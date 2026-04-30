@@ -584,20 +584,22 @@ $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
     {
       "name": "customer-onboarding",
       "version": "1.4",
-      "trigger": "api",
-      "owner": "banking-team",
-      "steps": 5,
-      "allow_agent": true,
-      "schema_url": "/sop/customer-onboarding/schema",
-      "trace_url":  "/audit/customer-onboarding"
+      "description": "Onboard a business for cross-border banking",
+      "tags": ["banking", "onboarding", "compliance", "kyb"],
+      "inputs_summary":  "company_name (string, required), country (enum: US|MX, required)",
+      "outputs_summary": "account_id (string), status (enum: approved|rejected)",
+      "sla": "72h",
+      "schema_url": "/sop/customer-onboarding/schema"
     },
     {
       "name": "continuous-pr-review",
       "version": "2.1",
-      "trigger": "webhook",
-      "owner": "platform",
-      "steps": 5,
-      "allow_agent": true
+      "description": "Agent + policy review on every pull request",
+      "tags": ["dev", "review", "agent"],
+      "inputs_summary":  "repo (string), pr_number (number), diff_url (string)",
+      "outputs_summary": "decision (enum: approve|request-changes), comments (string[])",
+      "sla": null,
+      "schema_url": "/sop/continuous-pr-review/schema"
     }
     /* … */
   ]
