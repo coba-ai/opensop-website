@@ -39,17 +39,21 @@ process:
     - id: review
       type: judgment
       name: "Risk review"
+      outputs:
+        - { name: decision, type: enum, values: [approve, reject] }
       judgment:
         allow_agent: true
         confidence_threshold: 0.9
-        escalation: queue
+        escalation: manual
     - id: compliance
       type: webhook
       name: "Submit to compliance provider"
       condition: "steps.review.outputs.decision == 'approve'"
     - id: provision
       type: automated
-      name: "Provision account"`,
+      name: "Provision account"
+      outputs:
+        - { name: account_id, type: string }`,
     steps: [
       { id: "collect",    name: "Collect business info",     type: "form",      ms: 0,    dur: 1100 },
       { id: "verify",     name: "Verify KYB documents",      type: "automated", ms: 1100, dur: 900 },
@@ -81,10 +85,7 @@ process:
   description: "Agent + policy review on every pull request"
   owner: platform
 
-  trigger:
-    type: webhook
-    source: github
-    event: pull_request.opened
+  trigger: { type: api }
 
   inputs:
     - { name: repo, type: string }
@@ -103,7 +104,7 @@ process:
       type: llm
       name: "Agent code review"
       model: claude-sonnet-4-7
-      tools: [grep, read_file, run_tests]
+      tools: [Read, Grep]
     - id: policy
       type: judgment
       name: "Policy check"
@@ -122,7 +123,7 @@ process:
       "POST   /sop/continuous-pr-review/start",
       "GET    /sop/continuous-pr-review/:id",
       "GET    /sop/continuous-pr-review/:id/steps",
-      "POST   /sop/webhooks/github (auto-trigger)",
+      "POST   /sop/triggers/continuous-pr-review (HMAC)",
       "GET    /sop/instances?process=continuous-pr-review"
     ]
   },
@@ -142,9 +143,7 @@ process:
   description: "Triage incoming bug bounty submissions"
   owner: security
 
-  trigger:
-    type: webhook
-    source: hackerone
+  trigger: { type: api }
 
   steps:
     - id: validate
@@ -154,7 +153,7 @@ process:
       type: llm
       name: "Dedupe against known issues"
       model: claude-sonnet-4-7
-      tools: [search_issues]
+      tools: [Read, Grep]
     - id: reproduce
       type: automated
       name: "Auto-reproduce in sandbox"
@@ -211,7 +210,6 @@ process:
       type: llm
       name: "Draft proposal"
       model: claude-sonnet-4-7
-      tools: [crm_lookup, pricing_table]
     - id: internal-review
       type: approval
       name: "Internal review"
@@ -249,9 +247,7 @@ process:
   version: "3.0"
   owner: growth
 
-  trigger:
-    type: webhook
-    source: website-form
+  trigger: { type: api }
 
   steps:
     - id: classify
@@ -280,10 +276,10 @@ process:
       { id: "respond",  name: "Auto-reply",          type: "automated", ms: 2100, dur: 400 }
     ],
     endpoints: [
-      "POST   /sop/webhooks/website-form (auto-trigger)",
+      "POST   /sop/triggers/inbound-inquiry-triage (HMAC)",
       "GET    /sop/inbound-inquiry-triage/:id",
       "GET    /sop/inbound-inquiry-triage/:id/steps",
-      "GET    /sop/instances?tier=A&since=24h"
+      "GET    /sop/instances?process=inbound-inquiry-triage"
     ]
   }
 ];

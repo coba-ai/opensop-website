@@ -516,7 +516,7 @@ function EditorialPage({
     className: "ed-ledger"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-ledger-head"
-  }, /*#__PURE__*/React.createElement("span", null, "instance_id"), /*#__PURE__*/React.createElement("span", null, "v"), /*#__PURE__*/React.createElement("span", null, "status"), /*#__PURE__*/React.createElement("span", null, "at_step"), /*#__PURE__*/React.createElement("span", null, "duration"), /*#__PURE__*/React.createElement("span", null, "actor"), /*#__PURE__*/React.createElement("span", null)), [["i_9f3a4c", "v1.4", "running", "step.review", "+02m 14s", "claude-sonnet"], ["i_8b21de", "v1.4", "completed", "—", "+04m 12s", "human"], ["i_7c10aa", "v1.3", "completed", "—", "+05m 31s", "claude-sonnet"], ["i_6a09c1", "v1.3", "escalated", "step.compliance", "+03m 02s", "human"], ["i_5d99a0", "v1.2", "completed", "—", "+06m 48s", "claude-sonnet"], ["i_4e8801", "v1.2", "failed", "step.verify", "+01m 09s", "—"]].map(r => /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, "instance_id"), /*#__PURE__*/React.createElement("span", null, "v"), /*#__PURE__*/React.createElement("span", null, "status"), /*#__PURE__*/React.createElement("span", null, "at_step"), /*#__PURE__*/React.createElement("span", null, "duration"), /*#__PURE__*/React.createElement("span", null, "actor"), /*#__PURE__*/React.createElement("span", null)), [["i_9f3a4c", "v1.4", "running", "step.review", "+02m 14s", "agent"], ["i_8b21de", "v1.4", "completed", "—", "+04m 12s", "human"], ["i_7c10aa", "v1.3", "completed", "—", "+05m 31s", "agent"], ["i_6a09c1", "v1.3", "escalated", "step.compliance", "+03m 02s", "human"], ["i_5d99a0", "v1.2", "completed", "—", "+06m 48s", "agent"], ["i_4e8801", "v1.2", "failed", "step.verify", "+01m 09s", "system"]].map(r => /*#__PURE__*/React.createElement("div", {
     className: "ed-ledger-row",
     key: r[0]
   }, /*#__PURE__*/React.createElement("span", {
@@ -543,10 +543,9 @@ function EditorialPage({
   - id: review
     type: judgment
     judgment:
-      threshold: 0.80     # too low
+      confidence_threshold: 0.85
       escalation: manual
-    retry:
-      max: 2
+    retry: { max: 2 }
 
 success: 91.4%`)), /*#__PURE__*/React.createElement("div", {
     className: "ed-diff-arrow"
@@ -560,10 +559,10 @@ success: 91.4%`)), /*#__PURE__*/React.createElement("div", {
   - id: review
     type: judgment
     judgment:
-      threshold: 0.90     # tightened
-      escalation: queue
-    retry:
-      max: 3
+      confidence_threshold: 0.92  # tightened
+      escalation: manual
+      allow_agent: true
+    retry: { max: 3, backoff: exponential }
 
 success: ${wf.success}`)))), /*#__PURE__*/React.createElement("section", {
     className: "ed-section ed-section-api"
@@ -634,14 +633,18 @@ $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
   }, "in 60 seconds.")), /*#__PURE__*/React.createElement("pre", {
     className: "ed-qs-block"
   }, `$ git clone https://github.com/Chosen9115/opensop && cd opensop
-$ bin/setup
-$ bin/rails server                                  # → http://localhost:3000
-$ opensop register ./examples/customer-onboarding.sop.yaml
+$ bin/setup                                          # bundle + db:prepare + bin/dev → http://localhost:3000
 
-✓ registered  customer-onboarding v1.0
-✓ POST /sop/customer-onboarding/start
-✓ GET  /sop/customer-onboarding/:id
-✓ trace at /audit/customer-onboarding`), /*#__PURE__*/React.createElement("div", {
+$ curl http://localhost:3000/sop/                    # discover the example processes
+{ "processes": [
+  { "name": "customer-onboarding", "version": "1.0", "schema_url": "/sop/customer-onboarding/schema" },
+  { "name": "lead-qualification",  "version": "1.0", "schema_url": "/sop/lead-qualification/schema" }
+] }
+
+$ curl -X POST http://localhost:3000/sop/customer-onboarding/start \\
+       -H "Content-Type: application/json" \\
+       -d '{"company_name":"Acme Corp"}'
+{ "instance_id": "01HX...", "next_step": "collect-business-info" }`), /*#__PURE__*/React.createElement("div", {
     className: "ed-qs-row"
   }, /*#__PURE__*/React.createElement("a", {
     className: "ed-btn ed-btn-dark",
