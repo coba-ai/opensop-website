@@ -13,6 +13,40 @@ function highlightYaml2(src) {
     .replace(/(:\s*)(\d+(?:\.\d+)?[a-z]*)\b/g, '$1<span class="ec-num">$2</span>');
 }
 
+function useGitHubStars(repo) {
+  const [count, setCount] = useState2(null);
+  useEffect2(() => {
+    const cacheKey = "gh-stars:" + repo;
+    const ttl = 60 * 60 * 1000;
+    try {
+      const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
+      if (cached && typeof cached.n === "number" && Date.now() - cached.t < ttl) {
+        setCount(cached.n);
+        return;
+      }
+    } catch (e) {}
+    fetch("https://api.github.com/repos/" + repo)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (d && typeof d.stargazers_count === "number") {
+          setCount(d.stargazers_count);
+          try {
+            localStorage.setItem(cacheKey, JSON.stringify({ n: d.stargazers_count, t: Date.now() }));
+          } catch (e) {}
+        }
+      })
+      .catch(() => {});
+  }, [repo]);
+  return count;
+}
+
+function formatStars(n) {
+  if (n == null) return null;
+  if (n < 1000) return String(n);
+  if (n < 10000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "k";
+  return Math.round(n / 1000) + "k";
+}
+
 // Animated harness diagram with travelling tokens
 function HarnessDiagram({ workflow }) {
   const canvasRef = useRef2(null);
@@ -180,6 +214,8 @@ function ProcessRibbon({ workflow }) {
 function EditorialPage({ tweaks, setTweak }) {
   const [wfId, setWfId] = useState2(tweaks.workflow);
   useEffect2(() => setWfId(tweaks.workflow), [tweaks.workflow]);
+  const stars = useGitHubStars("Chosen9115/opensop");
+  const starsLabel = formatStars(stars);
   const wf = WORKFLOWS_2.find((w) => w.id === wfId) || WORKFLOWS_2[0];
 
   const heroes = {
@@ -203,7 +239,7 @@ function EditorialPage({ tweaks, setTweak }) {
         </nav>
         <div className="ed-nav-r">
           <a className="ed-nav-link">Sign in</a>
-          <a className="ed-nav-cta" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Star · 4.2k</a>
+          <a className="ed-nav-cta" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Star{starsLabel ? " · " + starsLabel : ""}</a>
         </div>
       </header>
 

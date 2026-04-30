@@ -9,6 +9,38 @@ const STEP_TYPES_2 = window.OPENSOP_STEP_TYPES;
 function highlightYaml2(src) {
   return src.replace(/(#.*)$/gm, '<span class="ec-com">$1</span>').replace(/^(\s*-?\s*)([a-zA-Z_][\w-]*)(\s*:)/gm, '$1<span class="ec-key">$2</span>$3').replace(/(:\s*)("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g, '$1<span class="ec-str">$2</span>').replace(/(:\s*)(true|false|null)\b/g, '$1<span class="ec-bool">$2</span>').replace(/(:\s*)(\d+(?:\.\d+)?[a-z]*)\b/g, '$1<span class="ec-num">$2</span>');
 }
+function useGitHubStars(repo) {
+  const [count, setCount] = useState2(null);
+  useEffect2(() => {
+    const cacheKey = "gh-stars:" + repo;
+    const ttl = 60 * 60 * 1000;
+    try {
+      const cached = JSON.parse(localStorage.getItem(cacheKey) || "null");
+      if (cached && typeof cached.n === "number" && Date.now() - cached.t < ttl) {
+        setCount(cached.n);
+        return;
+      }
+    } catch (e) {}
+    fetch("https://api.github.com/repos/" + repo).then(r => r.ok ? r.json() : null).then(d => {
+      if (d && typeof d.stargazers_count === "number") {
+        setCount(d.stargazers_count);
+        try {
+          localStorage.setItem(cacheKey, JSON.stringify({
+            n: d.stargazers_count,
+            t: Date.now()
+          }));
+        } catch (e) {}
+      }
+    }).catch(() => {});
+  }, [repo]);
+  return count;
+}
+function formatStars(n) {
+  if (n == null) return null;
+  if (n < 1000) return String(n);
+  if (n < 10000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "k";
+  return Math.round(n / 1000) + "k";
+}
 
 // Animated harness diagram with travelling tokens
 function HarnessDiagram({
@@ -214,6 +246,8 @@ function EditorialPage({
 }) {
   const [wfId, setWfId] = useState2(tweaks.workflow);
   useEffect2(() => setWfId(tweaks.workflow), [tweaks.workflow]);
+  const stars = useGitHubStars("Chosen9115/opensop");
+  const starsLabel = formatStars(stars);
   const wf = WORKFLOWS_2.find(w => w.id === wfId) || WORKFLOWS_2[0];
   const heroes = {
     yaml: "yaml",
@@ -258,7 +292,7 @@ function EditorialPage({
     href: "https://github.com/Chosen9115/opensop",
     target: "_blank",
     rel: "noopener noreferrer"
-  }, "\u2605 Star \xB7 4.2k"))), /*#__PURE__*/React.createElement("section", {
+  }, "\u2605 Star", starsLabel ? " · " + starsLabel : ""))), /*#__PURE__*/React.createElement("section", {
     className: "ed-hero"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-hero-eyebrow"
