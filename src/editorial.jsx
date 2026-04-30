@@ -203,7 +203,7 @@ function EditorialPage({ tweaks, setTweak }) {
         </nav>
         <div className="ed-nav-r">
           <a className="ed-nav-link">Sign in</a>
-          <a className="ed-nav-cta">★ Star · 4.2k</a>
+          <a className="ed-nav-cta" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Star · 4.2k</a>
         </div>
       </header>
 
@@ -226,8 +226,8 @@ function EditorialPage({ tweaks, setTweak }) {
           run is a replayable instance you can branch, diff and improve.
         </p>
         <div className="ed-hero-row">
-          <a className="ed-btn ed-btn-dark">★ Star on GitHub</a>
-          <a className="ed-btn ed-btn-ghost">Read the spec →</a>
+          <a className="ed-btn ed-btn-dark" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Star on GitHub</a>
+          <a className="ed-btn ed-btn-ghost" href="https://github.com/Chosen9115/opensop#readme" target="_blank" rel="noopener noreferrer">Read the spec →</a>
           <span className="ed-hero-meta">
             <span className="ed-pulse" /> v0.2 stable · Apache 2.0 · self-host in 60s
           </span>
@@ -481,8 +481,7 @@ $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
       <section className="ed-cta">
         <h2>Ship a process. Get an API.<br />Audit every run.</h2>
         <div className="ed-cta-row">
-          <a className="ed-btn ed-btn-dark">★ Star on GitHub</a>
-          <a className="ed-btn ed-btn-ghost">npx create-opensop →</a>
+          <a className="ed-btn ed-btn-dark" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Star on GitHub</a>
         </div>
         <div className="ed-cta-meta">Apache 2.0 &middot; self-hostable &middot; Postgres + Ruby on Rails &middot; deployable in 60s</div>
       </section>
@@ -490,7 +489,7 @@ $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
       <section className="ed-quickstart">
         <div className="ed-qs-eb"><span className="ed-pulse" /> Quickstart</div>
         <h2 className="ed-qs-h">Ship your first process<br /><span className="ed-italic">in 60 seconds.</span></h2>
-        <pre className="ed-qs-block">{`$ git clone github.com/opensop/opensop && cd opensop
+        <pre className="ed-qs-block">{`$ git clone https://github.com/Chosen9115/opensop && cd opensop
 $ bin/setup
 $ bin/rails server                                  # → http://localhost:3000
 $ opensop register ./examples/customer-onboarding.sop.yaml
@@ -500,8 +499,7 @@ $ opensop register ./examples/customer-onboarding.sop.yaml
 ✓ GET  /sop/customer-onboarding/:id
 ✓ trace at /audit/customer-onboarding`}</pre>
         <div className="ed-qs-row">
-          <a className="ed-btn ed-btn-dark">★ Star on GitHub</a>
-          <a className="ed-btn ed-btn-ghost">Read the spec →</a>
+          <a className="ed-btn ed-btn-dark" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Star on GitHub</a>
         </div>
       </section>
 
@@ -513,7 +511,7 @@ $ opensop register ./examples/customer-onboarding.sop.yaml
         <div className="ed-foot-cols">
           <div><h6>Product</h6><a>Runtime</a><a>Spec v0.2</a><a>Roadmap</a><a>Changelog</a></div>
           <div><h6>Developers</h6><a>Docs</a><a>API reference</a><a>Postman</a><a>Examples</a></div>
-          <div><h6>Community</h6><a>GitHub</a><a>Discord</a><a>Showcase</a><a>Contributing</a></div>
+          <div><h6>Community</h6><a href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">GitHub</a><a>Discord</a><a>Showcase</a><a>Contributing</a></div>
         </div>
       </footer>
     </div>
@@ -522,8 +520,10 @@ $ opensop register ./examples/customer-onboarding.sop.yaml
 
 window.EditorialPage = EditorialPage;
 
-// --- Boot stub: render the editorial page with baked tweaks ---
-const __OPENSOP_TWEAKS = { workflow: "kyb", hero: "graph", density: "medium" };
-const __noop = () => {};
-const __root = ReactDOM.createRoot(document.getElementById("root"));
-__root.render(<EditorialPage tweaks={__OPENSOP_TWEAKS} setTweak={__noop} />);
+// --- Boot stub: stateful App so hero/workflow switchers work ---
+function __OpenSOPApp() {
+  const [tweaks, setTweaks] = React.useState({ workflow: "kyb", hero: "graph", density: "medium" });
+  const setTweak = (k, v) => setTweaks(prev => ({ ...prev, [k]: v }));
+  return <EditorialPage tweaks={tweaks} setTweak={setTweak} />;
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<__OpenSOPApp />);

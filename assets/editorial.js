@@ -254,7 +254,10 @@ function EditorialPage({
   }, /*#__PURE__*/React.createElement("a", {
     className: "ed-nav-link"
   }, "Sign in"), /*#__PURE__*/React.createElement("a", {
-    className: "ed-nav-cta"
+    className: "ed-nav-cta",
+    href: "https://github.com/Chosen9115/opensop",
+    target: "_blank",
+    rel: "noopener noreferrer"
   }, "\u2605 Star \xB7 4.2k"))), /*#__PURE__*/React.createElement("section", {
     className: "ed-hero"
   }, /*#__PURE__*/React.createElement("div", {
@@ -276,9 +279,15 @@ function EditorialPage({
   }, "Define a process in YAML. Get a versioned, typed, auditable API. Agents and humans interact with the same endpoint \u2014 and every run is a replayable instance you can branch, diff and improve."), /*#__PURE__*/React.createElement("div", {
     className: "ed-hero-row"
   }, /*#__PURE__*/React.createElement("a", {
-    className: "ed-btn ed-btn-dark"
+    className: "ed-btn ed-btn-dark",
+    href: "https://github.com/Chosen9115/opensop",
+    target: "_blank",
+    rel: "noopener noreferrer"
   }, "\u2605 Star on GitHub"), /*#__PURE__*/React.createElement("a", {
-    className: "ed-btn ed-btn-ghost"
+    className: "ed-btn ed-btn-ghost",
+    href: "https://github.com/Chosen9115/opensop#readme",
+    target: "_blank",
+    rel: "noopener noreferrer"
   }, "Read the spec \u2192"), /*#__PURE__*/React.createElement("span", {
     className: "ed-hero-meta"
   }, /*#__PURE__*/React.createElement("span", {
@@ -572,10 +581,11 @@ $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
   }, /*#__PURE__*/React.createElement("h2", null, "Ship a process. Get an API.", /*#__PURE__*/React.createElement("br", null), "Audit every run."), /*#__PURE__*/React.createElement("div", {
     className: "ed-cta-row"
   }, /*#__PURE__*/React.createElement("a", {
-    className: "ed-btn ed-btn-dark"
-  }, "\u2605 Star on GitHub"), /*#__PURE__*/React.createElement("a", {
-    className: "ed-btn ed-btn-ghost"
-  }, "npx create-opensop \u2192")), /*#__PURE__*/React.createElement("div", {
+    className: "ed-btn ed-btn-dark",
+    href: "https://github.com/Chosen9115/opensop",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "\u2605 Star on GitHub")), /*#__PURE__*/React.createElement("div", {
     className: "ed-cta-meta"
   }, "Apache 2.0 \xB7 self-hostable \xB7 Postgres + Ruby on Rails \xB7 deployable in 60s")), /*#__PURE__*/React.createElement("section", {
     className: "ed-quickstart"
@@ -589,7 +599,7 @@ $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
     className: "ed-italic"
   }, "in 60 seconds.")), /*#__PURE__*/React.createElement("pre", {
     className: "ed-qs-block"
-  }, `$ git clone github.com/opensop/opensop && cd opensop
+  }, `$ git clone https://github.com/Chosen9115/opensop && cd opensop
 $ bin/setup
 $ bin/rails server                                  # → http://localhost:3000
 $ opensop register ./examples/customer-onboarding.sop.yaml
@@ -600,10 +610,11 @@ $ opensop register ./examples/customer-onboarding.sop.yaml
 ✓ trace at /audit/customer-onboarding`), /*#__PURE__*/React.createElement("div", {
     className: "ed-qs-row"
   }, /*#__PURE__*/React.createElement("a", {
-    className: "ed-btn ed-btn-dark"
-  }, "\u2605 Star on GitHub"), /*#__PURE__*/React.createElement("a", {
-    className: "ed-btn ed-btn-ghost"
-  }, "Read the spec \u2192"))), /*#__PURE__*/React.createElement("footer", {
+    className: "ed-btn ed-btn-dark",
+    href: "https://github.com/Chosen9115/opensop",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "\u2605 Star on GitHub"))), /*#__PURE__*/React.createElement("footer", {
     className: "ed-foot"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-foot-l"
@@ -626,19 +637,28 @@ $ opensop register ./examples/customer-onboarding.sop.yaml
     strokeWidth: "1.4"
   })), " ", /*#__PURE__*/React.createElement("span", null, "OpenSOP")), /*#__PURE__*/React.createElement("p", null, "An open runtime for business processes.", /*#__PURE__*/React.createElement("br", null), "Apache 2.0 \xB7 2026.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-foot-cols"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h6", null, "Product"), /*#__PURE__*/React.createElement("a", null, "Runtime"), /*#__PURE__*/React.createElement("a", null, "Spec v0.2"), /*#__PURE__*/React.createElement("a", null, "Roadmap"), /*#__PURE__*/React.createElement("a", null, "Changelog")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h6", null, "Developers"), /*#__PURE__*/React.createElement("a", null, "Docs"), /*#__PURE__*/React.createElement("a", null, "API reference"), /*#__PURE__*/React.createElement("a", null, "Postman"), /*#__PURE__*/React.createElement("a", null, "Examples")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h6", null, "Community"), /*#__PURE__*/React.createElement("a", null, "GitHub"), /*#__PURE__*/React.createElement("a", null, "Discord"), /*#__PURE__*/React.createElement("a", null, "Showcase"), /*#__PURE__*/React.createElement("a", null, "Contributing")))));
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h6", null, "Product"), /*#__PURE__*/React.createElement("a", null, "Runtime"), /*#__PURE__*/React.createElement("a", null, "Spec v0.2"), /*#__PURE__*/React.createElement("a", null, "Roadmap"), /*#__PURE__*/React.createElement("a", null, "Changelog")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h6", null, "Developers"), /*#__PURE__*/React.createElement("a", null, "Docs"), /*#__PURE__*/React.createElement("a", null, "API reference"), /*#__PURE__*/React.createElement("a", null, "Postman"), /*#__PURE__*/React.createElement("a", null, "Examples")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h6", null, "Community"), /*#__PURE__*/React.createElement("a", {
+    href: "https://github.com/Chosen9115/opensop",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "GitHub"), /*#__PURE__*/React.createElement("a", null, "Discord"), /*#__PURE__*/React.createElement("a", null, "Showcase"), /*#__PURE__*/React.createElement("a", null, "Contributing")))));
 }
 window.EditorialPage = EditorialPage;
 
-// --- Boot stub: render the editorial page with baked tweaks ---
-const __OPENSOP_TWEAKS = {
-  workflow: "kyb",
-  hero: "graph",
-  density: "medium"
-};
-const __noop = () => {};
-const __root = ReactDOM.createRoot(document.getElementById("root"));
-__root.render(/*#__PURE__*/React.createElement(EditorialPage, {
-  tweaks: __OPENSOP_TWEAKS,
-  setTweak: __noop
-}));
+// --- Boot stub: stateful App so hero/workflow switchers work ---
+function __OpenSOPApp() {
+  const [tweaks, setTweaks] = React.useState({
+    workflow: "kyb",
+    hero: "graph",
+    density: "medium"
+  });
+  const setTweak = (k, v) => setTweaks(prev => ({
+    ...prev,
+    [k]: v
+  }));
+  return /*#__PURE__*/React.createElement(EditorialPage, {
+    tweaks: tweaks,
+    setTweak: setTweak
+  });
+}
+ReactDOM.createRoot(document.getElementById("root")).render(/*#__PURE__*/React.createElement(__OpenSOPApp, null));
