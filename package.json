@@ -1,0 +1,13 @@
+{
+  "name": "opensop-website",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "babel src/editorial.jsx --presets @babel/preset-react -o assets/editorial.js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.24.0",
+    "@babel/core": "^7.24.0",
+    "@babel/preset-react": "^7.24.0"
+  }
+}
