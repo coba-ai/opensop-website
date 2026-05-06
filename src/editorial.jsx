@@ -244,6 +244,16 @@ function EditorialPage({ tweaks, setTweak }) {
       </header>
 
       <section className="ed-hero">
+        <img
+          className="ed-hero-illu"
+          src="./assets/hero-illustration.jpg"
+          alt=""
+          width="1600"
+          height="1066"
+          loading="eager"
+          decoding="async"
+          aria-hidden="true"
+        />
         <div className="ed-hero-eyebrow">
           <span className="ed-eb-num">No. 01</span>
           <span className="ed-eb-sep">/</span>
