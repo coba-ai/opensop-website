@@ -283,11 +283,26 @@ function EditorialPage({
     className: "ed-logo-word"
   }, "OpenSOP"))), /*#__PURE__*/React.createElement("nav", {
     className: "ed-nav-c"
-  }, /*#__PURE__*/React.createElement("a", null, "Runtime"), /*#__PURE__*/React.createElement("a", null, "Spec"), /*#__PURE__*/React.createElement("a", null, "Workflows"), /*#__PURE__*/React.createElement("a", null, "Audit"), /*#__PURE__*/React.createElement("a", null, "Docs"), /*#__PURE__*/React.createElement("a", null, "Blog")), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("a", {
+    href: "#runtime"
+  }, "Runtime"), /*#__PURE__*/React.createElement("a", {
+    href: "https://github.com/Chosen9115/opensop/blob/main/SPEC.md",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "Spec"), /*#__PURE__*/React.createElement("a", {
+    href: "#workflows"
+  }, "Workflows"), /*#__PURE__*/React.createElement("a", {
+    href: "#audit"
+  }, "Audit"), /*#__PURE__*/React.createElement("a", {
+    href: "https://github.com/Chosen9115/opensop/tree/main/docs",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "Docs")), /*#__PURE__*/React.createElement("div", {
     className: "ed-nav-r"
   }, /*#__PURE__*/React.createElement("a", {
-    className: "ed-nav-link"
-  }, "Sign in"), /*#__PURE__*/React.createElement("a", {
+    className: "ed-nav-link",
+    href: "#mvp"
+  }, "MVP status"), /*#__PURE__*/React.createElement("a", {
     className: "ed-nav-cta",
     href: "https://github.com/Chosen9115/opensop",
     target: "_blank",
@@ -300,17 +315,17 @@ function EditorialPage({
     className: "ed-eb-num"
   }, "No. 01"), /*#__PURE__*/React.createElement("span", {
     className: "ed-eb-sep"
-  }, "/"), /*#__PURE__*/React.createElement("span", null, "An open runtime for business processes"), /*#__PURE__*/React.createElement("span", {
+  }, "/"), /*#__PURE__*/React.createElement("span", null, "Process runtime + safety harness for agents"), /*#__PURE__*/React.createElement("span", {
     className: "ed-eb-sep"
-  }, "/"), /*#__PURE__*/React.createElement("span", null, "v0.2 \xB7 April 2026")), /*#__PURE__*/React.createElement("h1", {
+  }, "/"), /*#__PURE__*/React.createElement("span", null, "v0.1 developer preview")), /*#__PURE__*/React.createElement("h1", {
     className: "ed-hero-h"
-  }, "Your business ", /*#__PURE__*/React.createElement("span", {
+  }, "AI agents need a ", /*#__PURE__*/React.createElement("span", {
     className: "ed-italic"
-  }, "processes"), /*#__PURE__*/React.createElement("br", null), "deserve a ", /*#__PURE__*/React.createElement("span", {
+  }, "harness"), ",", /*#__PURE__*/React.createElement("br", null), "not another ", /*#__PURE__*/React.createElement("span", {
     className: "ed-italic"
-  }, "runtime"), ",", /*#__PURE__*/React.createElement("br", null), "not another doc."), /*#__PURE__*/React.createElement("p", {
+  }, "prompt"), "."), /*#__PURE__*/React.createElement("p", {
     className: "ed-hero-sub"
-  }, "Define a process in YAML. Get a versioned, typed, auditable API. Agents and humans interact with the same endpoint \u2014 and every run is a replayable instance you can branch, diff and improve."), /*#__PURE__*/React.createElement("div", {
+  }, "Define a process or agent workflow in YAML. Get a typed, versioned, auditable API. Humans and agents run the same steps through the same endpoints, with deterministic gates, append-only receipts and replayable state."), /*#__PURE__*/React.createElement("div", {
     className: "ed-hero-row"
   }, /*#__PURE__*/React.createElement("a", {
     className: "ed-btn ed-btn-dark",
@@ -326,7 +341,7 @@ function EditorialPage({
     className: "ed-hero-meta"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ed-pulse"
-  }), " v0.2 stable \xB7 Apache 2.0 \xB7 self-host in 60s")), /*#__PURE__*/React.createElement("div", {
+  }), " v0.1 developer preview \xB7 Apache 2.0 \xB7 self-hostable")), /*#__PURE__*/React.createElement("div", {
     className: "ed-hero-figure"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-hero-fig-tabs"
@@ -373,9 +388,7 @@ function EditorialPage({
     workflow: wf
   })))), /*#__PURE__*/React.createElement("section", {
     className: "ed-quote"
-  }, /*#__PURE__*/React.createElement("blockquote", null, "\u201CProcesses are company IP. They live in heads, Notion pages, tribal knowledge. OpenSOP makes them ", /*#__PURE__*/React.createElement("span", {
-    className: "ed-italic"
-  }, "callable"), ".\u201D"), /*#__PURE__*/React.createElement("cite", null, "\u2014 OpenSOP Spec, \xA71")), /*#__PURE__*/React.createElement("section", {
+  }, /*#__PURE__*/React.createElement("blockquote", null, "\u201CLLM creativity belongs inside deterministic gates. OpenSOP gives every agent run typed inputs, accepted outputs, receipts and replay.\u201D"), /*#__PURE__*/React.createElement("cite", null, "\u2014 OpenSOP launch note")), /*#__PURE__*/React.createElement("section", {
     className: "ed-section"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-sec-head"
@@ -383,7 +396,7 @@ function EditorialPage({
     className: "ed-sec-num"
   }, "02"), /*#__PURE__*/React.createElement("h2", {
     className: "ed-sec-h"
-  }, "A workflow brain \u2014 for the agents you're about to deploy.")), /*#__PURE__*/React.createElement("div", {
+  }, "A process harness for the agents you're about to deploy.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-three"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-three-col"
@@ -405,7 +418,7 @@ function EditorialPage({
     d: "M12 14h16 M12 20h12 M12 26h8",
     stroke: "currentColor",
     strokeWidth: "1.2"
-  }))), /*#__PURE__*/React.createElement("h3", null, "The definition is the contract."), /*#__PURE__*/React.createElement("p", null, "One YAML file. Inputs, outputs, steps, conditions, retries. The runtime exposes it as a REST API automatically \u2014 no separate API layer to build, no drift.")), /*#__PURE__*/React.createElement("div", {
+  }))), /*#__PURE__*/React.createElement("h3", null, "The workflow is the contract."), /*#__PURE__*/React.createElement("p", null, "One YAML file. Inputs, outputs, steps, gates, retries. The runtime exposes it as a REST API automatically, so prompts do not become the hidden source of truth.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-three-col"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-three-icon ed-icon-2"
@@ -429,7 +442,7 @@ function EditorialPage({
     d: "M20 6v4 M20 30v4 M6 20h4 M30 20h4",
     stroke: "currentColor",
     strokeWidth: "1.2"
-  }))), /*#__PURE__*/React.createElement("h3", null, "Every step has a type."), /*#__PURE__*/React.createElement("p", null, "Automated, form, judgment, approval, webhook, llm. The runtime knows which steps need a human, which need an LLM, and which just run \u2014 and routes accordingly.")), /*#__PURE__*/React.createElement("div", {
+  }))), /*#__PURE__*/React.createElement("h3", null, "Every agent gets rails."), /*#__PURE__*/React.createElement("p", null, "Each LLM call sits inside a narrow gate: structured prompt, typed output, size cap, parser, and deterministic checks before any side effect.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-three-col"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-three-icon ed-icon-3"
@@ -446,17 +459,56 @@ function EditorialPage({
     d: "M14 22h12",
     stroke: "currentColor",
     strokeWidth: "1.2"
-  }))), /*#__PURE__*/React.createElement("h3", null, "Audit, diff, replay."), /*#__PURE__*/React.createElement("p", null, "Every instance keeps inputs, outputs, agent confidences, and the exact process version. Diff ", /*#__PURE__*/React.createElement("em", null, "v1"), " against ", /*#__PURE__*/React.createElement("em", null, "v3"), ". Replay a failed step. Ship the improvement.")))), /*#__PURE__*/React.createElement("section", {
-    className: "ed-section ed-section-wf"
+  }))), /*#__PURE__*/React.createElement("h3", null, "Receipts, audit, replay."), /*#__PURE__*/React.createElement("p", null, "Every run writes an append-only receipt with inputs, outputs, actor, process version and result. Diff a process change, replay a failed step, then ship the safer path.")))), /*#__PURE__*/React.createElement("section", {
+    className: "ed-section ed-section-worker",
+    id: "agent-harness"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-sec-head"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ed-sec-num"
   }, "03"), /*#__PURE__*/React.createElement("h2", {
     className: "ed-sec-h"
-  }, "Workflows in production."), /*#__PURE__*/React.createElement("p", {
+  }, "LLM creativity inside deterministic gates."), /*#__PURE__*/React.createElement("p", {
     className: "ed-sec-sub"
-  }, "Pick a process. The YAML below is the actual file. The endpoints are auto-generated.")), /*#__PURE__*/React.createElement("div", {
+  }, "At Coba, OpenSOP runs opensop-worker: a Rust daemon that schedules 11 specialized agents across our Rails projects.")), /*#__PURE__*/React.createElement("div", {
+    className: "ed-three"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ed-three-col"
+  }, /*#__PURE__*/React.createElement("h3", null, "Useful agents on schedule."), /*#__PURE__*/React.createElement("p", null, "PR review, dependency bumps, conflict resolution, Slack cooks, AGENTS.md generation, CI re-runs and release notes. The routine engineering work humans defer or forget runs on time.")), /*#__PURE__*/React.createElement("div", {
+    className: "ed-three-col"
+  }, /*#__PURE__*/React.createElement("h3", null, "Narrow gates around every call."), /*#__PURE__*/React.createElement("p", null, "Each job has typed inputs and outputs, prompt templates with marker protocols, structured responses parsed by Rust, size caps and critical-path exclusions.")), /*#__PURE__*/React.createElement("div", {
+    className: "ed-three-col"
+  }, /*#__PURE__*/React.createElement("h3", null, "Receipts before side effects."), /*#__PURE__*/React.createElement("p", null, "Every fire writes an append-only receipt. Ground-truth git diff checks catch schema drift, scope creep, hallucinated files and unsafe changes before anything touches production.")))), /*#__PURE__*/React.createElement("section", {
+    className: "ed-section ed-section-vs"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ed-vs-card"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ed-vs-eb"
+  }, "Not another agent framework"), /*#__PURE__*/React.createElement("h3", {
+    className: "ed-vs-h"
+  }, "OpenSOP defines the operational boundary."), /*#__PURE__*/React.createElement("p", null, "LangGraph, CrewAI, AutoGen and custom scripts decide how agents think and collaborate. OpenSOP defines what agent work is allowed to do: accepted inputs, expected outputs, validation before side effects and a receipt after every action."))), /*#__PURE__*/React.createElement("section", {
+    className: "ed-section ed-section-mvp",
+    id: "mvp"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ed-sec-head"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sec-num"
+  }, "04"), /*#__PURE__*/React.createElement("h2", {
+    className: "ed-sec-h"
+  }, "Honest v0.1 status."), /*#__PURE__*/React.createElement("p", {
+    className: "ed-sec-sub"
+  }, "The parser, executor, REST API, admin UI and RSpec coverage are real. ", /*#__PURE__*/React.createElement("code", null, "form"), ", ", /*#__PURE__*/React.createElement("code", null, "automated"), " and ", /*#__PURE__*/React.createElement("code", null, "notification"), " steps execute today. ", /*#__PURE__*/React.createElement("code", null, "judgment"), ", ", /*#__PURE__*/React.createElement("code", null, "approval"), ", ", /*#__PURE__*/React.createElement("code", null, "webhook"), ", ", /*#__PURE__*/React.createElement("code", null, "subprocess"), " and ", /*#__PURE__*/React.createElement("code", null, "wait"), " are modeled and callable as state transitions while full side effects harden."))), /*#__PURE__*/React.createElement("section", {
+    className: "ed-section ed-section-wf",
+    id: "workflows"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ed-sec-head"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sec-num"
+  }, "05"), /*#__PURE__*/React.createElement("h2", {
+    className: "ed-sec-h"
+  }, "Used internally at Coba; examples below."), /*#__PURE__*/React.createElement("p", {
+    className: "ed-sec-sub"
+  }, "Pick a process. The YAML below shows the contract OpenSOP turns into endpoints, state and audit trails.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-wf-pills"
   }, WORKFLOWS_2.map(w => /*#__PURE__*/React.createElement("button", {
     key: w.id,
@@ -503,12 +555,13 @@ function EditorialPage({
       className: "ed-ep-p"
     }, r.join(" ")));
   }))))), /*#__PURE__*/React.createElement("section", {
-    className: "ed-section ed-section-ledger"
+    className: "ed-section ed-section-ledger",
+    id: "audit"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-sec-head"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ed-sec-num"
-  }, "04"), /*#__PURE__*/React.createElement("h2", {
+  }, "06"), /*#__PURE__*/React.createElement("h2", {
     className: "ed-sec-h"
   }, "Audit, diff, replay."), /*#__PURE__*/React.createElement("p", {
     className: "ed-sec-sub"
@@ -565,16 +618,17 @@ success: 91.4%`)), /*#__PURE__*/React.createElement("div", {
     retry: { max: 3, backoff: exponential }
 
 success: ${wf.success}`)))), /*#__PURE__*/React.createElement("section", {
-    className: "ed-section ed-section-api"
+    className: "ed-section ed-section-api",
+    id: "runtime"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-sec-head"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ed-sec-num"
-  }, "05"), /*#__PURE__*/React.createElement("h2", {
+  }, "07"), /*#__PURE__*/React.createElement("h2", {
     className: "ed-sec-h"
-  }, "Discoverable, typed, stable."), /*#__PURE__*/React.createElement("p", {
+  }, "Discoverable, typed, operational."), /*#__PURE__*/React.createElement("p", {
     className: "ed-sec-sub"
-  }, /*#__PURE__*/React.createElement("code", null, "GET /sop/"), " returns a typed catalogue of every process your org runs. Any agent can discover what your company does and how to invoke it \u2014 without reading docs.")), /*#__PURE__*/React.createElement("pre", {
+  }, /*#__PURE__*/React.createElement("code", null, "GET /sop/"), " returns a typed catalogue of every process your org runs. Any agent can discover what it is allowed to do and how to invoke it without scraping docs or guessing from chat history.")), /*#__PURE__*/React.createElement("pre", {
     className: "ed-api-block"
   }, `# discover everything an org can do
 $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
@@ -611,9 +665,9 @@ $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
     className: "ed-vs-eb"
   }, "A note on positioning"), /*#__PURE__*/React.createElement("h3", {
     className: "ed-vs-h"
-  }, "OpenSOP is not workflow glue."), /*#__PURE__*/React.createElement("p", null, "n8n, Zapier, Make \u2014 these are ", /*#__PURE__*/React.createElement("em", null, "connectors"), ". They wire services together with nodes. OpenSOP sits one layer above: it ", /*#__PURE__*/React.createElement("em", null, "hosts"), " your business processes so they're typed, versioned, auditable and callable from agents and humans through the same API. Different layer, different job."))), /*#__PURE__*/React.createElement("section", {
+  }, "OpenSOP is not a connector canvas."), /*#__PURE__*/React.createElement("p", null, "n8n, Zapier and Make wire services together. OpenSOP defines the process contract those services and agents execute: typed inputs, valid next steps, state, audit, replay and versioning. It can call connector tools. It is not trying to replace them."))), /*#__PURE__*/React.createElement("section", {
     className: "ed-cta"
-  }, /*#__PURE__*/React.createElement("h2", null, "Ship a process. Get an API.", /*#__PURE__*/React.createElement("br", null), "Audit every run."), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h2", null, "Give agents a harness.", /*#__PURE__*/React.createElement("br", null), "Give processes a runtime."), /*#__PURE__*/React.createElement("div", {
     className: "ed-cta-row"
   }, /*#__PURE__*/React.createElement("a", {
     className: "ed-btn ed-btn-dark",
@@ -622,7 +676,7 @@ $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
     rel: "noopener noreferrer"
   }, "\u2605 Star on GitHub")), /*#__PURE__*/React.createElement("div", {
     className: "ed-cta-meta"
-  }, "Apache 2.0 \xB7 self-hostable \xB7 Postgres + Ruby on Rails \xB7 deployable in 60s")), /*#__PURE__*/React.createElement("section", {
+  }, "Apache 2.0 \xB7 self-hostable \xB7 Rails + Postgres \xB7 v0.1 developer preview")), /*#__PURE__*/React.createElement("section", {
     className: "ed-quickstart"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-qs-eb"
@@ -632,7 +686,7 @@ $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
     className: "ed-qs-h"
   }, "Ship your first process", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
     className: "ed-italic"
-  }, "in 60 seconds.")), /*#__PURE__*/React.createElement("pre", {
+  }, "with receipts.")), /*#__PURE__*/React.createElement("pre", {
     className: "ed-qs-block"
   }, `$ git clone https://github.com/Chosen9115/opensop && cd opensop
 $ bin/setup                                          # bundle + db:prepare + bin/dev → http://localhost:3000
@@ -674,13 +728,53 @@ $ curl -X POST http://localhost:3000/sop/customer-onboarding/start \\
     d: "M5 11h12 M5 7h8 M5 15h6",
     stroke: "currentColor",
     strokeWidth: "1.4"
-  })), " ", /*#__PURE__*/React.createElement("span", null, "OpenSOP")), /*#__PURE__*/React.createElement("p", null, "An open runtime for business processes.", /*#__PURE__*/React.createElement("br", null), "Apache 2.0 \xB7 2026.")), /*#__PURE__*/React.createElement("div", {
+  })), " ", /*#__PURE__*/React.createElement("span", null, "OpenSOP")), /*#__PURE__*/React.createElement("p", null, "A process runtime and safety harness for agent workflows.", /*#__PURE__*/React.createElement("br", null), "Apache 2.0 \xB7 2026.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-foot-cols"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h6", null, "Product"), /*#__PURE__*/React.createElement("a", null, "Runtime"), /*#__PURE__*/React.createElement("a", null, "Spec v0.2"), /*#__PURE__*/React.createElement("a", null, "Roadmap"), /*#__PURE__*/React.createElement("a", null, "Changelog")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h6", null, "Developers"), /*#__PURE__*/React.createElement("a", null, "Docs"), /*#__PURE__*/React.createElement("a", null, "API reference"), /*#__PURE__*/React.createElement("a", null, "Postman"), /*#__PURE__*/React.createElement("a", null, "Examples")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h6", null, "Community"), /*#__PURE__*/React.createElement("a", {
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h6", null, "Product"), /*#__PURE__*/React.createElement("a", {
+    href: "#runtime"
+  }, "Runtime"), /*#__PURE__*/React.createElement("a", {
+    href: "https://github.com/Chosen9115/opensop/blob/main/SPEC.md",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "Spec v0.1"), /*#__PURE__*/React.createElement("a", {
+    href: "https://github.com/Chosen9115/opensop/blob/main/ROADMAP.md",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "Roadmap"), /*#__PURE__*/React.createElement("a", {
     href: "https://github.com/Chosen9115/opensop",
     target: "_blank",
     rel: "noopener noreferrer"
-  }, "GitHub"), /*#__PURE__*/React.createElement("a", null, "Discord"), /*#__PURE__*/React.createElement("a", null, "Showcase"), /*#__PURE__*/React.createElement("a", null, "Contributing")))));
+  }, "Changelog")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h6", null, "Developers"), /*#__PURE__*/React.createElement("a", {
+    href: "https://github.com/Chosen9115/opensop/tree/main/docs",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "Docs"), /*#__PURE__*/React.createElement("a", {
+    href: "https://github.com/Chosen9115/opensop/blob/main/docs/API.md",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "API reference"), /*#__PURE__*/React.createElement("a", {
+    href: "https://github.com/Chosen9115/opensop/blob/main/docs/opensop.postman.json",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "Postman"), /*#__PURE__*/React.createElement("a", {
+    href: "https://github.com/Chosen9115/opensop/tree/main/processes/examples",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "Examples")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h6", null, "Community"), /*#__PURE__*/React.createElement("a", {
+    href: "https://github.com/Chosen9115/opensop",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "GitHub"), /*#__PURE__*/React.createElement("a", {
+    href: "https://github.com/Chosen9115/opensop/discussions",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "Discussions"), /*#__PURE__*/React.createElement("a", {
+    href: "#agent-harness"
+  }, "Case study"), /*#__PURE__*/React.createElement("a", {
+    href: "https://github.com/Chosen9115/opensop/blob/main/CONTRIBUTING.md",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "Contributing")))));
 }
 window.EditorialPage = EditorialPage;
 

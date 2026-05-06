@@ -235,10 +235,10 @@ function EditorialPage({ tweaks, setTweak }) {
           </span>
         </div>
         <nav className="ed-nav-c">
-          <a>Runtime</a><a>Spec</a><a>Workflows</a><a>Audit</a><a>Docs</a><a>Blog</a>
+          <a href="#runtime">Runtime</a><a href="https://github.com/Chosen9115/opensop/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">Spec</a><a href="#workflows">Workflows</a><a href="#audit">Audit</a><a href="https://github.com/Chosen9115/opensop/tree/main/docs" target="_blank" rel="noopener noreferrer">Docs</a>
         </nav>
         <div className="ed-nav-r">
-          <a className="ed-nav-link">Sign in</a>
+          <a className="ed-nav-link" href="#mvp">MVP status</a>
           <a className="ed-nav-cta" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Star{starsLabel ? " · " + starsLabel : ""}</a>
         </div>
       </header>
@@ -247,25 +247,24 @@ function EditorialPage({ tweaks, setTweak }) {
         <div className="ed-hero-eyebrow">
           <span className="ed-eb-num">No. 01</span>
           <span className="ed-eb-sep">/</span>
-          <span>An open runtime for business processes</span>
+          <span>Process runtime + safety harness for agents</span>
           <span className="ed-eb-sep">/</span>
-          <span>v0.2 · April 2026</span>
+          <span>v0.1 developer preview</span>
         </div>
         <h1 className="ed-hero-h">
-          Your business <span className="ed-italic">processes</span><br />
-          deserve a <span className="ed-italic">runtime</span>,<br />
-          not another doc.
+          AI agents need a <span className="ed-italic">harness</span>,<br />
+          not another <span className="ed-italic">prompt</span>.
         </h1>
         <p className="ed-hero-sub">
-          Define a process in YAML. Get a versioned, typed, auditable API.
-          Agents and humans interact with the same endpoint &mdash; and every
-          run is a replayable instance you can branch, diff and improve.
+          Define a process or agent workflow in YAML. Get a typed, versioned,
+          auditable API. Humans and agents run the same steps through the same
+          endpoints, with deterministic gates, append-only receipts and replayable state.
         </p>
         <div className="ed-hero-row">
           <a className="ed-btn ed-btn-dark" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Star on GitHub</a>
           <a className="ed-btn ed-btn-ghost" href="https://github.com/Chosen9115/opensop#readme" target="_blank" rel="noopener noreferrer">Read the spec →</a>
           <span className="ed-hero-meta">
-            <span className="ed-pulse" /> v0.2 stable · Apache 2.0 · self-host in 60s
+            <span className="ed-pulse" /> v0.1 developer preview · Apache 2.0 · self-hostable
           </span>
         </div>
 
@@ -312,47 +311,88 @@ function EditorialPage({ tweaks, setTweak }) {
 
       <section className="ed-quote">
         <blockquote>
-          “Processes are company IP. They live in heads, Notion pages, tribal knowledge.
-          OpenSOP makes them <span className="ed-italic">callable</span>.”
+          “LLM creativity belongs inside deterministic gates. OpenSOP gives every agent run typed inputs, accepted outputs, receipts and replay.”
         </blockquote>
-        <cite>— OpenSOP Spec, §1</cite>
+        <cite>— OpenSOP launch note</cite>
       </section>
 
       <section className="ed-section">
         <div className="ed-sec-head">
           <span className="ed-sec-num">02</span>
-          <h2 className="ed-sec-h">A workflow brain — for the agents you're about to deploy.</h2>
+          <h2 className="ed-sec-h">A process harness for the agents you're about to deploy.</h2>
         </div>
         <div className="ed-three">
           <div className="ed-three-col">
             <div className="ed-three-icon ed-icon-1">
               <svg viewBox="0 0 40 40" width="40" height="40"><rect x="6" y="6" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.2"/><path d="M12 14h16 M12 20h12 M12 26h8" stroke="currentColor" strokeWidth="1.2"/></svg>
             </div>
-            <h3>The definition is the contract.</h3>
-            <p>One YAML file. Inputs, outputs, steps, conditions, retries. The runtime exposes it as a REST API automatically — no separate API layer to build, no drift.</p>
+            <h3>The workflow is the contract.</h3>
+            <p>One YAML file. Inputs, outputs, steps, gates, retries. The runtime exposes it as a REST API automatically, so prompts do not become the hidden source of truth.</p>
           </div>
           <div className="ed-three-col">
             <div className="ed-three-icon ed-icon-2">
               <svg viewBox="0 0 40 40" width="40" height="40"><circle cx="20" cy="20" r="14" fill="none" stroke="currentColor" strokeWidth="1.2"/><circle cx="20" cy="20" r="3" fill="currentColor"/><path d="M20 6v4 M20 30v4 M6 20h4 M30 20h4" stroke="currentColor" strokeWidth="1.2"/></svg>
             </div>
-            <h3>Every step has a type.</h3>
-            <p>Automated, form, judgment, approval, webhook, llm. The runtime knows which steps need a human, which need an LLM, and which just run — and routes accordingly.</p>
+            <h3>Every agent gets rails.</h3>
+            <p>Each LLM call sits inside a narrow gate: structured prompt, typed output, size cap, parser, and deterministic checks before any side effect.</p>
           </div>
           <div className="ed-three-col">
             <div className="ed-three-icon ed-icon-3">
               <svg viewBox="0 0 40 40" width="40" height="40"><path d="M6 30 L20 10 L34 30 Z" fill="none" stroke="currentColor" strokeWidth="1.2"/><path d="M14 22h12" stroke="currentColor" strokeWidth="1.2"/></svg>
             </div>
-            <h3>Audit, diff, replay.</h3>
-            <p>Every instance keeps inputs, outputs, agent confidences, and the exact process version. Diff <em>v1</em> against <em>v3</em>. Replay a failed step. Ship the improvement.</p>
+            <h3>Receipts, audit, replay.</h3>
+            <p>Every run writes an append-only receipt with inputs, outputs, actor, process version and result. Diff a process change, replay a failed step, then ship the safer path.</p>
           </div>
         </div>
       </section>
 
-      <section className="ed-section ed-section-wf">
+      <section className="ed-section ed-section-worker" id="agent-harness">
         <div className="ed-sec-head">
           <span className="ed-sec-num">03</span>
-          <h2 className="ed-sec-h">Workflows in production.</h2>
-          <p className="ed-sec-sub">Pick a process. The YAML below is the actual file. The endpoints are auto-generated.</p>
+          <h2 className="ed-sec-h">LLM creativity inside deterministic gates.</h2>
+          <p className="ed-sec-sub">At Coba, OpenSOP runs opensop-worker: a Rust daemon that schedules 11 specialized agents across our Rails projects.</p>
+        </div>
+        <div className="ed-three">
+          <div className="ed-three-col">
+            <h3>Useful agents on schedule.</h3>
+            <p>PR review, dependency bumps, conflict resolution, Slack cooks, AGENTS.md generation, CI re-runs and release notes. The routine engineering work humans defer or forget runs on time.</p>
+          </div>
+          <div className="ed-three-col">
+            <h3>Narrow gates around every call.</h3>
+            <p>Each job has typed inputs and outputs, prompt templates with marker protocols, structured responses parsed by Rust, size caps and critical-path exclusions.</p>
+          </div>
+          <div className="ed-three-col">
+            <h3>Receipts before side effects.</h3>
+            <p>Every fire writes an append-only receipt. Ground-truth git diff checks catch schema drift, scope creep, hallucinated files and unsafe changes before anything touches production.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="ed-section ed-section-vs">
+        <div className="ed-vs-card">
+          <div className="ed-vs-eb">Not another agent framework</div>
+          <h3 className="ed-vs-h">OpenSOP defines the operational boundary.</h3>
+          <p>
+            LangGraph, CrewAI, AutoGen and custom scripts decide how agents think and collaborate.
+            OpenSOP defines what agent work is allowed to do: accepted inputs, expected outputs,
+            validation before side effects and a receipt after every action.
+          </p>
+        </div>
+      </section>
+
+      <section className="ed-section ed-section-mvp" id="mvp">
+        <div className="ed-sec-head">
+          <span className="ed-sec-num">04</span>
+          <h2 className="ed-sec-h">Honest v0.1 status.</h2>
+          <p className="ed-sec-sub">The parser, executor, REST API, admin UI and RSpec coverage are real. <code>form</code>, <code>automated</code> and <code>notification</code> steps execute today. <code>judgment</code>, <code>approval</code>, <code>webhook</code>, <code>subprocess</code> and <code>wait</code> are modeled and callable as state transitions while full side effects harden.</p>
+        </div>
+      </section>
+
+      <section className="ed-section ed-section-wf" id="workflows">
+        <div className="ed-sec-head">
+          <span className="ed-sec-num">05</span>
+          <h2 className="ed-sec-h">Used internally at Coba; examples below.</h2>
+          <p className="ed-sec-sub">Pick a process. The YAML below shows the contract OpenSOP turns into endpoints, state and audit trails.</p>
         </div>
 
         <div className="ed-wf-pills">
@@ -405,9 +445,9 @@ function EditorialPage({ tweaks, setTweak }) {
         </div>
       </section>
 
-      <section className="ed-section ed-section-ledger">
+      <section className="ed-section ed-section-ledger" id="audit">
         <div className="ed-sec-head">
-          <span className="ed-sec-num">04</span>
+          <span className="ed-sec-num">06</span>
           <h2 className="ed-sec-h">Audit, diff, replay.</h2>
           <p className="ed-sec-sub">Every instance keeps inputs, outputs, agent confidences, and the exact process version. Diff <em>v1</em> against <em>v3</em>. Replay a failed step against a new threshold. Ship the improvement.</p>
         </div>
@@ -465,11 +505,11 @@ success: ${wf.success}`}</pre>
         </div>
       </section>
 
-      <section className="ed-section ed-section-api">
+      <section className="ed-section ed-section-api" id="runtime">
         <div className="ed-sec-head">
-          <span className="ed-sec-num">05</span>
-          <h2 className="ed-sec-h">Discoverable, typed, stable.</h2>
-          <p className="ed-sec-sub"><code>GET /sop/</code> returns a typed catalogue of every process your org runs. Any agent can discover what your company does and how to invoke it &mdash; without reading docs.</p>
+          <span className="ed-sec-num">07</span>
+          <h2 className="ed-sec-h">Discoverable, typed, operational.</h2>
+          <p className="ed-sec-sub"><code>GET /sop/</code> returns a typed catalogue of every process your org runs. Any agent can discover what it is allowed to do and how to invoke it without scraping docs or guessing from chat history.</p>
         </div>
 
         <pre className="ed-api-block">{`# discover everything an org can do
@@ -505,27 +545,26 @@ $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
       <section className="ed-section ed-section-vs">
         <div className="ed-vs-card">
           <div className="ed-vs-eb">A note on positioning</div>
-          <h3 className="ed-vs-h">OpenSOP is not workflow glue.</h3>
+          <h3 className="ed-vs-h">OpenSOP is not a connector canvas.</h3>
           <p>
-            n8n, Zapier, Make &mdash; these are <em>connectors</em>. They wire services together
-            with nodes. OpenSOP sits one layer above: it <em>hosts</em> your business processes
-            so they're typed, versioned, auditable and callable from agents and humans through
-            the same API. Different layer, different job.
+            n8n, Zapier and Make wire services together. OpenSOP defines the process contract
+            those services and agents execute: typed inputs, valid next steps, state, audit,
+            replay and versioning. It can call connector tools. It is not trying to replace them.
           </p>
         </div>
       </section>
 
       <section className="ed-cta">
-        <h2>Ship a process. Get an API.<br />Audit every run.</h2>
+        <h2>Give agents a harness.<br />Give processes a runtime.</h2>
         <div className="ed-cta-row">
           <a className="ed-btn ed-btn-dark" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Star on GitHub</a>
         </div>
-        <div className="ed-cta-meta">Apache 2.0 &middot; self-hostable &middot; Postgres + Ruby on Rails &middot; deployable in 60s</div>
+        <div className="ed-cta-meta">Apache 2.0 &middot; self-hostable &middot; Rails + Postgres &middot; v0.1 developer preview</div>
       </section>
 
       <section className="ed-quickstart">
         <div className="ed-qs-eb"><span className="ed-pulse" /> Quickstart</div>
-        <h2 className="ed-qs-h">Ship your first process<br /><span className="ed-italic">in 60 seconds.</span></h2>
+        <h2 className="ed-qs-h">Ship your first process<br /><span className="ed-italic">with receipts.</span></h2>
         <pre className="ed-qs-block">{`$ git clone https://github.com/Chosen9115/opensop && cd opensop
 $ bin/setup                                          # bundle + db:prepare + bin/dev → http://localhost:3000
 
@@ -547,12 +586,12 @@ $ curl -X POST http://localhost:3000/sop/customer-onboarding/start \\
       <footer className="ed-foot">
         <div className="ed-foot-l">
           <div className="ed-logo"><svg width="20" height="20" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="currentColor" strokeWidth="1.4"/><path d="M5 11h12 M5 7h8 M5 15h6" stroke="currentColor" strokeWidth="1.4"/></svg> <span>OpenSOP</span></div>
-          <p>An open runtime for business processes.<br />Apache 2.0 · 2026.</p>
+          <p>A process runtime and safety harness for agent workflows.<br />Apache 2.0 · 2026.</p>
         </div>
         <div className="ed-foot-cols">
-          <div><h6>Product</h6><a>Runtime</a><a>Spec v0.2</a><a>Roadmap</a><a>Changelog</a></div>
-          <div><h6>Developers</h6><a>Docs</a><a>API reference</a><a>Postman</a><a>Examples</a></div>
-          <div><h6>Community</h6><a href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">GitHub</a><a>Discord</a><a>Showcase</a><a>Contributing</a></div>
+          <div><h6>Product</h6><a href="#runtime">Runtime</a><a href="https://github.com/Chosen9115/opensop/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">Spec v0.1</a><a href="https://github.com/Chosen9115/opensop/blob/main/ROADMAP.md" target="_blank" rel="noopener noreferrer">Roadmap</a><a href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">Changelog</a></div>
+          <div><h6>Developers</h6><a href="https://github.com/Chosen9115/opensop/tree/main/docs" target="_blank" rel="noopener noreferrer">Docs</a><a href="https://github.com/Chosen9115/opensop/blob/main/docs/API.md" target="_blank" rel="noopener noreferrer">API reference</a><a href="https://github.com/Chosen9115/opensop/blob/main/docs/opensop.postman.json" target="_blank" rel="noopener noreferrer">Postman</a><a href="https://github.com/Chosen9115/opensop/tree/main/processes/examples" target="_blank" rel="noopener noreferrer">Examples</a></div>
+          <div><h6>Community</h6><a href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://github.com/Chosen9115/opensop/discussions" target="_blank" rel="noopener noreferrer">Discussions</a><a href="#agent-harness">Case study</a><a href="https://github.com/Chosen9115/opensop/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contributing</a></div>
         </div>
       </footer>
     </div>
