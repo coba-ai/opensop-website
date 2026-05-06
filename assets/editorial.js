@@ -309,7 +309,16 @@ function EditorialPage({
     rel: "noopener noreferrer"
   }, "\u2605 Star", starsLabel ? " · " + starsLabel : ""))), /*#__PURE__*/React.createElement("section", {
     className: "ed-hero"
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("img", {
+    className: "ed-hero-illu",
+    src: "./assets/hero-illustration.jpg",
+    alt: "",
+    width: "1600",
+    height: "1066",
+    loading: "eager",
+    decoding: "async",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("div", {
     className: "ed-hero-eyebrow"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ed-eb-num"
