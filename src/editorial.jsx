@@ -211,6 +211,33 @@ function ProcessRibbon({ workflow }) {
   );
 }
 
+const HERO_PASTE_PROMPT = `Help me uncover the procedures my team repeats weekly that would benefit from a deterministic gate around LLM calls. For each one you surface, sketch what it would look like as an OpenSOP workflow — steps, gates, receipts. https://github.com/Chosen9115/opensop`;
+
+function HeroPaste() {
+  const [copied, setCopied] = useState2(false);
+  const onCopy = () => {
+    if (!navigator.clipboard) return;
+    navigator.clipboard.writeText(HERO_PASTE_PROMPT).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    });
+  };
+  return (
+    <div className="ed-hero-paste">
+      <div className="ed-paste-eb">
+        <span className="ed-paste-arrow">▷</span> Hand this to your agent
+        <span className="ed-paste-hint">— Claude Code, Codex, Cursor, anything</span>
+      </div>
+      <div className="ed-paste-body">
+        <pre className="ed-paste-code">{HERO_PASTE_PROMPT}</pre>
+        <button className={`ed-paste-copy ${copied ? "is-copied" : ""}`} onClick={onCopy} aria-label="Copy prompt">
+          {copied ? "Copied" : "Copy"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function EditorialPage({ tweaks, setTweak }) {
   const [wfId, setWfId] = useState2(tweaks.workflow);
   useEffect2(() => setWfId(tweaks.workflow), [tweaks.workflow]);
@@ -277,6 +304,8 @@ function EditorialPage({ tweaks, setTweak }) {
             <span className="ed-pulse" /> v0.1 developer preview · Apache 2.0 · self-hostable
           </span>
         </div>
+
+        <HeroPaste />
 
         <div className="ed-hero-figure">
           <div className="ed-hero-fig-tabs">

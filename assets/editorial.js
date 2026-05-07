@@ -240,6 +240,34 @@ function ProcessRibbon({
     })));
   }));
 }
+const HERO_PASTE_PROMPT = `Help me uncover the procedures my team repeats weekly that would benefit from a deterministic gate around LLM calls. For each one you surface, sketch what it would look like as an OpenSOP workflow — steps, gates, receipts. https://github.com/Chosen9115/opensop`;
+function HeroPaste() {
+  const [copied, setCopied] = useState2(false);
+  const onCopy = () => {
+    if (!navigator.clipboard) return;
+    navigator.clipboard.writeText(HERO_PASTE_PROMPT).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    });
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "ed-hero-paste"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ed-paste-eb"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ed-paste-arrow"
+  }, "\u25B7"), " Hand this to your agent", /*#__PURE__*/React.createElement("span", {
+    className: "ed-paste-hint"
+  }, "\u2014 Claude Code, Codex, Cursor, anything")), /*#__PURE__*/React.createElement("div", {
+    className: "ed-paste-body"
+  }, /*#__PURE__*/React.createElement("pre", {
+    className: "ed-paste-code"
+  }, HERO_PASTE_PROMPT), /*#__PURE__*/React.createElement("button", {
+    className: `ed-paste-copy ${copied ? "is-copied" : ""}`,
+    onClick: onCopy,
+    "aria-label": "Copy prompt"
+  }, copied ? "Copied" : "Copy")));
+}
 function EditorialPage({
   tweaks,
   setTweak
@@ -350,7 +378,7 @@ function EditorialPage({
     className: "ed-hero-meta"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ed-pulse"
-  }), " v0.1 developer preview \xB7 Apache 2.0 \xB7 self-hostable")), /*#__PURE__*/React.createElement("div", {
+  }), " v0.1 developer preview \xB7 Apache 2.0 \xB7 self-hostable")), /*#__PURE__*/React.createElement(HeroPaste, null), /*#__PURE__*/React.createElement("div", {
     className: "ed-hero-figure"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-hero-fig-tabs"

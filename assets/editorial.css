@@ -74,6 +74,58 @@ a.ed-nav-cta:hover { background: var(--acc); }
           mask-image: linear-gradient(to left, #000 38%, transparent 100%);
 }
 .ed-hero > *:not(.ed-hero-illu) { position: relative; z-index: 1; }
+
+/* hero paste-prompt block */
+.ed-hero-paste {
+  max-width: 720px;
+  margin: 0 0 56px;
+}
+.ed-paste-eb {
+  display: inline-flex; align-items: baseline; gap: 8px;
+  font-family: var(--mono); font-size: 11.5px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--ink-2);
+  margin-bottom: 12px;
+}
+.ed-paste-arrow { color: var(--acc); font-size: 13px; line-height: 1; }
+.ed-paste-hint {
+  text-transform: none; letter-spacing: 0;
+  color: var(--ink-3); font-size: 11.5px;
+}
+.ed-paste-body {
+  position: relative;
+  background: rgba(20, 17, 10, 0.04);
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  padding: 18px 22px;
+  padding-right: 92px;
+}
+.ed-paste-code {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--ink);
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+.ed-paste-copy {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: var(--ink); color: var(--bg);
+  border: none; border-radius: 999px;
+  padding: 7px 14px;
+  font-family: var(--mono); font-size: 11.5px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s;
+}
+.ed-paste-copy:hover { background: var(--acc); }
+.ed-paste-copy.is-copied {
+  background: var(--acc);
+  transform: scale(0.96);
+}
+
 .ed-hero-eyebrow {
   display: flex; gap: 12px; align-items: center;
   font-family: var(--mono); font-size: 11.5px; color: var(--ink-3);
@@ -462,6 +514,11 @@ a.ed-btn-ghost:hover { background: var(--bg-2); }
   /* hero */
   .ed-hero { padding: var(--pad-y) var(--pad-x) calc(var(--pad-y) - 12px); }
   .ed-hero-illu { display: none; }
+  .ed-hero-paste { margin-bottom: 36px; }
+  .ed-paste-body { padding: 16px 18px 16px 18px; padding-right: 76px; }
+  .ed-paste-code { font-size: 12.5px; }
+  .ed-paste-copy { top: 10px; right: 10px; padding: 6px 11px; font-size: 10.5px; }
+  .ed-paste-hint { display: none; }
   .ed-hero-eyebrow {
     flex-wrap: wrap; row-gap: 6px; column-gap: 10px;
     margin-bottom: 20px; font-size: 10.5px;
