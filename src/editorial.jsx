@@ -211,7 +211,7 @@ function ProcessRibbon({ workflow }) {
   );
 }
 
-const HERO_PASTE_PROMPT = `Help me uncover the procedures my team repeats weekly that would benefit from a deterministic gate around LLM calls. For each one you surface, sketch what it would look like as an OpenSOP workflow — steps, gates, receipts. https://github.com/Chosen9115/opensop`;
+const HERO_PASTE_PROMPT = `Help me uncover the procedures my team repeats weekly that would benefit from a deterministic gate around LLM calls. For each, sketch what it would look like as an OpenSOP workflow — steps, gates, receipts. End with a comparison table per procedure: time, cost, reliability, token spend — today vs with OpenSOP, multiplier called out. https://github.com/Chosen9115/opensop`;
 
 function HeroPaste() {
   const [copied, setCopied] = useState2(false);
