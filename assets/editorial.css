@@ -74,6 +74,58 @@ a.ed-nav-cta:hover { background: var(--acc); }
           mask-image: linear-gradient(to left, #000 38%, transparent 100%);
 }
 .ed-hero > *:not(.ed-hero-illu) { position: relative; z-index: 1; }
+
+/* hero paste-prompt block */
+.ed-hero-paste {
+  max-width: 720px;
+  margin: 0 0 56px;
+}
+.ed-paste-eb {
+  display: inline-flex; align-items: baseline; gap: 8px;
+  font-family: var(--mono); font-size: 11.5px;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--ink-2);
+  margin-bottom: 12px;
+}
+.ed-paste-arrow { color: var(--acc); font-size: 13px; line-height: 1; }
+.ed-paste-hint {
+  text-transform: none; letter-spacing: 0;
+  color: var(--ink-3); font-size: 11.5px;
+}
+.ed-paste-body {
+  position: relative;
+  background: rgba(20, 17, 10, 0.04);
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  padding: 18px 22px;
+  padding-right: 92px;
+}
+.ed-paste-code {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--ink);
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+}
+.ed-paste-copy {
+  position: absolute;
+  top: 12px; right: 12px;
+  background: var(--ink); color: var(--bg);
+  border: none; border-radius: 999px;
+  padding: 7px 14px;
+  font-family: var(--mono); font-size: 11.5px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s;
+}
+.ed-paste-copy:hover { background: var(--acc); }
+.ed-paste-copy.is-copied {
+  background: var(--acc);
+  transform: scale(0.96);
+}
+
 .ed-hero-eyebrow {
   display: flex; gap: 12px; align-items: center;
   font-family: var(--mono); font-size: 11.5px; color: var(--ink-3);
@@ -426,6 +478,84 @@ a.ed-btn-ghost:hover { background: var(--bg-2); }
 .ed-foot-cols a { display: block; font-size: 13.5px; color: var(--ink-2); padding: 4px 0; }
 .ed-foot-cols a:hover { color: var(--acc); }
 
+/* sample agent-output table */
+.ed-section-sample {}
+.ed-sample-wrap { overflow-x: auto; }
+.ed-sample-table {
+  width: 100%; border-collapse: collapse;
+  font-family: var(--sans);
+}
+.ed-sample-table thead th {
+  font-family: var(--mono); font-size: 11px; color: var(--ink-3);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  padding: 16px 14px;
+  border-bottom: 1px solid var(--line-2);
+  font-weight: 400; text-align: left;
+}
+.ed-sample-table tbody tr {
+  border-bottom: 1px solid var(--line);
+}
+.ed-sample-table tbody tr:last-child {
+  border-bottom: none;
+}
+.ed-sample-table tbody td {
+  padding: 16px 14px; vertical-align: top;
+  font-size: 14px; color: var(--ink);
+}
+.ed-sample-proc {
+  font-family: var(--serif); font-size: 18px; color: var(--ink);
+  font-weight: 400; margin-bottom: 6px;
+}
+.ed-sample-sig {
+  font-family: var(--mono); font-size: 11.5px; color: var(--ink-3);
+  margin-top: 4px;
+}
+.ed-sample-from {
+  font-family: var(--mono); font-size: 13px; color: var(--ink-3);
+}
+.ed-sample-arrow {
+  font-family: var(--mono); color: var(--acc); padding: 0 8px;
+}
+.ed-sample-to {
+  font-family: var(--mono); font-size: 13px; color: var(--ink);
+}
+.ed-sample-mult {
+  font-family: var(--serif); font-style: italic; font-size: 16px;
+  color: var(--acc); display: block; font-weight: 400;
+}
+.ed-sample-mult-sub {
+  font-family: var(--mono); font-size: 10.5px; color: var(--ink-3);
+  display: block; margin-top: 2px;
+}
+.ed-sample-meta {
+  font-family: var(--mono); font-size: 11.5px; color: var(--ink-3);
+  text-align: center; margin-top: 28px; font-style: normal;
+}
+
+/* consolidated dual vs-card */
+.ed-vs-card-dual { max-width: 920px; }
+.ed-vs-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+  margin-top: 24px;
+}
+.ed-vs-col {}
+.ed-vs-h-sm {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(22px, 2.6vw, 30px); line-height: 1.1;
+  letter-spacing: -0.022em; margin: 0 0 18px;
+}
+
+/* slim quickstart variant */
+.ed-quickstart-slim { padding: 48px var(--pad-x); }
+.ed-quickstart-slim .ed-qs-eb {
+  font-size: 11px; margin-bottom: 16px;
+  display: inline-flex;
+}
+.ed-qs-block-slim {
+  font-size: 12px; padding: 16px 20px;
+  max-width: 640px; line-height: 1.7;
+}
+
 /* ===================================================================
    Responsive — phone-first overrides. Desktop CSS above untouched.
    Breakpoints: 1080 (tablet), 820 (phone), 480 (small phone), 360 (xs).
@@ -462,6 +592,11 @@ a.ed-btn-ghost:hover { background: var(--bg-2); }
   /* hero */
   .ed-hero { padding: var(--pad-y) var(--pad-x) calc(var(--pad-y) - 12px); }
   .ed-hero-illu { display: none; }
+  .ed-hero-paste { margin-bottom: 36px; }
+  .ed-paste-body { padding: 16px 18px 16px 18px; padding-right: 76px; }
+  .ed-paste-code { font-size: 12.5px; }
+  .ed-paste-copy { top: 10px; right: 10px; padding: 6px 11px; font-size: 10.5px; }
+  .ed-paste-hint { display: none; }
   .ed-hero-eyebrow {
     flex-wrap: wrap; row-gap: 6px; column-gap: 10px;
     margin-bottom: 20px; font-size: 10.5px;
@@ -611,6 +746,29 @@ a.ed-btn-ghost:hover { background: var(--bg-2); }
     font-size: 11px; line-height: 1.65;
     border-radius: 10px;
   }
+
+  /* sample table */
+  .ed-sample-table thead th {
+    font-size: 10px; padding: 11px 10px;
+  }
+  .ed-sample-table tbody td {
+    padding: 11px 10px; font-size: 12px;
+  }
+  .ed-sample-proc { font-size: 16px; }
+  .ed-sample-sig { font-size: 10.5px; }
+  .ed-sample-from, .ed-sample-to { font-size: 12px; }
+  .ed-sample-mult { font-size: 14px; }
+  .ed-sample-mult-sub { font-size: 9.5px; }
+  .ed-sample-table { min-width: 720px; }
+
+  /* vs grid */
+  .ed-vs-grid { grid-template-columns: 1fr; gap: 28px; }
+  .ed-vs-h-sm { font-size: clamp(18px, 5vw, 26px); }
+
+  /* slim quickstart */
+  .ed-quickstart-slim { padding: 36px var(--pad-x); }
+  .ed-quickstart-slim .ed-qs-eb { font-size: 10px; margin-bottom: 14px; }
+  .ed-qs-block-slim { font-size: 11px; padding: 14px 18px; line-height: 1.65; }
 
   /* vs */
   .ed-section-vs { padding: 56px var(--pad-x); }

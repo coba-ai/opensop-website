@@ -240,6 +240,34 @@ function ProcessRibbon({
     })));
   }));
 }
+const HERO_PASTE_PROMPT = `Help me uncover the procedures my team repeats weekly that would benefit from a deterministic gate around LLM calls. For each, sketch what it would look like as an OpenSOP workflow — steps, gates, receipts. End with a comparison table per procedure: time, cost, reliability, token spend — today vs with OpenSOP, multiplier called out. https://github.com/Chosen9115/opensop`;
+function HeroPaste() {
+  const [copied, setCopied] = useState2(false);
+  const onCopy = () => {
+    if (!navigator.clipboard) return;
+    navigator.clipboard.writeText(HERO_PASTE_PROMPT).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    });
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "ed-hero-paste"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ed-paste-eb"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ed-paste-arrow"
+  }, "\u25B7"), " Hand this to your agent", /*#__PURE__*/React.createElement("span", {
+    className: "ed-paste-hint"
+  }, "\u2014 Claude Code, Codex, Cursor, anything")), /*#__PURE__*/React.createElement("div", {
+    className: "ed-paste-body"
+  }, /*#__PURE__*/React.createElement("pre", {
+    className: "ed-paste-code"
+  }, HERO_PASTE_PROMPT), /*#__PURE__*/React.createElement("button", {
+    className: `ed-paste-copy ${copied ? "is-copied" : ""}`,
+    onClick: onCopy,
+    "aria-label": "Copy prompt"
+  }, copied ? "Copied" : "Copy")));
+}
 function EditorialPage({
   tweaks,
   setTweak
@@ -350,7 +378,7 @@ function EditorialPage({
     className: "ed-hero-meta"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ed-pulse"
-  }), " v0.1 developer preview \xB7 Apache 2.0 \xB7 self-hostable")), /*#__PURE__*/React.createElement("div", {
+  }), " v0.1 developer preview \xB7 Apache 2.0 \xB7 self-hostable")), /*#__PURE__*/React.createElement(HeroPaste, null), /*#__PURE__*/React.createElement("div", {
     className: "ed-hero-figure"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-hero-fig-tabs"
@@ -398,77 +426,183 @@ function EditorialPage({
   })))), /*#__PURE__*/React.createElement("section", {
     className: "ed-quote"
   }, /*#__PURE__*/React.createElement("blockquote", null, "\u201CLLM creativity belongs inside deterministic gates. OpenSOP gives every agent run typed inputs, accepted outputs, receipts and replay.\u201D"), /*#__PURE__*/React.createElement("cite", null, "\u2014 OpenSOP launch note")), /*#__PURE__*/React.createElement("section", {
-    className: "ed-section"
+    className: "ed-section ed-section-sample",
+    id: "sample"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-sec-head"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ed-sec-num"
   }, "02"), /*#__PURE__*/React.createElement("h2", {
     className: "ed-sec-h"
-  }, "A process harness for the agents you're about to deploy.")), /*#__PURE__*/React.createElement("div", {
-    className: "ed-three"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "ed-three-col"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "ed-three-icon ed-icon-1"
-  }, /*#__PURE__*/React.createElement("svg", {
-    viewBox: "0 0 40 40",
-    width: "40",
-    height: "40"
-  }, /*#__PURE__*/React.createElement("rect", {
-    x: "6",
-    y: "6",
-    width: "28",
-    height: "28",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: "1.2"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M12 14h16 M12 20h12 M12 26h8",
-    stroke: "currentColor",
-    strokeWidth: "1.2"
-  }))), /*#__PURE__*/React.createElement("h3", null, "The workflow is the contract."), /*#__PURE__*/React.createElement("p", null, "One YAML file. Inputs, outputs, steps, gates, retries. The runtime exposes it as a REST API automatically, so prompts do not become the hidden source of truth.")), /*#__PURE__*/React.createElement("div", {
-    className: "ed-three-col"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "ed-three-icon ed-icon-2"
-  }, /*#__PURE__*/React.createElement("svg", {
-    viewBox: "0 0 40 40",
-    width: "40",
-    height: "40"
-  }, /*#__PURE__*/React.createElement("circle", {
-    cx: "20",
-    cy: "20",
-    r: "14",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: "1.2"
-  }), /*#__PURE__*/React.createElement("circle", {
-    cx: "20",
-    cy: "20",
-    r: "3",
-    fill: "currentColor"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M20 6v4 M20 30v4 M6 20h4 M30 20h4",
-    stroke: "currentColor",
-    strokeWidth: "1.2"
-  }))), /*#__PURE__*/React.createElement("h3", null, "Every agent gets rails."), /*#__PURE__*/React.createElement("p", null, "Each LLM call sits inside a narrow gate: structured prompt, typed output, size cap, parser, and deterministic checks before any side effect.")), /*#__PURE__*/React.createElement("div", {
-    className: "ed-three-col"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "ed-three-icon ed-icon-3"
-  }, /*#__PURE__*/React.createElement("svg", {
-    viewBox: "0 0 40 40",
-    width: "40",
-    height: "40"
-  }, /*#__PURE__*/React.createElement("path", {
-    d: "M6 30 L20 10 L34 30 Z",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: "1.2"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M14 22h12",
-    stroke: "currentColor",
-    strokeWidth: "1.2"
-  }))), /*#__PURE__*/React.createElement("h3", null, "Receipts, audit, replay."), /*#__PURE__*/React.createElement("p", null, "Every run writes an append-only receipt with inputs, outputs, actor, process version and result. Diff a process change, replay a failed step, then ship the safer path.")))), /*#__PURE__*/React.createElement("section", {
+  }, "What Coba's agent surfaced."), /*#__PURE__*/React.createElement("p", {
+    className: "ed-sec-sub"
+  }, "Verbatim output when the prompt above ran against Coba's codebase. Your agent will surface the procedures specific to your team \u2014 these are ours.")), /*#__PURE__*/React.createElement("div", {
+    className: "ed-sample-wrap"
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "ed-sample-table"
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Procedure"), /*#__PURE__*/React.createElement("th", null, "Time"), /*#__PURE__*/React.createElement("th", null, "Cost / run"), /*#__PURE__*/React.createElement("th", null, "Reliability"), /*#__PURE__*/React.createElement("th", null, "Tokens / run"), /*#__PURE__*/React.createElement("th", null, "\u0394"))), /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", {
+    className: "ed-sample-proc"
+  }, "PR review"), /*#__PURE__*/React.createElement("div", {
+    className: "ed-sample-sig"
+  }, "ingest \u2192 llm-review \u2192 gate(schema, scope) \u2192 human-approve")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "20 min"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "75 s")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "$0"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "$0.05")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "85% catch"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "92% catch")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "0"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "7K")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-mult"
+  }, "16\xD7 faster"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-mult-sub"
+  }, "+7pt reliability"))), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", {
+    className: "ed-sample-proc"
+  }, "KYB verification"), /*#__PURE__*/React.createElement("div", {
+    className: "ed-sample-sig"
+  }, "collect-docs \u2192 llm-extract \u2192 gate(schema) \u2192 approve")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "6 min"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "35 s")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "$0"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "$0.04")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "90%"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "95%")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "0"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "5K")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-mult"
+  }, "10\xD7 faster"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-mult-sub"
+  }, "half the misses"))), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", {
+    className: "ed-sample-proc"
+  }, "Lead qualification"), /*#__PURE__*/React.createElement("div", {
+    className: "ed-sample-sig"
+  }, "form \u2192 llm-score \u2192 gate(rubric) \u2192 notify-rep")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "8 min"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "25 s")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "$0"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "$0.03")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "inconsistent"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "normalized")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "0"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "4K")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-mult"
+  }, "19\xD7 faster"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-mult-sub"
+  }, "consistent rubric"))), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", {
+    className: "ed-sample-proc"
+  }, "Slack thread digest"), /*#__PURE__*/React.createElement("div", {
+    className: "ed-sample-sig"
+  }, "scheduled \u2192 llm-summarize \u2192 gate(actionable) \u2192 post")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "12 min/day"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "20 s")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "$0"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "$0.02")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "noisy"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "actionable-only")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "0"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "3K")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-mult"
+  }, "36\xD7 faster"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-mult-sub"
+  }, "signal-only"))), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", {
+    className: "ed-sample-proc"
+  }, "Release notes"), /*#__PURE__*/React.createElement("div", {
+    className: "ed-sample-sig"
+  }, "trigger(tag) \u2192 llm-draft \u2192 gate(format) \u2192 publish")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "25 min"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "45 s")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "$0"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "$0.07")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "often skipped"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "100%")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-from"
+  }, "0"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-arrow"
+  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-to"
+  }, "10K")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-mult"
+  }, "33\xD7 faster"), /*#__PURE__*/React.createElement("span", {
+    className: "ed-sample-mult-sub"
+  }, "never skipped")))))), /*#__PURE__*/React.createElement("p", {
+    className: "ed-sample-meta"
+  }, "Numbers from Coba's April 2026 run. Your agent will produce its own \u2014 different procedures, different multipliers.")), /*#__PURE__*/React.createElement("section", {
     className: "ed-section ed-section-worker",
     id: "agent-harness"
   }, /*#__PURE__*/React.createElement("div", {
@@ -488,14 +622,6 @@ function EditorialPage({
   }, /*#__PURE__*/React.createElement("h3", null, "Narrow gates around every call."), /*#__PURE__*/React.createElement("p", null, "Each job has typed inputs and outputs, prompt templates with marker protocols, structured responses parsed by Rust, size caps and critical-path exclusions.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-three-col"
   }, /*#__PURE__*/React.createElement("h3", null, "Receipts before side effects."), /*#__PURE__*/React.createElement("p", null, "Every fire writes an append-only receipt. Ground-truth git diff checks catch schema drift, scope creep, hallucinated files and unsafe changes before anything touches production.")))), /*#__PURE__*/React.createElement("section", {
-    className: "ed-section ed-section-vs"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "ed-vs-card"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "ed-vs-eb"
-  }, "Not another agent framework"), /*#__PURE__*/React.createElement("h3", {
-    className: "ed-vs-h"
-  }, "OpenSOP defines the operational boundary."), /*#__PURE__*/React.createElement("p", null, "LangGraph, CrewAI, AutoGen and custom scripts decide how agents think and collaborate. OpenSOP defines what agent work is allowed to do: accepted inputs, expected outputs, validation before side effects and a receipt after every action."))), /*#__PURE__*/React.createElement("section", {
     className: "ed-section ed-section-mvp",
     id: "mvp"
   }, /*#__PURE__*/React.createElement("div", {
@@ -669,12 +795,20 @@ $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
 }`)), /*#__PURE__*/React.createElement("section", {
     className: "ed-section ed-section-vs"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "ed-vs-card"
+    className: "ed-vs-card ed-vs-card-dual"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-vs-eb"
-  }, "A note on positioning"), /*#__PURE__*/React.createElement("h3", {
-    className: "ed-vs-h"
-  }, "OpenSOP is not a connector canvas."), /*#__PURE__*/React.createElement("p", null, "n8n, Zapier and Make wire services together. OpenSOP defines the process contract those services and agents execute: typed inputs, valid next steps, state, audit, replay and versioning. It can call connector tools. It is not trying to replace them."))), /*#__PURE__*/React.createElement("section", {
+  }, "What OpenSOP is not"), /*#__PURE__*/React.createElement("div", {
+    className: "ed-vs-grid"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ed-vs-col"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "ed-vs-h-sm"
+  }, "Not an agent framework."), /*#__PURE__*/React.createElement("p", null, "LangGraph, CrewAI, AutoGen decide ", /*#__PURE__*/React.createElement("em", null, "how"), " agents think. OpenSOP defines what their work is allowed to do \u2014 typed inputs, accepted outputs, gates, receipts.")), /*#__PURE__*/React.createElement("div", {
+    className: "ed-vs-col"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "ed-vs-h-sm"
+  }, "Not a connector canvas."), /*#__PURE__*/React.createElement("p", null, "n8n, Zapier, Make wire services together. OpenSOP is the process contract those services and agents execute. It can call connector tools, not replace them."))))), /*#__PURE__*/React.createElement("section", {
     className: "ed-cta"
   }, /*#__PURE__*/React.createElement("h2", null, "Give agents a harness.", /*#__PURE__*/React.createElement("br", null), "Give processes a runtime."), /*#__PURE__*/React.createElement("div", {
     className: "ed-cta-row"
@@ -686,37 +820,13 @@ $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
   }, "\u2605 Star on GitHub")), /*#__PURE__*/React.createElement("div", {
     className: "ed-cta-meta"
   }, "Apache 2.0 \xB7 self-hostable \xB7 Rails + Postgres \xB7 v0.1 developer preview")), /*#__PURE__*/React.createElement("section", {
-    className: "ed-quickstart"
+    className: "ed-quickstart ed-quickstart-slim"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-qs-eb"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "ed-pulse"
-  }), " Quickstart"), /*#__PURE__*/React.createElement("h2", {
-    className: "ed-qs-h"
-  }, "Ship your first process", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
-    className: "ed-italic"
-  }, "with receipts.")), /*#__PURE__*/React.createElement("pre", {
-    className: "ed-qs-block"
+  }, "Or install manually"), /*#__PURE__*/React.createElement("pre", {
+    className: "ed-qs-block ed-qs-block-slim"
   }, `$ git clone https://github.com/Chosen9115/opensop && cd opensop
-$ bin/setup                                          # bundle + db:prepare + bin/dev → http://localhost:3000
-
-$ curl http://localhost:3000/sop/                    # discover the example processes
-{ "processes": [
-  { "name": "customer-onboarding", "version": "1.0", "schema_url": "/sop/customer-onboarding/schema" },
-  { "name": "lead-qualification",  "version": "1.0", "schema_url": "/sop/lead-qualification/schema" }
-] }
-
-$ curl -X POST http://localhost:3000/sop/customer-onboarding/start \\
-       -H "Content-Type: application/json" \\
-       -d '{"company_name":"Acme Corp"}'
-{ "instance_id": "01HX...", "next_step": "collect-business-info" }`), /*#__PURE__*/React.createElement("div", {
-    className: "ed-qs-row"
-  }, /*#__PURE__*/React.createElement("a", {
-    className: "ed-btn ed-btn-dark",
-    href: "https://github.com/Chosen9115/opensop",
-    target: "_blank",
-    rel: "noopener noreferrer"
-  }, "\u2605 Star on GitHub"))), /*#__PURE__*/React.createElement("footer", {
+$ bin/setup    # bundle + db:prepare + bin/dev → http://localhost:3000`)), /*#__PURE__*/React.createElement("footer", {
     className: "ed-foot"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-foot-l"
