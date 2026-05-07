@@ -355,34 +355,86 @@ function EditorialPage({ tweaks, setTweak }) {
         <cite>— OpenSOP launch note</cite>
       </section>
 
-      <section className="ed-section">
+      <section className="ed-section ed-section-sample" id="sample">
         <div className="ed-sec-head">
           <span className="ed-sec-num">02</span>
-          <h2 className="ed-sec-h">A process harness for the agents you're about to deploy.</h2>
+          <h2 className="ed-sec-h">What Coba's agent surfaced.</h2>
+          <p className="ed-sec-sub">Verbatim output when the prompt above ran against Coba's codebase. Your agent will surface the procedures specific to your team — these are ours.</p>
         </div>
-        <div className="ed-three">
-          <div className="ed-three-col">
-            <div className="ed-three-icon ed-icon-1">
-              <svg viewBox="0 0 40 40" width="40" height="40"><rect x="6" y="6" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.2"/><path d="M12 14h16 M12 20h12 M12 26h8" stroke="currentColor" strokeWidth="1.2"/></svg>
-            </div>
-            <h3>The workflow is the contract.</h3>
-            <p>One YAML file. Inputs, outputs, steps, gates, retries. The runtime exposes it as a REST API automatically, so prompts do not become the hidden source of truth.</p>
-          </div>
-          <div className="ed-three-col">
-            <div className="ed-three-icon ed-icon-2">
-              <svg viewBox="0 0 40 40" width="40" height="40"><circle cx="20" cy="20" r="14" fill="none" stroke="currentColor" strokeWidth="1.2"/><circle cx="20" cy="20" r="3" fill="currentColor"/><path d="M20 6v4 M20 30v4 M6 20h4 M30 20h4" stroke="currentColor" strokeWidth="1.2"/></svg>
-            </div>
-            <h3>Every agent gets rails.</h3>
-            <p>Each LLM call sits inside a narrow gate: structured prompt, typed output, size cap, parser, and deterministic checks before any side effect.</p>
-          </div>
-          <div className="ed-three-col">
-            <div className="ed-three-icon ed-icon-3">
-              <svg viewBox="0 0 40 40" width="40" height="40"><path d="M6 30 L20 10 L34 30 Z" fill="none" stroke="currentColor" strokeWidth="1.2"/><path d="M14 22h12" stroke="currentColor" strokeWidth="1.2"/></svg>
-            </div>
-            <h3>Receipts, audit, replay.</h3>
-            <p>Every run writes an append-only receipt with inputs, outputs, actor, process version and result. Diff a process change, replay a failed step, then ship the safer path.</p>
-          </div>
+
+        <div className="ed-sample-wrap">
+          <table className="ed-sample-table">
+            <thead>
+              <tr>
+                <th>Procedure</th>
+                <th>Time</th>
+                <th>Cost / run</th>
+                <th>Reliability</th>
+                <th>Tokens / run</th>
+                <th>Δ</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div className="ed-sample-proc">PR review</div>
+                  <div className="ed-sample-sig">ingest → llm-review → gate(schema, scope) → human-approve</div>
+                </td>
+                <td><span className="ed-sample-from">20 min</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">75 s</span></td>
+                <td><span className="ed-sample-from">$0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">$0.05</span></td>
+                <td><span className="ed-sample-from">85% catch</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">92% catch</span></td>
+                <td><span className="ed-sample-from">0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">7K</span></td>
+                <td><span className="ed-sample-mult">16× faster</span><span className="ed-sample-mult-sub">+7pt reliability</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div className="ed-sample-proc">KYB verification</div>
+                  <div className="ed-sample-sig">collect-docs → llm-extract → gate(schema) → approve</div>
+                </td>
+                <td><span className="ed-sample-from">6 min</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">35 s</span></td>
+                <td><span className="ed-sample-from">$0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">$0.04</span></td>
+                <td><span className="ed-sample-from">90%</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">95%</span></td>
+                <td><span className="ed-sample-from">0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">5K</span></td>
+                <td><span className="ed-sample-mult">10× faster</span><span className="ed-sample-mult-sub">half the misses</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div className="ed-sample-proc">Lead qualification</div>
+                  <div className="ed-sample-sig">form → llm-score → gate(rubric) → notify-rep</div>
+                </td>
+                <td><span className="ed-sample-from">8 min</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">25 s</span></td>
+                <td><span className="ed-sample-from">$0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">$0.03</span></td>
+                <td><span className="ed-sample-from">inconsistent</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">normalized</span></td>
+                <td><span className="ed-sample-from">0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">4K</span></td>
+                <td><span className="ed-sample-mult">19× faster</span><span className="ed-sample-mult-sub">consistent rubric</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div className="ed-sample-proc">Slack thread digest</div>
+                  <div className="ed-sample-sig">scheduled → llm-summarize → gate(actionable) → post</div>
+                </td>
+                <td><span className="ed-sample-from">12 min/day</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">20 s</span></td>
+                <td><span className="ed-sample-from">$0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">$0.02</span></td>
+                <td><span className="ed-sample-from">noisy</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">actionable-only</span></td>
+                <td><span className="ed-sample-from">0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">3K</span></td>
+                <td><span className="ed-sample-mult">36× faster</span><span className="ed-sample-mult-sub">signal-only</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div className="ed-sample-proc">Release notes</div>
+                  <div className="ed-sample-sig">trigger(tag) → llm-draft → gate(format) → publish</div>
+                </td>
+                <td><span className="ed-sample-from">25 min</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">45 s</span></td>
+                <td><span className="ed-sample-from">$0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">$0.07</span></td>
+                <td><span className="ed-sample-from">often skipped</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">100%</span></td>
+                <td><span className="ed-sample-from">0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">10K</span></td>
+                <td><span className="ed-sample-mult">33× faster</span><span className="ed-sample-mult-sub">never skipped</span></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+
+        <p className="ed-sample-meta">Numbers from Coba's April 2026 run. Your agent will produce its own — different procedures, different multipliers.</p>
       </section>
 
       <section className="ed-section ed-section-worker" id="agent-harness">
@@ -404,18 +456,6 @@ function EditorialPage({ tweaks, setTweak }) {
             <h3>Receipts before side effects.</h3>
             <p>Every fire writes an append-only receipt. Ground-truth git diff checks catch schema drift, scope creep, hallucinated files and unsafe changes before anything touches production.</p>
           </div>
-        </div>
-      </section>
-
-      <section className="ed-section ed-section-vs">
-        <div className="ed-vs-card">
-          <div className="ed-vs-eb">Not another agent framework</div>
-          <h3 className="ed-vs-h">OpenSOP defines the operational boundary.</h3>
-          <p>
-            LangGraph, CrewAI, AutoGen and custom scripts decide how agents think and collaborate.
-            OpenSOP defines what agent work is allowed to do: accepted inputs, expected outputs,
-            validation before side effects and a receipt after every action.
-          </p>
         </div>
       </section>
 
@@ -582,14 +622,18 @@ $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
       </section>
 
       <section className="ed-section ed-section-vs">
-        <div className="ed-vs-card">
-          <div className="ed-vs-eb">A note on positioning</div>
-          <h3 className="ed-vs-h">OpenSOP is not a connector canvas.</h3>
-          <p>
-            n8n, Zapier and Make wire services together. OpenSOP defines the process contract
-            those services and agents execute: typed inputs, valid next steps, state, audit,
-            replay and versioning. It can call connector tools. It is not trying to replace them.
-          </p>
+        <div className="ed-vs-card ed-vs-card-dual">
+          <div className="ed-vs-eb">What OpenSOP is not</div>
+          <div className="ed-vs-grid">
+            <div className="ed-vs-col">
+              <h3 className="ed-vs-h-sm">Not an agent framework.</h3>
+              <p>LangGraph, CrewAI, AutoGen decide <em>how</em> agents think. OpenSOP defines what their work is allowed to do — typed inputs, accepted outputs, gates, receipts.</p>
+            </div>
+            <div className="ed-vs-col">
+              <h3 className="ed-vs-h-sm">Not a connector canvas.</h3>
+              <p>n8n, Zapier, Make wire services together. OpenSOP is the process contract those services and agents execute. It can call connector tools, not replace them.</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -601,25 +645,10 @@ $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
         <div className="ed-cta-meta">Apache 2.0 &middot; self-hostable &middot; Rails + Postgres &middot; v0.1 developer preview</div>
       </section>
 
-      <section className="ed-quickstart">
-        <div className="ed-qs-eb"><span className="ed-pulse" /> Quickstart</div>
-        <h2 className="ed-qs-h">Ship your first process<br /><span className="ed-italic">with receipts.</span></h2>
-        <pre className="ed-qs-block">{`$ git clone https://github.com/Chosen9115/opensop && cd opensop
-$ bin/setup                                          # bundle + db:prepare + bin/dev → http://localhost:3000
-
-$ curl http://localhost:3000/sop/                    # discover the example processes
-{ "processes": [
-  { "name": "customer-onboarding", "version": "1.0", "schema_url": "/sop/customer-onboarding/schema" },
-  { "name": "lead-qualification",  "version": "1.0", "schema_url": "/sop/lead-qualification/schema" }
-] }
-
-$ curl -X POST http://localhost:3000/sop/customer-onboarding/start \\
-       -H "Content-Type: application/json" \\
-       -d '{"company_name":"Acme Corp"}'
-{ "instance_id": "01HX...", "next_step": "collect-business-info" }`}</pre>
-        <div className="ed-qs-row">
-          <a className="ed-btn ed-btn-dark" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Star on GitHub</a>
-        </div>
+      <section className="ed-quickstart ed-quickstart-slim">
+        <div className="ed-qs-eb">Or install manually</div>
+        <pre className="ed-qs-block ed-qs-block-slim">{`$ git clone https://github.com/Chosen9115/opensop && cd opensop
+$ bin/setup    # bundle + db:prepare + bin/dev → http://localhost:3000`}</pre>
       </section>
 
       <footer className="ed-foot">
