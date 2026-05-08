@@ -284,7 +284,7 @@ function EditorialPage({ tweaks, setTweak }) {
         <div className="ed-hero-eyebrow">
           <span className="ed-eb-num">No. 01</span>
           <span className="ed-eb-sep">/</span>
-          <span>Process runtime + safety harness for agents</span>
+          <span>Process runtime for AI agents</span>
           <span className="ed-eb-sep">/</span>
           <span>v0.1 developer preview</span>
         </div>
@@ -293,9 +293,8 @@ function EditorialPage({ tweaks, setTweak }) {
           not another <span className="ed-italic">prompt</span>.
         </h1>
         <p className="ed-hero-sub">
-          Define a process or agent workflow in YAML. Get a typed, versioned,
-          auditable API. Humans and agents run the same steps through the same
-          endpoints, with deterministic gates, append-only receipts and replayable state.
+          Write the procedure once in YAML. Agents drive a typed, replayable
+          API — LLM calls only where judgment lives, hard gates everywhere else.
         </p>
         <div className="ed-hero-row">
           <a className="ed-btn ed-btn-dark" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Star on GitHub</a>
@@ -359,7 +358,7 @@ function EditorialPage({ tweaks, setTweak }) {
         <div className="ed-sec-head">
           <span className="ed-sec-num">02</span>
           <h2 className="ed-sec-h">What our agent surfaced.</h2>
-          <p className="ed-sec-sub">Real procedures from our team. Where today and OpenSOP read the same — Claude is the bottleneck, not the harness. The wins are in failure modes, debugging, and replay.</p>
+          <p className="ed-sec-sub">We ran the prompt above on our own codebase. Where today and OpenSOP read the same, Claude is the bottleneck — not the harness. The wins concentrate in failure modes, debugging, and replay.</p>
         </div>
 
         <div className="ed-sample-wrap">
@@ -429,13 +428,13 @@ function EditorialPage({ tweaks, setTweak }) {
       <section className="ed-section ed-section-worker" id="agent-harness">
         <div className="ed-sec-head">
           <span className="ed-sec-num">03</span>
-          <h2 className="ed-sec-h">LLM creativity inside deterministic gates.</h2>
+          <h2 className="ed-sec-h">Eleven agents on schedule. One harness.</h2>
           <p className="ed-sec-sub">Internally, OpenSOP runs opensop-worker: a Rust daemon that schedules 11 specialized agents across our Rails projects.</p>
         </div>
         <div className="ed-three">
           <div className="ed-three-col">
-            <h3>Useful agents on schedule.</h3>
-            <p>PR review, dependency bumps, conflict resolution, Slack cooks, AGENTS.md generation, CI re-runs and release notes. The routine engineering work humans defer or forget runs on time.</p>
+            <h3>Routine work runs on time.</h3>
+            <p>PR review, dependency bumps, conflict resolution, Slack digests, AGENTS.md generation, CI re-runs, release notes. The work humans defer or forget runs on its own schedule.</p>
           </div>
           <div className="ed-three-col">
             <h3>Narrow gates around every call.</h3>
@@ -452,14 +451,14 @@ function EditorialPage({ tweaks, setTweak }) {
         <div className="ed-sec-head">
           <span className="ed-sec-num">04</span>
           <h2 className="ed-sec-h">Honest v0.1 status.</h2>
-          <p className="ed-sec-sub">The parser, executor, REST API, admin UI and RSpec coverage are real. <code>form</code>, <code>automated</code> and <code>notification</code> steps execute today. <code>judgment</code>, <code>approval</code>, <code>webhook</code>, <code>subprocess</code> and <code>wait</code> are modeled and callable as state transitions while full side effects harden.</p>
+          <p className="ed-sec-sub">The core runs end-to-end today. Parser, executor, REST API, admin UI, and tests are all real. <code>form</code>, <code>automated</code>, and <code>notification</code> steps execute today. <code>judgment</code>, <code>approval</code>, <code>webhook</code>, <code>subprocess</code>, and <code>wait</code> are modeled and callable; full side effects are hardening next.</p>
         </div>
       </section>
 
       <section className="ed-section ed-section-wf" id="workflows">
         <div className="ed-sec-head">
           <span className="ed-sec-num">05</span>
-          <h2 className="ed-sec-h">Running in production; examples below.</h2>
+          <h2 className="ed-sec-h">Running in production. Examples below.</h2>
           <p className="ed-sec-sub">Pick a process. The YAML below shows the contract OpenSOP turns into endpoints, state and audit trails.</p>
         </div>
 
@@ -517,7 +516,7 @@ function EditorialPage({ tweaks, setTweak }) {
         <div className="ed-sec-head">
           <span className="ed-sec-num">06</span>
           <h2 className="ed-sec-h">Audit, diff, replay.</h2>
-          <p className="ed-sec-sub">Every instance keeps inputs, outputs, agent confidences, and the exact process version. Diff <em>v1</em> against <em>v3</em>. Replay a failed step against a new threshold. Ship the improvement.</p>
+          <p className="ed-sec-sub">Every run records inputs, outputs, agent confidences, and the exact process version. Diff <em>v1</em> against <em>v3</em>. Replay a failed step against a new threshold. Ship the improvement.</p>
         </div>
         <div className="ed-ledger">
           <div className="ed-ledger-head">
@@ -620,7 +619,7 @@ $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
             </div>
             <div className="ed-vs-col">
               <h3 className="ed-vs-h-sm">Not a connector canvas.</h3>
-              <p>n8n, Zapier, Make wire services together. OpenSOP is the process contract those services and agents execute. It can call connector tools, not replace them.</p>
+              <p>n8n, Zapier, Make wire services together. OpenSOP is the process contract those services and agents execute — it can call connector tools, not replace them.</p>
             </div>
           </div>
         </div>
@@ -643,7 +642,7 @@ $ bin/setup    # bundle + db:prepare + bin/dev → http://localhost:3000`}</pre>
       <footer className="ed-foot">
         <div className="ed-foot-l">
           <div className="ed-logo"><svg width="20" height="20" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="currentColor" strokeWidth="1.4"/><path d="M5 11h12 M5 7h8 M5 15h6" stroke="currentColor" strokeWidth="1.4"/></svg> <span>OpenSOP</span></div>
-          <p>A process runtime and safety harness for agent workflows.<br />Apache 2.0 · 2026.</p>
+          <p>A process runtime for AI agents — open and self-hostable.<br />Apache 2.0 · 2026.</p>
         </div>
         <div className="ed-foot-cols">
           <div><h6>Product</h6><a href="#runtime">Runtime</a><a href="https://github.com/Chosen9115/opensop/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">Spec v0.1</a><a href="https://github.com/Chosen9115/opensop/blob/main/ROADMAP.md" target="_blank" rel="noopener noreferrer">Roadmap</a><a href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">Changelog</a></div>
