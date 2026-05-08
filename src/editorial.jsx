@@ -350,7 +350,7 @@ function EditorialPage({ tweaks, setTweak }) {
 
       <section className="ed-quote">
         <blockquote>
-          “LLM creativity belongs inside deterministic gates. OpenSOP gives every agent run typed inputs, accepted outputs, receipts and replay.”
+          “Use intelligence to figure out a process — once it's repeating, put the LLM call only where judgment lives and let Python and Rust do the rest.”
         </blockquote>
         <cite>— OpenSOP launch note</cite>
       </section>
