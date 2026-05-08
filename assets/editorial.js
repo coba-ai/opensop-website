@@ -352,7 +352,7 @@ function EditorialPage({
     className: "ed-eb-num"
   }, "No. 01"), /*#__PURE__*/React.createElement("span", {
     className: "ed-eb-sep"
-  }, "/"), /*#__PURE__*/React.createElement("span", null, "Process runtime + safety harness for agents"), /*#__PURE__*/React.createElement("span", {
+  }, "/"), /*#__PURE__*/React.createElement("span", null, "Process runtime for AI agents"), /*#__PURE__*/React.createElement("span", {
     className: "ed-eb-sep"
   }, "/"), /*#__PURE__*/React.createElement("span", null, "v0.1 developer preview")), /*#__PURE__*/React.createElement("h1", {
     className: "ed-hero-h"
@@ -362,7 +362,7 @@ function EditorialPage({
     className: "ed-italic"
   }, "prompt"), "."), /*#__PURE__*/React.createElement("p", {
     className: "ed-hero-sub"
-  }, "Define a process or agent workflow in YAML. Get a typed, versioned, auditable API. Humans and agents run the same steps through the same endpoints, with deterministic gates, append-only receipts and replayable state."), /*#__PURE__*/React.createElement("div", {
+  }, "Write the procedure once in YAML. Agents drive a typed, replayable API \u2014 LLM calls only where judgment lives, hard gates everywhere else."), /*#__PURE__*/React.createElement("div", {
     className: "ed-hero-row"
   }, /*#__PURE__*/React.createElement("a", {
     className: "ed-btn ed-btn-dark",
@@ -436,7 +436,7 @@ function EditorialPage({
     className: "ed-sec-h"
   }, "What our agent surfaced."), /*#__PURE__*/React.createElement("p", {
     className: "ed-sec-sub"
-  }, "Real procedures from our team. Where today and OpenSOP read the same \u2014 Claude is the bottleneck, not the harness. The wins are in failure modes, debugging, and replay.")), /*#__PURE__*/React.createElement("div", {
+  }, "We ran the prompt above on our own codebase. Where today and OpenSOP read the same, Claude is the bottleneck \u2014 not the harness. The wins concentrate in failure modes, debugging, and replay.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-sample-wrap"
   }, /*#__PURE__*/React.createElement("table", {
     className: "ed-sample-table"
@@ -579,13 +579,13 @@ function EditorialPage({
     className: "ed-sec-num"
   }, "03"), /*#__PURE__*/React.createElement("h2", {
     className: "ed-sec-h"
-  }, "LLM creativity inside deterministic gates."), /*#__PURE__*/React.createElement("p", {
+  }, "Eleven agents on schedule. One harness."), /*#__PURE__*/React.createElement("p", {
     className: "ed-sec-sub"
   }, "Internally, OpenSOP runs opensop-worker: a Rust daemon that schedules 11 specialized agents across our Rails projects.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-three"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-three-col"
-  }, /*#__PURE__*/React.createElement("h3", null, "Useful agents on schedule."), /*#__PURE__*/React.createElement("p", null, "PR review, dependency bumps, conflict resolution, Slack cooks, AGENTS.md generation, CI re-runs and release notes. The routine engineering work humans defer or forget runs on time.")), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h3", null, "Routine work runs on time."), /*#__PURE__*/React.createElement("p", null, "PR review, dependency bumps, conflict resolution, Slack digests, AGENTS.md generation, CI re-runs, release notes. The work humans defer or forget runs on its own schedule.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-three-col"
   }, /*#__PURE__*/React.createElement("h3", null, "Narrow gates around every call."), /*#__PURE__*/React.createElement("p", null, "Each job has typed inputs and outputs, prompt templates with marker protocols, structured responses parsed by Rust, size caps and critical-path exclusions.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-three-col"
@@ -600,7 +600,7 @@ function EditorialPage({
     className: "ed-sec-h"
   }, "Honest v0.1 status."), /*#__PURE__*/React.createElement("p", {
     className: "ed-sec-sub"
-  }, "The parser, executor, REST API, admin UI and RSpec coverage are real. ", /*#__PURE__*/React.createElement("code", null, "form"), ", ", /*#__PURE__*/React.createElement("code", null, "automated"), " and ", /*#__PURE__*/React.createElement("code", null, "notification"), " steps execute today. ", /*#__PURE__*/React.createElement("code", null, "judgment"), ", ", /*#__PURE__*/React.createElement("code", null, "approval"), ", ", /*#__PURE__*/React.createElement("code", null, "webhook"), ", ", /*#__PURE__*/React.createElement("code", null, "subprocess"), " and ", /*#__PURE__*/React.createElement("code", null, "wait"), " are modeled and callable as state transitions while full side effects harden."))), /*#__PURE__*/React.createElement("section", {
+  }, "The core runs end-to-end today. Parser, executor, REST API, admin UI, and tests are all real. ", /*#__PURE__*/React.createElement("code", null, "form"), ", ", /*#__PURE__*/React.createElement("code", null, "automated"), ", and ", /*#__PURE__*/React.createElement("code", null, "notification"), " steps execute today. ", /*#__PURE__*/React.createElement("code", null, "judgment"), ", ", /*#__PURE__*/React.createElement("code", null, "approval"), ", ", /*#__PURE__*/React.createElement("code", null, "webhook"), ", ", /*#__PURE__*/React.createElement("code", null, "subprocess"), ", and ", /*#__PURE__*/React.createElement("code", null, "wait"), " are modeled and callable; full side effects are hardening next."))), /*#__PURE__*/React.createElement("section", {
     className: "ed-section ed-section-wf",
     id: "workflows"
   }, /*#__PURE__*/React.createElement("div", {
@@ -609,7 +609,7 @@ function EditorialPage({
     className: "ed-sec-num"
   }, "05"), /*#__PURE__*/React.createElement("h2", {
     className: "ed-sec-h"
-  }, "Running in production; examples below."), /*#__PURE__*/React.createElement("p", {
+  }, "Running in production. Examples below."), /*#__PURE__*/React.createElement("p", {
     className: "ed-sec-sub"
   }, "Pick a process. The YAML below shows the contract OpenSOP turns into endpoints, state and audit trails.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-wf-pills"
@@ -668,7 +668,7 @@ function EditorialPage({
     className: "ed-sec-h"
   }, "Audit, diff, replay."), /*#__PURE__*/React.createElement("p", {
     className: "ed-sec-sub"
-  }, "Every instance keeps inputs, outputs, agent confidences, and the exact process version. Diff ", /*#__PURE__*/React.createElement("em", null, "v1"), " against ", /*#__PURE__*/React.createElement("em", null, "v3"), ". Replay a failed step against a new threshold. Ship the improvement.")), /*#__PURE__*/React.createElement("div", {
+  }, "Every run records inputs, outputs, agent confidences, and the exact process version. Diff ", /*#__PURE__*/React.createElement("em", null, "v1"), " against ", /*#__PURE__*/React.createElement("em", null, "v3"), ". Replay a failed step against a new threshold. Ship the improvement.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-ledger"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-ledger-head"
@@ -776,7 +776,7 @@ $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
     className: "ed-vs-col"
   }, /*#__PURE__*/React.createElement("h3", {
     className: "ed-vs-h-sm"
-  }, "Not a connector canvas."), /*#__PURE__*/React.createElement("p", null, "n8n, Zapier, Make wire services together. OpenSOP is the process contract those services and agents execute. It can call connector tools, not replace them."))))), /*#__PURE__*/React.createElement("section", {
+  }, "Not a connector canvas."), /*#__PURE__*/React.createElement("p", null, "n8n, Zapier, Make wire services together. OpenSOP is the process contract those services and agents execute \u2014 it can call connector tools, not replace them."))))), /*#__PURE__*/React.createElement("section", {
     className: "ed-cta"
   }, /*#__PURE__*/React.createElement("h2", null, "Give agents a harness.", /*#__PURE__*/React.createElement("br", null), "Give processes a runtime."), /*#__PURE__*/React.createElement("div", {
     className: "ed-cta-row"
@@ -815,7 +815,7 @@ $ bin/setup    # bundle + db:prepare + bin/dev → http://localhost:3000`)), /*#
     d: "M5 11h12 M5 7h8 M5 15h6",
     stroke: "currentColor",
     strokeWidth: "1.4"
-  })), " ", /*#__PURE__*/React.createElement("span", null, "OpenSOP")), /*#__PURE__*/React.createElement("p", null, "A process runtime and safety harness for agent workflows.", /*#__PURE__*/React.createElement("br", null), "Apache 2.0 \xB7 2026.")), /*#__PURE__*/React.createElement("div", {
+  })), " ", /*#__PURE__*/React.createElement("span", null, "OpenSOP")), /*#__PURE__*/React.createElement("p", null, "A process runtime for AI agents \u2014 open and self-hostable.", /*#__PURE__*/React.createElement("br", null), "Apache 2.0 \xB7 2026.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-foot-cols"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h6", null, "Product"), /*#__PURE__*/React.createElement("a", {
     href: "#runtime"
