@@ -425,7 +425,7 @@ function EditorialPage({
     workflow: wf
   })))), /*#__PURE__*/React.createElement("section", {
     className: "ed-quote"
-  }, /*#__PURE__*/React.createElement("blockquote", null, "\u201CLLM creativity belongs inside deterministic gates. OpenSOP gives every agent run typed inputs, accepted outputs, receipts and replay.\u201D"), /*#__PURE__*/React.createElement("cite", null, "\u2014 OpenSOP launch note")), /*#__PURE__*/React.createElement("section", {
+  }, /*#__PURE__*/React.createElement("blockquote", null, "\u201CUse intelligence to figure out a process \u2014 once it's repeating, put the LLM call only where judgment lives and let Python and Rust do the rest.\u201D"), /*#__PURE__*/React.createElement("cite", null, "\u2014 OpenSOP launch note")), /*#__PURE__*/React.createElement("section", {
     className: "ed-section ed-section-sample",
     id: "sample"
   }, /*#__PURE__*/React.createElement("div", {
