@@ -581,7 +581,7 @@ function EditorialPage({
     className: "ed-sec-h"
   }, "LLM creativity inside deterministic gates."), /*#__PURE__*/React.createElement("p", {
     className: "ed-sec-sub"
-  }, "At Coba, OpenSOP runs opensop-worker: a Rust daemon that schedules 11 specialized agents across our Rails projects.")), /*#__PURE__*/React.createElement("div", {
+  }, "Internally, OpenSOP runs opensop-worker: a Rust daemon that schedules 11 specialized agents across our Rails projects.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-three"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-three-col"
@@ -609,7 +609,7 @@ function EditorialPage({
     className: "ed-sec-num"
   }, "05"), /*#__PURE__*/React.createElement("h2", {
     className: "ed-sec-h"
-  }, "Used internally at Coba; examples below."), /*#__PURE__*/React.createElement("p", {
+  }, "Running in production; examples below."), /*#__PURE__*/React.createElement("p", {
     className: "ed-sec-sub"
   }, "Pick a process. The YAML below shows the contract OpenSOP turns into endpoints, state and audit trails.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-wf-pills"

@@ -430,7 +430,7 @@ function EditorialPage({ tweaks, setTweak }) {
         <div className="ed-sec-head">
           <span className="ed-sec-num">03</span>
           <h2 className="ed-sec-h">LLM creativity inside deterministic gates.</h2>
-          <p className="ed-sec-sub">At Coba, OpenSOP runs opensop-worker: a Rust daemon that schedules 11 specialized agents across our Rails projects.</p>
+          <p className="ed-sec-sub">Internally, OpenSOP runs opensop-worker: a Rust daemon that schedules 11 specialized agents across our Rails projects.</p>
         </div>
         <div className="ed-three">
           <div className="ed-three-col">
@@ -459,7 +459,7 @@ function EditorialPage({ tweaks, setTweak }) {
       <section className="ed-section ed-section-wf" id="workflows">
         <div className="ed-sec-head">
           <span className="ed-sec-num">05</span>
-          <h2 className="ed-sec-h">Used internally at Coba; examples below.</h2>
+          <h2 className="ed-sec-h">Running in production; examples below.</h2>
           <p className="ed-sec-sub">Pick a process. The YAML below shows the contract OpenSOP turns into endpoints, state and audit trails.</p>
         </div>
 
