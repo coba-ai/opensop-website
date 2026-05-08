@@ -434,175 +434,143 @@ function EditorialPage({
     className: "ed-sec-num"
   }, "02"), /*#__PURE__*/React.createElement("h2", {
     className: "ed-sec-h"
-  }, "What Coba's agent surfaced."), /*#__PURE__*/React.createElement("p", {
+  }, "What our agent surfaced."), /*#__PURE__*/React.createElement("p", {
     className: "ed-sec-sub"
-  }, "Verbatim output when the prompt above ran against Coba's codebase. Your agent will surface the procedures specific to your team \u2014 these are ours.")), /*#__PURE__*/React.createElement("div", {
+  }, "Real procedures from our team. Where today and OpenSOP read the same \u2014 Claude is the bottleneck, not the harness. The wins are in failure modes, debugging, and replay.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-sample-wrap"
   }, /*#__PURE__*/React.createElement("table", {
     className: "ed-sample-table"
-  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Procedure"), /*#__PURE__*/React.createElement("th", null, "Time"), /*#__PURE__*/React.createElement("th", null, "Cost / run"), /*#__PURE__*/React.createElement("th", null, "Reliability"), /*#__PURE__*/React.createElement("th", null, "Tokens / run"), /*#__PURE__*/React.createElement("th", null, "\u0394"))), /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null, "Procedure"), /*#__PURE__*/React.createElement("th", null, "Wall time"), /*#__PURE__*/React.createElement("th", null, "Cost"), /*#__PURE__*/React.createElement("th", null, "Failure catch"), /*#__PURE__*/React.createElement("th", null, "Debug + replay"), /*#__PURE__*/React.createElement("th", null, "\u0394"))), /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", {
     className: "ed-sample-proc"
-  }, "PR review"), /*#__PURE__*/React.createElement("div", {
+  }, "Morning briefing"), /*#__PURE__*/React.createElement("div", {
     className: "ed-sample-sig"
-  }, "ingest \u2192 llm-review \u2192 gate(schema, scope) \u2192 human-approve")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "gather(N sources, deterministic) \u2192 bundle \u2192 llm-judge(single call) \u2192 publish")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-from"
-  }, "20 min"), /*#__PURE__*/React.createElement("span", {
+  }, "3\u201310 min, spikes 15+"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-arrow"
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-to"
-  }, "75 s")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "70\u2013145 s consistent")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-from"
-  }, "$0"), /*#__PURE__*/React.createElement("span", {
+  }, "50\u2013200K input tok"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-arrow"
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-to"
-  }, "$0.05")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "15\u201325K (pre-curated)")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-from"
-  }, "85% catch"), /*#__PURE__*/React.createElement("span", {
+  }, "high variance, claude picks fetches"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-arrow"
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-to"
-  }, "92% catch")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "identical bundle each run")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-from"
-  }, "0"), /*#__PURE__*/React.createElement("span", {
+  }, "none"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-arrow"
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-to"
-  }, "7K")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "receipts per phase, replay")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-mult"
-  }, "16\xD7 faster"), /*#__PURE__*/React.createElement("span", {
+  }, "3\u20135\xD7 faster"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-mult-sub"
-  }, "+7pt reliability"))), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", {
+  }, "5\u201310\xD7 cheaper \xB7 deterministic"))), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", {
     className: "ed-sample-proc"
-  }, "KYB verification"), /*#__PURE__*/React.createElement("div", {
+  }, "Document parse + verify"), /*#__PURE__*/React.createElement("div", {
     className: "ed-sample-sig"
-  }, "collect-docs \u2192 llm-extract \u2192 gate(schema) \u2192 approve")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "classify \u2192 chunk \u2192 extract(parallel) \u2192 dedup \u2192 integrity-gate \u2192 approve(if escalated) \u2192 notify")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-from"
-  }, "6 min"), /*#__PURE__*/React.createElement("span", {
+  }, "~10 min"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-arrow"
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-to"
-  }, "35 s")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "~10 min (1\xD7)")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-from"
-  }, "$0"), /*#__PURE__*/React.createElement("span", {
+  }, "~$2.88 / doc"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-arrow"
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-to"
-  }, "$0.04")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "~$2.88 (1\xD7)")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-from"
-  }, "90%"), /*#__PURE__*/React.createElement("span", {
+  }, "3 of 14 prompt edits regressed silently"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-arrow"
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-to"
-  }, "95%")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "schema-gated, 0 silent")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-from"
-  }, "0"), /*#__PURE__*/React.createElement("span", {
+  }, "log archaeology, hours"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-arrow"
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-to"
-  }, "5K")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "audit query, minutes")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-mult"
-  }, "10\xD7 faster"), /*#__PURE__*/React.createElement("span", {
+  }, "~5\xD7 fewer regressions"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-mult-sub"
-  }, "half the misses"))), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", {
+  }, "~10\xD7 faster MTTR \xB7 1\xD7 wall time"))), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", {
     className: "ed-sample-proc"
-  }, "Lead qualification"), /*#__PURE__*/React.createElement("div", {
+  }, "Bug triage + fix loop"), /*#__PURE__*/React.createElement("div", {
     className: "ed-sample-sig"
-  }, "form \u2192 llm-score \u2192 gate(rubric) \u2192 notify-rep")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "ingest \u2192 classify-bugs \u2192 dispatch(per-bug) \u2192 regression-gate \u2192 deploy \u2192 retest \u2192 notify")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-from"
-  }, "8 min"), /*#__PURE__*/React.createElement("span", {
+  }, "~6 h over 2 days"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-arrow"
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-to"
-  }, "25 s")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "~3 h, gates fire on triggers")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-from"
-  }, "$0"), /*#__PURE__*/React.createElement("span", {
+  }, "retry storms after reverts"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-arrow"
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-to"
-  }, "$0.03")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "fail-fast, gates catch upstream")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-from"
-  }, "inconsistent"), /*#__PURE__*/React.createElement("span", {
+  }, "3 of 14 PRs reverted"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-arrow"
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-to"
-  }, "normalized")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "pre-deploy regression-gate")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-from"
-  }, "0"), /*#__PURE__*/React.createElement("span", {
+  }, "re-justify from chat history"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-arrow"
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-to"
-  }, "4K")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "audit log per cycle, PR refs")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-mult"
-  }, "19\xD7 faster"), /*#__PURE__*/React.createElement("span", {
+  }, "2\xD7 faster cycle"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-mult-sub"
-  }, "consistent rubric"))), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", {
+  }, "~3\xD7 fewer reverts \xB7 replay-capable"))), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", {
     className: "ed-sample-proc"
-  }, "Slack thread digest"), /*#__PURE__*/React.createElement("div", {
+  }, "Auto-answer template"), /*#__PURE__*/React.createElement("div", {
     className: "ed-sample-sig"
-  }, "scheduled \u2192 llm-summarize \u2192 gate(actionable) \u2192 post")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "embed \u2192 search \u2192 rank-gate \u2192 synthesize(citations bound to results) \u2192 human-confirm \u2192 persist")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-from"
-  }, "12 min/day"), /*#__PURE__*/React.createElement("span", {
+  }, "~30 min / 78 questions"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-arrow"
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-to"
-  }, "20 s")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "~20 min")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-from"
-  }, "$0"), /*#__PURE__*/React.createElement("span", {
+  }, "~$0.50 / template"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-arrow"
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-to"
-  }, "$0.02")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "~$0.30")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-from"
-  }, "noisy"), /*#__PURE__*/React.createElement("span", {
+  }, "hallucinated citations, customer-visible"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-arrow"
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-to"
-  }, "actionable-only")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "~0, citations gated to search results")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-from"
-  }, "0"), /*#__PURE__*/React.createElement("span", {
+  }, "implicit trust"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-arrow"
   }, "\u2192"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-to"
-  }, "3K")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
+  }, "explicit receipt: \"47 cited / 12 manual\"")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-mult"
-  }, "36\xD7 faster"), /*#__PURE__*/React.createElement("span", {
+  }, "1.5\xD7 faster \xB7 1.7\xD7 cheaper"), /*#__PURE__*/React.createElement("span", {
     className: "ed-sample-mult-sub"
-  }, "signal-only"))), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("div", {
-    className: "ed-sample-proc"
-  }, "Release notes"), /*#__PURE__*/React.createElement("div", {
-    className: "ed-sample-sig"
-  }, "trigger(tag) \u2192 llm-draft \u2192 gate(format) \u2192 publish")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
-    className: "ed-sample-from"
-  }, "25 min"), /*#__PURE__*/React.createElement("span", {
-    className: "ed-sample-arrow"
-  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
-    className: "ed-sample-to"
-  }, "45 s")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
-    className: "ed-sample-from"
-  }, "$0"), /*#__PURE__*/React.createElement("span", {
-    className: "ed-sample-arrow"
-  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
-    className: "ed-sample-to"
-  }, "$0.07")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
-    className: "ed-sample-from"
-  }, "often skipped"), /*#__PURE__*/React.createElement("span", {
-    className: "ed-sample-arrow"
-  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
-    className: "ed-sample-to"
-  }, "100%")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
-    className: "ed-sample-from"
-  }, "0"), /*#__PURE__*/React.createElement("span", {
-    className: "ed-sample-arrow"
-  }, "\u2192"), /*#__PURE__*/React.createElement("span", {
-    className: "ed-sample-to"
-  }, "10K")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("span", {
-    className: "ed-sample-mult"
-  }, "33\xD7 faster"), /*#__PURE__*/React.createElement("span", {
-    className: "ed-sample-mult-sub"
-  }, "never skipped")))))), /*#__PURE__*/React.createElement("p", {
+  }, "hallucinations gated out")))))), /*#__PURE__*/React.createElement("p", {
     className: "ed-sample-meta"
-  }, "Numbers from Coba's April 2026 run. Your agent will produce its own \u2014 different procedures, different multipliers.")), /*#__PURE__*/React.createElement("section", {
+  }, "Real runs from our team. Your output will differ \u2014 different procedures, different multipliers \u2014 but the shape stays: flat happy-path, big wins on failure modes, debugging, and replay.")), /*#__PURE__*/React.createElement("section", {
     className: "ed-section ed-section-worker",
     id: "agent-harness"
   }, /*#__PURE__*/React.createElement("div", {
@@ -901,7 +869,7 @@ window.EditorialPage = EditorialPage;
 function __OpenSOPApp() {
   const [tweaks, setTweaks] = React.useState({
     workflow: "kyb",
-    hero: "graph",
+    hero: "harness",
     density: "medium"
   });
   const setTweak = (k, v) => setTweaks(prev => ({

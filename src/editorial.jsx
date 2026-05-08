@@ -358,8 +358,8 @@ function EditorialPage({ tweaks, setTweak }) {
       <section className="ed-section ed-section-sample" id="sample">
         <div className="ed-sec-head">
           <span className="ed-sec-num">02</span>
-          <h2 className="ed-sec-h">What Coba's agent surfaced.</h2>
-          <p className="ed-sec-sub">Verbatim output when the prompt above ran against Coba's codebase. Your agent will surface the procedures specific to your team — these are ours.</p>
+          <h2 className="ed-sec-h">What our agent surfaced.</h2>
+          <p className="ed-sec-sub">Real procedures from our team. Where today and OpenSOP read the same — Claude is the bottleneck, not the harness. The wins are in failure modes, debugging, and replay.</p>
         </div>
 
         <div className="ed-sample-wrap">
@@ -367,74 +367,63 @@ function EditorialPage({ tweaks, setTweak }) {
             <thead>
               <tr>
                 <th>Procedure</th>
-                <th>Time</th>
-                <th>Cost / run</th>
-                <th>Reliability</th>
-                <th>Tokens / run</th>
+                <th>Wall time</th>
+                <th>Cost</th>
+                <th>Failure catch</th>
+                <th>Debug + replay</th>
                 <th>Δ</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>
-                  <div className="ed-sample-proc">PR review</div>
-                  <div className="ed-sample-sig">ingest → llm-review → gate(schema, scope) → human-approve</div>
+                  <div className="ed-sample-proc">Morning briefing</div>
+                  <div className="ed-sample-sig">gather(N sources, deterministic) → bundle → llm-judge(single call) → publish</div>
                 </td>
-                <td><span className="ed-sample-from">20 min</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">75 s</span></td>
-                <td><span className="ed-sample-from">$0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">$0.05</span></td>
-                <td><span className="ed-sample-from">85% catch</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">92% catch</span></td>
-                <td><span className="ed-sample-from">0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">7K</span></td>
-                <td><span className="ed-sample-mult">16× faster</span><span className="ed-sample-mult-sub">+7pt reliability</span></td>
+                <td><span className="ed-sample-from">3–10 min, spikes 15+</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">70–145 s consistent</span></td>
+                <td><span className="ed-sample-from">50–200K input tok</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">15–25K (pre-curated)</span></td>
+                <td><span className="ed-sample-from">high variance, claude picks fetches</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">identical bundle each run</span></td>
+                <td><span className="ed-sample-from">none</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">receipts per phase, replay</span></td>
+                <td><span className="ed-sample-mult">3–5× faster</span><span className="ed-sample-mult-sub">5–10× cheaper · deterministic</span></td>
               </tr>
               <tr>
                 <td>
-                  <div className="ed-sample-proc">KYB verification</div>
-                  <div className="ed-sample-sig">collect-docs → llm-extract → gate(schema) → approve</div>
+                  <div className="ed-sample-proc">Document parse + verify</div>
+                  <div className="ed-sample-sig">classify → chunk → extract(parallel) → dedup → integrity-gate → approve(if escalated) → notify</div>
                 </td>
-                <td><span className="ed-sample-from">6 min</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">35 s</span></td>
-                <td><span className="ed-sample-from">$0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">$0.04</span></td>
-                <td><span className="ed-sample-from">90%</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">95%</span></td>
-                <td><span className="ed-sample-from">0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">5K</span></td>
-                <td><span className="ed-sample-mult">10× faster</span><span className="ed-sample-mult-sub">half the misses</span></td>
+                <td><span className="ed-sample-from">~10 min</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">~10 min (1×)</span></td>
+                <td><span className="ed-sample-from">~$2.88 / doc</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">~$2.88 (1×)</span></td>
+                <td><span className="ed-sample-from">3 of 14 prompt edits regressed silently</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">schema-gated, 0 silent</span></td>
+                <td><span className="ed-sample-from">log archaeology, hours</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">audit query, minutes</span></td>
+                <td><span className="ed-sample-mult">~5× fewer regressions</span><span className="ed-sample-mult-sub">~10× faster MTTR · 1× wall time</span></td>
               </tr>
               <tr>
                 <td>
-                  <div className="ed-sample-proc">Lead qualification</div>
-                  <div className="ed-sample-sig">form → llm-score → gate(rubric) → notify-rep</div>
+                  <div className="ed-sample-proc">Bug triage + fix loop</div>
+                  <div className="ed-sample-sig">ingest → classify-bugs → dispatch(per-bug) → regression-gate → deploy → retest → notify</div>
                 </td>
-                <td><span className="ed-sample-from">8 min</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">25 s</span></td>
-                <td><span className="ed-sample-from">$0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">$0.03</span></td>
-                <td><span className="ed-sample-from">inconsistent</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">normalized</span></td>
-                <td><span className="ed-sample-from">0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">4K</span></td>
-                <td><span className="ed-sample-mult">19× faster</span><span className="ed-sample-mult-sub">consistent rubric</span></td>
+                <td><span className="ed-sample-from">~6 h over 2 days</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">~3 h, gates fire on triggers</span></td>
+                <td><span className="ed-sample-from">retry storms after reverts</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">fail-fast, gates catch upstream</span></td>
+                <td><span className="ed-sample-from">3 of 14 PRs reverted</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">pre-deploy regression-gate</span></td>
+                <td><span className="ed-sample-from">re-justify from chat history</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">audit log per cycle, PR refs</span></td>
+                <td><span className="ed-sample-mult">2× faster cycle</span><span className="ed-sample-mult-sub">~3× fewer reverts · replay-capable</span></td>
               </tr>
               <tr>
                 <td>
-                  <div className="ed-sample-proc">Slack thread digest</div>
-                  <div className="ed-sample-sig">scheduled → llm-summarize → gate(actionable) → post</div>
+                  <div className="ed-sample-proc">Auto-answer template</div>
+                  <div className="ed-sample-sig">embed → search → rank-gate → synthesize(citations bound to results) → human-confirm → persist</div>
                 </td>
-                <td><span className="ed-sample-from">12 min/day</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">20 s</span></td>
-                <td><span className="ed-sample-from">$0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">$0.02</span></td>
-                <td><span className="ed-sample-from">noisy</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">actionable-only</span></td>
-                <td><span className="ed-sample-from">0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">3K</span></td>
-                <td><span className="ed-sample-mult">36× faster</span><span className="ed-sample-mult-sub">signal-only</span></td>
-              </tr>
-              <tr>
-                <td>
-                  <div className="ed-sample-proc">Release notes</div>
-                  <div className="ed-sample-sig">trigger(tag) → llm-draft → gate(format) → publish</div>
-                </td>
-                <td><span className="ed-sample-from">25 min</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">45 s</span></td>
-                <td><span className="ed-sample-from">$0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">$0.07</span></td>
-                <td><span className="ed-sample-from">often skipped</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">100%</span></td>
-                <td><span className="ed-sample-from">0</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">10K</span></td>
-                <td><span className="ed-sample-mult">33× faster</span><span className="ed-sample-mult-sub">never skipped</span></td>
+                <td><span className="ed-sample-from">~30 min / 78 questions</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">~20 min</span></td>
+                <td><span className="ed-sample-from">~$0.50 / template</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">~$0.30</span></td>
+                <td><span className="ed-sample-from">hallucinated citations, customer-visible</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">~0, citations gated to search results</span></td>
+                <td><span className="ed-sample-from">implicit trust</span><span className="ed-sample-arrow">→</span><span className="ed-sample-to">explicit receipt: "47 cited / 12 manual"</span></td>
+                <td><span className="ed-sample-mult">1.5× faster · 1.7× cheaper</span><span className="ed-sample-mult-sub">hallucinations gated out</span></td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <p className="ed-sample-meta">Numbers from Coba's April 2026 run. Your agent will produce its own — different procedures, different multipliers.</p>
+        <p className="ed-sample-meta">Real runs from our team. Your output will differ — different procedures, different multipliers — but the shape stays: flat happy-path, big wins on failure modes, debugging, and replay.</p>
       </section>
 
       <section className="ed-section ed-section-worker" id="agent-harness">
@@ -670,7 +659,7 @@ window.EditorialPage = EditorialPage;
 
 // --- Boot stub: stateful App so hero/workflow switchers work ---
 function __OpenSOPApp() {
-  const [tweaks, setTweaks] = React.useState({ workflow: "kyb", hero: "graph", density: "medium" });
+  const [tweaks, setTweaks] = React.useState({ workflow: "kyb", hero: "harness", density: "medium" });
   const setTweak = (k, v) => setTweaks(prev => ({ ...prev, [k]: v }));
   return <EditorialPage tweaks={tweaks} setTweak={setTweak} />;
 }
