@@ -268,7 +268,8 @@ function HeroPaste() {
     "aria-label": "Copy prompt"
   }, copied ? "Copied" : "Copy")));
 }
-const HERO_CLI_DISPLAY = `$ curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop-cli/main/bin/opensop -o /usr/local/bin/opensop && chmod +x /usr/local/bin/opensop
+const HERO_CLI_DISPLAY = `$ curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop-cli/main/bin/opensop -o /tmp/opensop && chmod +x /tmp/opensop
+$ sudo mv /tmp/opensop /usr/local/bin/opensop
 $ opensop config set url https://demo.opensop.ai
 $ opensop config set token demo-public-token-resets-daily
 $ opensop list`;
@@ -809,7 +810,8 @@ $ opensop search lead
     className: "ed-qs-eb"
   }, "Install the CLI \xB7 point at the demo"), /*#__PURE__*/React.createElement("pre", {
     className: "ed-qs-block ed-qs-block-slim"
-  }, `$ curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop-cli/main/bin/opensop -o /usr/local/bin/opensop && chmod +x /usr/local/bin/opensop
+  }, `$ curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop-cli/main/bin/opensop -o /tmp/opensop && chmod +x /tmp/opensop
+$ sudo mv /tmp/opensop /usr/local/bin/opensop          # one password prompt, then it's permanent
 $ opensop config set url https://demo.opensop.ai
 $ opensop config set token demo-public-token-resets-daily
 $ opensop list                                          # 12+ live processes`), /*#__PURE__*/React.createElement("div", {
