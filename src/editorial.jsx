@@ -239,7 +239,7 @@ function HeroPaste() {
 }
 
 const HERO_CLI_DISPLAY = `$ curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop-cli/main/bin/opensop -o /tmp/opensop && chmod +x /tmp/opensop
-$ sudo mv /tmp/opensop /usr/local/bin/opensop
+$ sudo mkdir -p /usr/local/bin && sudo mv /tmp/opensop /usr/local/bin/opensop
 $ opensop config set url https://demo.opensop.ai
 $ opensop config set token demo-public-token-resets-daily
 $ opensop list`;
@@ -653,10 +653,10 @@ $ opensop search lead
       <section className="ed-quickstart ed-quickstart-slim">
         <div className="ed-qs-eb">Install the CLI · point at the demo</div>
         <pre className="ed-qs-block ed-qs-block-slim">{`$ curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop-cli/main/bin/opensop -o /tmp/opensop && chmod +x /tmp/opensop
-$ sudo mv /tmp/opensop /usr/local/bin/opensop          # one password prompt, then it's permanent
+$ sudo mkdir -p /usr/local/bin && sudo mv /tmp/opensop /usr/local/bin/opensop   # one password prompt
 $ opensop config set url https://demo.opensop.ai
 $ opensop config set token demo-public-token-resets-daily
-$ opensop list                                          # 12+ live processes`}</pre>
+$ opensop list                                                                  # 12+ live processes`}</pre>
         <div className="ed-qs-foot">Or self-host the runtime: <a href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">git clone Chosen9115/opensop && bin/setup</a></div>
       </section>
 
