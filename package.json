@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "babel src/editorial.jsx --presets @babel/preset-react -o assets/editorial.js"
+    "build": "babel src/editorial.jsx --presets @babel/preset-react -o assets/editorial.js && node scripts/cache-bust.mjs"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.0",
