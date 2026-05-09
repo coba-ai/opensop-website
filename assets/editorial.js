@@ -765,25 +765,18 @@ success: ${wf.success}`)))), /*#__PURE__*/React.createElement("section", {
     className: "ed-sec-sub"
   }, /*#__PURE__*/React.createElement("code", null, "GET /sop/"), " returns a typed catalogue of every process your org runs. Any agent can discover what it is allowed to do and how to invoke it without scraping docs or guessing from chat history.")), /*#__PURE__*/React.createElement("pre", {
     className: "ed-api-block"
-  }, `# the CLI just wraps the API; you can curl it too
+  }, `# the CLI just wraps the API; agents can curl it too
 $ opensop list
-agent-pr-review                  An agent reviews a PR diff and emits a typed decision…
-appsignal-incident-fix           Classify an AppSignal incident, optionally spawn a fix worktree…
-customer-onboarding              Onboard a new business customer for cross-border banking
-expense-approval                 Employee submits an expense; an LLM categorizes and checks policy…
-lead-qualification               Qualify an inbound lead and score their fit
-release-deploy                   Release engineer fills release notes; automated stamping; deploy…
-support-ticket-triage            Inbound support ticket is categorized, triaged, routed, notified…
+agent-pr-review              developer-tooling, code-review, agent-harness, ai  An agent reviews a PR diff and emits a typed decision…
+customer-onboarding          banking, onboarding, compliance, kyb               Onboard a new business customer for cross-border banking
+expense-approval             finance, expense, approval, hr                     Employee submits an expense; LLM categorizes; manager approves…
+lead-qualification           growth, sales, qualification                       Qualify an inbound lead and score their fit
+release-deploy               devops, release, deployment, cicd                  Release engineer fills release notes; deploy webhook fires…
+support-ticket-triage        support, triage, customer-service                  Inbound support ticket is categorized, triaged, routed, notified…
 
-$ opensop schema lead-qualification
-{
-  "name": "lead-qualification",
-  "version": "1.0",
-  "inputs":  { "lead_name": "string!", "lead_email": "string!", "source": "enum(website|linkedin|referral)!" },
-  "outputs": { "score": "number", "qualified": "boolean" },
-  "steps":   ["collect-context", "classify", "notify-rep"],
-  "sla": null
-}`)), /*#__PURE__*/React.createElement("section", {
+# don't know the name? describe the task, get a recommendation:
+$ opensop search lead
+3   lead-qualification          (growth, sales, qualification)  Qualify an inbound lead and score their fit`)), /*#__PURE__*/React.createElement("section", {
     className: "ed-section ed-section-vs"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-vs-card ed-vs-card-dual"
