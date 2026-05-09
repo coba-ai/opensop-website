@@ -238,6 +238,37 @@ function HeroPaste() {
   );
 }
 
+const HERO_CLI_DISPLAY = `$ curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop-cli/main/bin/opensop -o /usr/local/bin/opensop && chmod +x /usr/local/bin/opensop
+$ opensop config set url https://demo.opensop.ai
+$ opensop config set token demo-public-token-resets-daily
+$ opensop list`;
+const HERO_CLI_COPY = HERO_CLI_DISPLAY.replace(/^\$ /gm, "");
+
+function HeroCli() {
+  const [copied, setCopied] = useState2(false);
+  const onCopy = () => {
+    if (!navigator.clipboard) return;
+    navigator.clipboard.writeText(HERO_CLI_COPY).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    });
+  };
+  return (
+    <div className="ed-hero-cli">
+      <div className="ed-paste-eb">
+        <span className="ed-paste-arrow">⌘</span> Or try it in a terminal
+        <span className="ed-paste-hint">— public demo, token resets daily</span>
+      </div>
+      <div className="ed-paste-body">
+        <pre className="ed-paste-code ed-paste-code-shell">{HERO_CLI_DISPLAY}</pre>
+        <button className={`ed-paste-copy ${copied ? "is-copied" : ""}`} onClick={onCopy} aria-label="Copy install commands">
+          {copied ? "Copied" : "Copy"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function EditorialPage({ tweaks, setTweak }) {
   const [wfId, setWfId] = useState2(tweaks.workflow);
   useEffect2(() => setWfId(tweaks.workflow), [tweaks.workflow]);
@@ -305,6 +336,7 @@ function EditorialPage({ tweaks, setTweak }) {
         </div>
 
         <HeroPaste />
+        <HeroCli />
 
         <div className="ed-hero-figure">
           <div className="ed-hero-fig-tabs">
@@ -579,33 +611,24 @@ success: ${wf.success}`}</pre>
           <p className="ed-sec-sub"><code>GET /sop/</code> returns a typed catalogue of every process your org runs. Any agent can discover what it is allowed to do and how to invoke it without scraping docs or guessing from chat history.</p>
         </div>
 
-        <pre className="ed-api-block">{`# discover everything an org can do
-$ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
+        <pre className="ed-api-block">{`# the CLI just wraps the API; you can curl it too
+$ opensop list
+agent-pr-review                  An agent reviews a PR diff and emits a typed decision…
+appsignal-incident-fix           Classify an AppSignal incident, optionally spawn a fix worktree…
+customer-onboarding              Onboard a new business customer for cross-border banking
+expense-approval                 Employee submits an expense; an LLM categorizes and checks policy…
+lead-qualification               Qualify an inbound lead and score their fit
+release-deploy                   Release engineer fills release notes; automated stamping; deploy…
+support-ticket-triage            Inbound support ticket is categorized, triaged, routed, notified…
 
+$ opensop schema lead-qualification
 {
-  "processes": [
-    {
-      "name": "customer-onboarding",
-      "version": "1.4",
-      "description": "Onboard a business for cross-border banking",
-      "tags": ["banking", "onboarding", "compliance", "kyb"],
-      "inputs_summary":  "company_name (string, required), country (enum: US|MX, required)",
-      "outputs_summary": "account_id (string), status (enum: approved|rejected)",
-      "sla": "72h",
-      "schema_url": "/sop/customer-onboarding/schema"
-    },
-    {
-      "name": "continuous-pr-review",
-      "version": "2.1",
-      "description": "Agent + policy review on every pull request",
-      "tags": ["dev", "review", "agent"],
-      "inputs_summary":  "repo (string), pr_number (number), diff_url (string)",
-      "outputs_summary": "decision (enum: approve|request-changes), comments (string[])",
-      "sla": null,
-      "schema_url": "/sop/continuous-pr-review/schema"
-    }
-    /* … */
-  ]
+  "name": "lead-qualification",
+  "version": "1.0",
+  "inputs":  { "lead_name": "string!", "lead_email": "string!", "source": "enum(website|linkedin|referral)!" },
+  "outputs": { "score": "number", "qualified": "boolean" },
+  "steps":   ["collect-context", "classify", "notify-rep"],
+  "sla": null
 }`}</pre>
       </section>
 
@@ -634,9 +657,12 @@ $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
       </section>
 
       <section className="ed-quickstart ed-quickstart-slim">
-        <div className="ed-qs-eb">Or install manually</div>
-        <pre className="ed-qs-block ed-qs-block-slim">{`$ git clone https://github.com/Chosen9115/opensop && cd opensop
-$ bin/setup    # bundle + db:prepare + bin/dev → http://localhost:3000`}</pre>
+        <div className="ed-qs-eb">Install the CLI · point at the demo</div>
+        <pre className="ed-qs-block ed-qs-block-slim">{`$ curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop-cli/main/bin/opensop -o /usr/local/bin/opensop && chmod +x /usr/local/bin/opensop
+$ opensop config set url https://demo.opensop.ai
+$ opensop config set token demo-public-token-resets-daily
+$ opensop list                                          # 12+ live processes`}</pre>
+        <div className="ed-qs-foot">Or self-host the runtime: <a href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">git clone Chosen9115/opensop && bin/setup</a></div>
       </section>
 
       <footer className="ed-foot">
@@ -646,7 +672,7 @@ $ bin/setup    # bundle + db:prepare + bin/dev → http://localhost:3000`}</pre>
         </div>
         <div className="ed-foot-cols">
           <div><h6>Product</h6><a href="#runtime">Runtime</a><a href="https://github.com/Chosen9115/opensop/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">Spec v0.1</a><a href="https://github.com/Chosen9115/opensop/blob/main/ROADMAP.md" target="_blank" rel="noopener noreferrer">Roadmap</a><a href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">Changelog</a></div>
-          <div><h6>Developers</h6><a href="https://github.com/Chosen9115/opensop/tree/main/docs" target="_blank" rel="noopener noreferrer">Docs</a><a href="https://github.com/Chosen9115/opensop/blob/main/docs/API.md" target="_blank" rel="noopener noreferrer">API reference</a><a href="https://github.com/Chosen9115/opensop/blob/main/docs/opensop.postman.json" target="_blank" rel="noopener noreferrer">Postman</a><a href="https://github.com/Chosen9115/opensop/tree/main/processes/examples" target="_blank" rel="noopener noreferrer">Examples</a></div>
+          <div><h6>Developers</h6><a href="https://github.com/Chosen9115/opensop-cli" target="_blank" rel="noopener noreferrer">CLI</a><a href="https://demo.opensop.ai" target="_blank" rel="noopener noreferrer">Public demo</a><a href="https://github.com/Chosen9115/opensop/tree/main/docs" target="_blank" rel="noopener noreferrer">Docs</a><a href="https://github.com/Chosen9115/opensop/blob/main/docs/API.md" target="_blank" rel="noopener noreferrer">API reference</a><a href="https://github.com/Chosen9115/opensop/tree/main/processes/examples" target="_blank" rel="noopener noreferrer">Examples</a></div>
           <div><h6>Community</h6><a href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://github.com/Chosen9115/opensop/discussions" target="_blank" rel="noopener noreferrer">Discussions</a><a href="#agent-harness">Case study</a><a href="https://github.com/Chosen9115/opensop/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contributing</a></div>
         </div>
       </footer>
