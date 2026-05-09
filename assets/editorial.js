@@ -268,6 +268,38 @@ function HeroPaste() {
     "aria-label": "Copy prompt"
   }, copied ? "Copied" : "Copy")));
 }
+const HERO_CLI_DISPLAY = `$ curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop-cli/main/bin/opensop -o /usr/local/bin/opensop && chmod +x /usr/local/bin/opensop
+$ opensop config set url https://demo.opensop.ai
+$ opensop config set token demo-public-token-resets-daily
+$ opensop list`;
+const HERO_CLI_COPY = HERO_CLI_DISPLAY.replace(/^\$ /gm, "");
+function HeroCli() {
+  const [copied, setCopied] = useState2(false);
+  const onCopy = () => {
+    if (!navigator.clipboard) return;
+    navigator.clipboard.writeText(HERO_CLI_COPY).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    });
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "ed-hero-cli"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ed-paste-eb"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ed-paste-arrow"
+  }, "\u2318"), " Or try it in a terminal", /*#__PURE__*/React.createElement("span", {
+    className: "ed-paste-hint"
+  }, "\u2014 public demo, token resets daily")), /*#__PURE__*/React.createElement("div", {
+    className: "ed-paste-body"
+  }, /*#__PURE__*/React.createElement("pre", {
+    className: "ed-paste-code ed-paste-code-shell"
+  }, HERO_CLI_DISPLAY), /*#__PURE__*/React.createElement("button", {
+    className: `ed-paste-copy ${copied ? "is-copied" : ""}`,
+    onClick: onCopy,
+    "aria-label": "Copy install commands"
+  }, copied ? "Copied" : "Copy")));
+}
 function EditorialPage({
   tweaks,
   setTweak
@@ -378,7 +410,7 @@ function EditorialPage({
     className: "ed-hero-meta"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ed-pulse"
-  }), " v0.1 developer preview \xB7 Apache 2.0 \xB7 self-hostable")), /*#__PURE__*/React.createElement(HeroPaste, null), /*#__PURE__*/React.createElement("div", {
+  }), " v0.1 developer preview \xB7 Apache 2.0 \xB7 self-hostable")), /*#__PURE__*/React.createElement(HeroPaste, null), /*#__PURE__*/React.createElement(HeroCli, null), /*#__PURE__*/React.createElement("div", {
     className: "ed-hero-figure"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-hero-fig-tabs"
@@ -733,33 +765,24 @@ success: ${wf.success}`)))), /*#__PURE__*/React.createElement("section", {
     className: "ed-sec-sub"
   }, /*#__PURE__*/React.createElement("code", null, "GET /sop/"), " returns a typed catalogue of every process your org runs. Any agent can discover what it is allowed to do and how to invoke it without scraping docs or guessing from chat history.")), /*#__PURE__*/React.createElement("pre", {
     className: "ed-api-block"
-  }, `# discover everything an org can do
-$ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
+  }, `# the CLI just wraps the API; you can curl it too
+$ opensop list
+agent-pr-review                  An agent reviews a PR diff and emits a typed decision…
+appsignal-incident-fix           Classify an AppSignal incident, optionally spawn a fix worktree…
+customer-onboarding              Onboard a new business customer for cross-border banking
+expense-approval                 Employee submits an expense; an LLM categorizes and checks policy…
+lead-qualification               Qualify an inbound lead and score their fit
+release-deploy                   Release engineer fills release notes; automated stamping; deploy…
+support-ticket-triage            Inbound support ticket is categorized, triaged, routed, notified…
 
+$ opensop schema lead-qualification
 {
-  "processes": [
-    {
-      "name": "customer-onboarding",
-      "version": "1.4",
-      "description": "Onboard a business for cross-border banking",
-      "tags": ["banking", "onboarding", "compliance", "kyb"],
-      "inputs_summary":  "company_name (string, required), country (enum: US|MX, required)",
-      "outputs_summary": "account_id (string), status (enum: approved|rejected)",
-      "sla": "72h",
-      "schema_url": "/sop/customer-onboarding/schema"
-    },
-    {
-      "name": "continuous-pr-review",
-      "version": "2.1",
-      "description": "Agent + policy review on every pull request",
-      "tags": ["dev", "review", "agent"],
-      "inputs_summary":  "repo (string), pr_number (number), diff_url (string)",
-      "outputs_summary": "decision (enum: approve|request-changes), comments (string[])",
-      "sla": null,
-      "schema_url": "/sop/continuous-pr-review/schema"
-    }
-    /* … */
-  ]
+  "name": "lead-qualification",
+  "version": "1.0",
+  "inputs":  { "lead_name": "string!", "lead_email": "string!", "source": "enum(website|linkedin|referral)!" },
+  "outputs": { "score": "number", "qualified": "boolean" },
+  "steps":   ["collect-context", "classify", "notify-rep"],
+  "sla": null
 }`)), /*#__PURE__*/React.createElement("section", {
     className: "ed-section ed-section-vs"
   }, /*#__PURE__*/React.createElement("div", {
@@ -791,10 +814,18 @@ $ curl https://api.acme.com/sop/ -H "X-SOP-Token: $TOKEN"
     className: "ed-quickstart ed-quickstart-slim"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-qs-eb"
-  }, "Or install manually"), /*#__PURE__*/React.createElement("pre", {
+  }, "Install the CLI \xB7 point at the demo"), /*#__PURE__*/React.createElement("pre", {
     className: "ed-qs-block ed-qs-block-slim"
-  }, `$ git clone https://github.com/Chosen9115/opensop && cd opensop
-$ bin/setup    # bundle + db:prepare + bin/dev → http://localhost:3000`)), /*#__PURE__*/React.createElement("footer", {
+  }, `$ curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop-cli/main/bin/opensop -o /usr/local/bin/opensop && chmod +x /usr/local/bin/opensop
+$ opensop config set url https://demo.opensop.ai
+$ opensop config set token demo-public-token-resets-daily
+$ opensop list                                          # 12+ live processes`), /*#__PURE__*/React.createElement("div", {
+    className: "ed-qs-foot"
+  }, "Or self-host the runtime: ", /*#__PURE__*/React.createElement("a", {
+    href: "https://github.com/Chosen9115/opensop",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "git clone Chosen9115/opensop && bin/setup"))), /*#__PURE__*/React.createElement("footer", {
     className: "ed-foot"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-foot-l"
@@ -832,6 +863,14 @@ $ bin/setup    # bundle + db:prepare + bin/dev → http://localhost:3000`)), /*#
     target: "_blank",
     rel: "noopener noreferrer"
   }, "Changelog")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h6", null, "Developers"), /*#__PURE__*/React.createElement("a", {
+    href: "https://github.com/Chosen9115/opensop-cli",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "CLI"), /*#__PURE__*/React.createElement("a", {
+    href: "https://demo.opensop.ai",
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, "Public demo"), /*#__PURE__*/React.createElement("a", {
     href: "https://github.com/Chosen9115/opensop/tree/main/docs",
     target: "_blank",
     rel: "noopener noreferrer"
@@ -840,10 +879,6 @@ $ bin/setup    # bundle + db:prepare + bin/dev → http://localhost:3000`)), /*#
     target: "_blank",
     rel: "noopener noreferrer"
   }, "API reference"), /*#__PURE__*/React.createElement("a", {
-    href: "https://github.com/Chosen9115/opensop/blob/main/docs/opensop.postman.json",
-    target: "_blank",
-    rel: "noopener noreferrer"
-  }, "Postman"), /*#__PURE__*/React.createElement("a", {
     href: "https://github.com/Chosen9115/opensop/tree/main/processes/examples",
     target: "_blank",
     rel: "noopener noreferrer"
