@@ -321,12 +321,11 @@ function EditorialPage({ tweaks, setTweak }) {
           <span>v0.1 developer preview</span>
         </div>
         <h1 className="ed-hero-h">
-          AI agents need a <span className="ed-italic">harness</span>,<br />
-          not another <span className="ed-italic">prompt</span>.
+          We got tired of agents lying to us,<br />
+          so we built them a <span className="ed-italic">harness</span>.
         </h1>
         <p className="ed-hero-sub">
-          Define once in YAML. Run as a typed REST API. Observe with append-only receipts.
-          LLM calls only where judgment lives — deterministic code everywhere else.
+          Define the process in YAML. The runtime executes every step, blocks the LLM from skipping anything, and writes an auditable receipt after every run.
         </p>
         <div className="ed-hero-row">
           <a className="ed-btn ed-btn-dark" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Star on GitHub</a>
@@ -506,14 +505,6 @@ function EditorialPage({ tweaks, setTweak }) {
         </div>
       </section>
 
-      <section className="ed-section ed-section-mvp" id="mvp">
-        <div className="ed-sec-head">
-          <span className="ed-sec-num">04</span>
-          <h2 className="ed-sec-h">Honest v0.1 status.</h2>
-          <p className="ed-sec-sub">The core runs end-to-end today. Parser, executor, REST API, admin UI, and tests are all real. <code>form</code>, <code>automated</code>, and <code>notification</code> steps execute today. <code>judgment</code>, <code>approval</code>, <code>webhook</code>, <code>subprocess</code>, and <code>wait</code> are modeled and callable; full side effects are hardening next.</p>
-        </div>
-      </section>
-
       <section className="ed-section ed-section-wf" id="workflows">
         <div className="ed-sec-head">
           <span className="ed-sec-num">05</span>
@@ -655,8 +646,8 @@ $ opensop search lead
       <section className="ed-section ed-section-runtimes" id="runtimes">
         <div className="ed-sec-head">
           <span className="ed-sec-num">08</span>
-          <h2 className="ed-sec-h">Two runtimes, one spec.</h2>
-          <p className="ed-sec-sub">The same <code>.sop.yaml</code> runs in both. Pick the runtime that fits the context — same artifact, same receipts.</p>
+          <h2 className="ed-sec-h">One runtime. One CLI.</h2>
+          <p className="ed-sec-sub">The runtime is where processes execute. The CLI is how you talk to it. Same <code>.sop.yaml</code> on both sides.</p>
         </div>
         <div className="ed-sample-wrap">
           <table className="ed-sample-table">
@@ -664,39 +655,29 @@ $ opensop search lead
               <tr>
                 <th></th>
                 <th>Hosted runtime (Rails)</th>
-                <th>Portable runtime (opensop-cli)</th>
+                <th>CLI client (opensop-cli)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong>Best for</strong></td>
-                <td>Multi-team workflows — DDQs, customer onboarding, expense approval, release deploys, week-long async</td>
-                <td>Agent-embedded skills — cron-driven routines, CI checks, mineralized agent procedures</td>
+                <td><strong>What it is</strong></td>
+                <td>Processes execute here. State lives here. The audit log accumulates here.</td>
+                <td>A bash wrapper around the /sop/* HTTP endpoints. One file, deps are curl + jq.</td>
               </tr>
               <tr>
-                <td><strong>Lifetime</strong></td>
-                <td>Days to weeks, survives restarts</td>
-                <td>Seconds to minutes, exits when done</td>
+                <td><strong>Best for</strong></td>
+                <td>Self-hosting OpenSOP — DDQs, customer onboarding, expense approval, week-long flows</td>
+                <td>Talking to any OpenSOP server from the terminal — yours, ours, the demo</td>
               </tr>
               <tr>
                 <td><strong>State</strong></td>
-                <td>Postgres — queryable, diff-able, replayable</td>
-                <td>SQLite — local, portable, disposable</td>
-              </tr>
-              <tr>
-                <td><strong>Async</strong></td>
-                <td>Yes — wait steps, human approvals, webhook callbacks</td>
-                <td>No — linear execution to completion</td>
-              </tr>
-              <tr>
-                <td><strong>Audience</strong></td>
-                <td>Teams, ops, compliance, cross-functional flows</td>
-                <td>Individual agents, CI pipelines, local dev</td>
+                <td>PostgreSQL + admin UI dashboard</td>
+                <td>Tiny ~/.opensop/instances.tsv cache for id→name lookups; real state on the server</td>
               </tr>
               <tr>
                 <td><strong>Install</strong></td>
-                <td><code>bin/setup</code> · self-hosted or demo.opensop.ai</td>
-                <td><code>curl … | bash</code> · single binary, no server</td>
+                <td><code>bin/setup</code> (self-host) or hit demo.opensop.ai</td>
+                <td><code>curl … | sh</code> (single bash file)</td>
               </tr>
             </tbody>
           </table>
@@ -719,22 +700,18 @@ $ opensop search lead
         </div>
       </section>
 
+      <section className="ed-quote">
+        <blockquote>
+          &ldquo;What you wrote is what runs. What ran is what&rsquo;s in the receipt.&rdquo;
+        </blockquote>
+      </section>
+
       <section className="ed-cta">
         <h2>Give agents a harness.<br />Give processes a runtime.</h2>
         <div className="ed-cta-row">
           <a className="ed-btn ed-btn-dark" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Star on GitHub</a>
         </div>
         <div className="ed-cta-meta">Apache 2.0 &middot; self-hostable &middot; Rails + Postgres &middot; v0.1 developer preview</div>
-      </section>
-
-      <section className="ed-quickstart ed-quickstart-slim">
-        <div className="ed-qs-eb">Install the CLI · point at the demo</div>
-        <pre className="ed-qs-block ed-qs-block-slim">{`$ curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop-cli/main/bin/opensop -o /tmp/opensop && chmod +x /tmp/opensop
-$ sudo mkdir -p /usr/local/bin && sudo mv /tmp/opensop /usr/local/bin/opensop   # one password prompt
-$ opensop config set url https://demo.opensop.ai
-$ opensop config set token demo-public-token-resets-daily
-$ opensop list                                                                  # 12+ live processes`}</pre>
-        <div className="ed-qs-foot">Or self-host the runtime: <a href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">git clone Chosen9115/opensop && bin/setup</a></div>
       </section>
 
       <footer className="ed-foot">
