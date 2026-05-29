@@ -325,8 +325,8 @@ function EditorialPage({ tweaks, setTweak }) {
           not another <span className="ed-italic">prompt</span>.
         </h1>
         <p className="ed-hero-sub">
-          Write the procedure once in YAML. Agents drive a typed, replayable
-          API — LLM calls only where judgment lives, hard gates everywhere else.
+          Define once in YAML. Run as a typed REST API. Observe with append-only receipts.
+          LLM calls only where judgment lives — deterministic code everywhere else.
         </p>
         <div className="ed-hero-row">
           <a className="ed-btn ed-btn-dark" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Star on GitHub</a>
@@ -382,9 +382,26 @@ function EditorialPage({ tweaks, setTweak }) {
 
       <section className="ed-quote">
         <blockquote>
-          “Use intelligence to figure out a process — once it's repeating, put the LLM call only where judgment lives and let Python and Rust do the rest.”
+          &ldquo;OpenAPI describes APIs. OpenSOP describes the work behind them.&rdquo;
         </blockquote>
-        <cite>— OpenSOP launch note</cite>
+      </section>
+
+      <section className="ed-section ed-section-why" id="why">
+        <div className="ed-sec-head">
+          <span className="ed-sec-num">01b</span>
+          <h2 className="ed-sec-h">Why we built this.</h2>
+          <p className="ed-sec-sub">We got tired of agents claiming they did things when they hadn't, and noticed most of what we'd asked them to do was deterministic in the first place. OpenSOP runs the deterministic parts on a code runtime — auditable, reliable, cheaper than tokens — and reserves agents for what genuinely needs intelligence.</p>
+        </div>
+        <div className="ed-why-scene">
+          <div className="ed-why-col">
+            <h3>Without a harness.</h3>
+            <p>The Calendar API times out at 07:51:34. The agent doesn't say that. It says <em>"your schedule looks clear this morning — no urgent meetings flagged."</em> You start your day assuming you're free. You had two meetings. You missed them. No exception thrown, no log entry — just absence of data laundered into a clean sentence.</p>
+          </div>
+          <div className="ed-why-col">
+            <h3>With OpenSOP.</h3>
+            <p>That briefing is a process. Five steps, each a deterministic CLI fetch with a required <code>success: true</code> output. Calendar fails at step three; the runtime stops. You get back exactly what was collected — <em>"Slack (3 unread DMs), Gmail (14 threads), Calendar unavailable at 07:51:34, Notion + Circleback skipped, synthesis not run"</em> — with a receipt. Honest, partial, useful.</p>
+          </div>
+        </div>
       </section>
 
       <section className="ed-section ed-section-sample" id="sample">
@@ -477,6 +494,15 @@ function EditorialPage({ tweaks, setTweak }) {
             <h3>Receipts before side effects.</h3>
             <p>Every fire writes an append-only receipt. Ground-truth git diff checks catch schema drift, scope creep, hallucinated files and unsafe changes before anything touches production.</p>
           </div>
+        </div>
+        <div className="ed-loop-row">
+          {["Create", "Test", "Audit", "Iterate", "Improve", "Cement"].map((step, i, arr) => (
+            <React.Fragment key={step}>
+              <span className="ed-loop-pill">{step}</span>
+              {i < arr.length - 1 && <span className="ed-loop-sep">→</span>}
+            </React.Fragment>
+          ))}
+          <p className="ed-loop-note">Agents can write the process for you. A new <code>.sop.yaml</code> takes seconds with the right prompt. Auditability is the superpower; reliability is the moat.</p>
         </div>
       </section>
 
@@ -626,6 +652,57 @@ $ opensop search lead
 3   lead-qualification          (growth, sales, qualification)  Qualify an inbound lead and score their fit`}</pre>
       </section>
 
+      <section className="ed-section ed-section-runtimes" id="runtimes">
+        <div className="ed-sec-head">
+          <span className="ed-sec-num">08</span>
+          <h2 className="ed-sec-h">Two runtimes, one spec.</h2>
+          <p className="ed-sec-sub">The same <code>.sop.yaml</code> runs in both. Pick the runtime that fits the context — same artifact, same receipts.</p>
+        </div>
+        <div className="ed-sample-wrap">
+          <table className="ed-sample-table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Hosted runtime (Rails)</th>
+                <th>Portable runtime (opensop-cli)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Best for</strong></td>
+                <td>Multi-team workflows — DDQs, customer onboarding, expense approval, release deploys, week-long async</td>
+                <td>Agent-embedded skills — cron-driven routines, CI checks, mineralized agent procedures</td>
+              </tr>
+              <tr>
+                <td><strong>Lifetime</strong></td>
+                <td>Days to weeks, survives restarts</td>
+                <td>Seconds to minutes, exits when done</td>
+              </tr>
+              <tr>
+                <td><strong>State</strong></td>
+                <td>Postgres — queryable, diff-able, replayable</td>
+                <td>SQLite — local, portable, disposable</td>
+              </tr>
+              <tr>
+                <td><strong>Async</strong></td>
+                <td>Yes — wait steps, human approvals, webhook callbacks</td>
+                <td>No — linear execution to completion</td>
+              </tr>
+              <tr>
+                <td><strong>Audience</strong></td>
+                <td>Teams, ops, compliance, cross-functional flows</td>
+                <td>Individual agents, CI pipelines, local dev</td>
+              </tr>
+              <tr>
+                <td><strong>Install</strong></td>
+                <td><code>bin/setup</code> · self-hosted or demo.opensop.ai</td>
+                <td><code>curl … | bash</code> · single binary, no server</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
       <section className="ed-section ed-section-vs">
         <div className="ed-vs-card ed-vs-card-dual">
           <div className="ed-vs-eb">What OpenSOP is not</div>
@@ -679,7 +756,7 @@ window.EditorialPage = EditorialPage;
 
 // --- Boot stub: stateful App so hero/workflow switchers work ---
 function __OpenSOPApp() {
-  const [tweaks, setTweaks] = React.useState({ workflow: "kyb", hero: "harness", density: "medium" });
+  const [tweaks, setTweaks] = React.useState({ workflow: "morning-briefing", hero: "harness", density: "medium" });
   const setTweak = (k, v) => setTweaks(prev => ({ ...prev, [k]: v }));
   return <EditorialPage tweaks={tweaks} setTweak={setTweak} />;
 }

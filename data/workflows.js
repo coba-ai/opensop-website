@@ -1,13 +1,90 @@
 // Shared workflow data for all OpenSOP variants.
 window.OPENSOP_WORKFLOWS = [
   {
+    id: "morning-briefing",
+    name: "Morning briefing",
+    blurb: "Daily 7:50 AM digest from Slack, Gmail, and Calendar. Fetches all sources in parallel, synthesizes only when every fetch succeeded, delivers to #daily-briefings.",
+    runs: "482",
+    p50: "18s",
+    success: "97.3%",
+    yaml: `opensop: "0.1"
+
+process:
+  name: morning-briefing
+  version: "1.0"
+  description: "Daily morning briefing from Slack, Gmail, Calendar. Synthesizes only when all deterministic fetches succeeded."
+  trigger:
+    type: schedule
+    cron: "50 7 * * 1-5"
+  inputs:
+    - { name: date, type: string, format: date, required: true }
+  steps:
+    - id: fetch-slack
+      name: Fetch Slack
+      type: automated
+      run: ./scripts/fetch-slack.sh
+      outputs:
+        - { name: success, type: boolean }
+        - { name: unread_count, type: number }
+
+    - id: fetch-gmail
+      name: Fetch Gmail
+      type: automated
+      run: ./scripts/fetch-gmail.sh
+      outputs:
+        - { name: success, type: boolean }
+
+    - id: fetch-calendar
+      name: Fetch Calendar
+      type: automated
+      run: ./scripts/fetch-calendar.sh
+      outputs:
+        - { name: success, type: boolean }
+        - { name: events, type: object }
+
+    - id: synthesize
+      name: Synthesize brief
+      type: llm
+      model: claude-opus-4-7
+      expected_output_schema:
+        brief: string
+      condition: |
+        steps.fetch-slack.outputs.success == true &&
+        steps.fetch-gmail.outputs.success == true &&
+        steps.fetch-calendar.outputs.success == true
+      prompt: "Synthesize a 200-word brief from these sources..."
+      outputs:
+        - { name: brief, type: string }
+
+    - id: deliver
+      name: Deliver to Slack
+      type: notification
+      channel: slack
+      to: "#daily-briefings"
+      body: "{{ steps.synthesize.outputs.brief }}"`,
+    steps: [
+      { id: "fetch-slack",    name: "Fetch Slack",       type: "automated",    ms: 0,    dur: 600 },
+      { id: "fetch-gmail",    name: "Fetch Gmail",       type: "automated",    ms: 0,    dur: 800 },
+      { id: "fetch-calendar", name: "Fetch Calendar",    type: "automated",    ms: 0,    dur: 500 },
+      { id: "synthesize",     name: "Synthesize brief",  type: "llm",          ms: 800,  dur: 1400 },
+      { id: "deliver",        name: "Deliver to Slack",  type: "notification", ms: 2200, dur: 300 }
+    ],
+    endpoints: [
+      "POST   /sop/morning-briefing/start",
+      "GET    /sop/morning-briefing/:id",
+      "GET    /sop/morning-briefing/:id/steps",
+      "GET    /sop/instances?process=morning-briefing"
+    ]
+  },
+
+  {
     id: "kyb",
     name: "Customer onboarding (KYB)",
     blurb: "Onboard a business customer end-to-end. Collect docs, verify, judge, route to compliance, provision account.",
     runs: "12,438",
     p50: "4m 12s",
     success: "98.4%",
-    yaml: `opensop: "0.2"
+    yaml: `opensop: "0.1"
 
 process:
   name: customer-onboarding
@@ -77,7 +154,7 @@ process:
     runs: "84,221",
     p50: "47s",
     success: "99.7%",
-    yaml: `opensop: "0.2"
+    yaml: `opensop: "0.1"
 
 process:
   name: continuous-pr-review
@@ -135,7 +212,7 @@ process:
     runs: "3,902",
     p50: "11m 06s",
     success: "94.1%",
-    yaml: `opensop: "0.2"
+    yaml: `opensop: "0.1"
 
 process:
   name: bug-bounty-triage
@@ -192,7 +269,7 @@ process:
     runs: "1,184",
     p50: "2m 38s",
     success: "100%",
-    yaml: `opensop: "0.2"
+    yaml: `opensop: "0.1"
 
 process:
   name: send-proposal
@@ -240,7 +317,7 @@ process:
     runs: "27,613",
     p50: "8s",
     success: "99.1%",
-    yaml: `opensop: "0.2"
+    yaml: `opensop: "0.1"
 
 process:
   name: inbound-inquiry-triage
@@ -285,10 +362,14 @@ process:
 ];
 
 window.OPENSOP_STEP_TYPES = {
-  automated: { label: "auto",      color: "#22c55e" },
-  form:      { label: "form",      color: "#60a5fa" },
-  judgment:  { label: "judgment",  color: "#f59e0b" },
-  approval:  { label: "approval",  color: "#a78bfa" },
-  webhook:   { label: "webhook",   color: "#f472b6" },
-  llm:       { label: "llm",       color: "#22d3ee" }
+  automated:    { label: "auto",         color: "#22c55e" },
+  form:         { label: "form",         color: "#60a5fa" },
+  judgment:     { label: "judgment",     color: "#f59e0b" },
+  approval:     { label: "approval",     color: "#a78bfa" },
+  webhook:      { label: "webhook",      color: "#f472b6" },
+  llm:          { label: "llm",          color: "#22d3ee" },
+  subprocess:   { label: "subprocess",   color: "#818cf8" },
+  notification: { label: "notification", color: "#fb923c" },
+  loop:         { label: "loop",         color: "#4ade80" },
+  wait:         { label: "wait",         color: "#94a3b8" }
 };
