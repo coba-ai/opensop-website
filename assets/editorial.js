@@ -240,12 +240,12 @@ function ProcessRibbon({
     })));
   }));
 }
-const HERO_PASTE_PROMPT = `Help me uncover the procedures my team repeats weekly that would benefit from a deterministic gate around LLM calls. For each, sketch what it would look like as an OpenSOP workflow — steps, gates, receipts. End with a comparison table per procedure: time, cost, reliability, token spend — today vs with OpenSOP, multiplier called out. https://github.com/Chosen9115/opensop`;
+const HERO_INSTALL_PROMPT = `Read and follow https://raw.githubusercontent.com/Chosen9115/opensop/main/INSTALL_FOR_AGENTS.md to set up OpenSOP for me.`;
 function HeroPaste() {
   const [copied, setCopied] = useState2(false);
   const onCopy = () => {
     if (!navigator.clipboard) return;
-    navigator.clipboard.writeText(HERO_PASTE_PROMPT).then(() => {
+    navigator.clipboard.writeText(HERO_INSTALL_PROMPT).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1600);
     });
@@ -256,29 +256,24 @@ function HeroPaste() {
     className: "ed-paste-eb"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ed-paste-arrow"
-  }, "\u25B7"), " Hand this to your agent", /*#__PURE__*/React.createElement("span", {
+  }, "\u25B7"), " Get started asap with your agent of choice", /*#__PURE__*/React.createElement("span", {
     className: "ed-paste-hint"
   }, "\u2014 Claude Code, Codex, Cursor, anything")), /*#__PURE__*/React.createElement("div", {
     className: "ed-paste-body"
   }, /*#__PURE__*/React.createElement("pre", {
     className: "ed-paste-code"
-  }, HERO_PASTE_PROMPT), /*#__PURE__*/React.createElement("button", {
+  }, HERO_INSTALL_PROMPT), /*#__PURE__*/React.createElement("button", {
     className: `ed-paste-copy ${copied ? "is-copied" : ""}`,
     onClick: onCopy,
-    "aria-label": "Copy prompt"
+    "aria-label": "Copy install prompt"
   }, copied ? "Copied" : "Copy")));
 }
-const HERO_CLI_DISPLAY = `$ curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop-cli/main/bin/opensop -o /tmp/opensop && chmod +x /tmp/opensop
-$ sudo mkdir -p /usr/local/bin && sudo mv /tmp/opensop /usr/local/bin/opensop
-$ opensop config set url https://demo.opensop.ai
-$ opensop config set token demo-public-token-resets-daily
-$ opensop list`;
-const HERO_CLI_COPY = HERO_CLI_DISPLAY.replace(/^\$ /gm, "");
+const HERO_DISCOVER_PROMPT = `Help me uncover the procedures my team repeats that would benefit from a deterministic gate around LLM calls. For each, sketch what it would look like as an OpenSOP workflow — steps, gates, receipts. End with a comparison table per procedure: time, cost, reliability, token spend — today vs with OpenSOP, multiplier called out. https://github.com/Chosen9115/opensop`;
 function HeroCli() {
   const [copied, setCopied] = useState2(false);
   const onCopy = () => {
     if (!navigator.clipboard) return;
-    navigator.clipboard.writeText(HERO_CLI_COPY).then(() => {
+    navigator.clipboard.writeText(HERO_DISCOVER_PROMPT).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1600);
     });
@@ -289,16 +284,16 @@ function HeroCli() {
     className: "ed-paste-eb"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ed-paste-arrow"
-  }, "\u2318"), " Or try it in a terminal", /*#__PURE__*/React.createElement("span", {
+  }, "\u25B7"), " See how it can benefit your current setup", /*#__PURE__*/React.createElement("span", {
     className: "ed-paste-hint"
-  }, "\u2014 public demo, token resets daily")), /*#__PURE__*/React.createElement("div", {
+  }, "\u2014 same agent, same chat")), /*#__PURE__*/React.createElement("div", {
     className: "ed-paste-body"
   }, /*#__PURE__*/React.createElement("pre", {
-    className: "ed-paste-code ed-paste-code-shell"
-  }, HERO_CLI_DISPLAY), /*#__PURE__*/React.createElement("button", {
+    className: "ed-paste-code"
+  }, HERO_DISCOVER_PROMPT), /*#__PURE__*/React.createElement("button", {
     className: `ed-paste-copy ${copied ? "is-copied" : ""}`,
     onClick: onCopy,
-    "aria-label": "Copy install commands"
+    "aria-label": "Copy discovery prompt"
   }, copied ? "Copied" : "Copy")));
 }
 function EditorialPage({

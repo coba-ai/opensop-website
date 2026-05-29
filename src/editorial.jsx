@@ -211,13 +211,13 @@ function ProcessRibbon({ workflow }) {
   );
 }
 
-const HERO_PASTE_PROMPT = `Help me uncover the procedures my team repeats weekly that would benefit from a deterministic gate around LLM calls. For each, sketch what it would look like as an OpenSOP workflow — steps, gates, receipts. End with a comparison table per procedure: time, cost, reliability, token spend — today vs with OpenSOP, multiplier called out. https://github.com/Chosen9115/opensop`;
+const HERO_INSTALL_PROMPT = `Read and follow https://raw.githubusercontent.com/Chosen9115/opensop/main/INSTALL_FOR_AGENTS.md to set up OpenSOP for me.`;
 
 function HeroPaste() {
   const [copied, setCopied] = useState2(false);
   const onCopy = () => {
     if (!navigator.clipboard) return;
-    navigator.clipboard.writeText(HERO_PASTE_PROMPT).then(() => {
+    navigator.clipboard.writeText(HERO_INSTALL_PROMPT).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1600);
     });
@@ -225,12 +225,12 @@ function HeroPaste() {
   return (
     <div className="ed-hero-paste">
       <div className="ed-paste-eb">
-        <span className="ed-paste-arrow">▷</span> Hand this to your agent
+        <span className="ed-paste-arrow">▷</span> Get started asap with your agent of choice
         <span className="ed-paste-hint">— Claude Code, Codex, Cursor, anything</span>
       </div>
       <div className="ed-paste-body">
-        <pre className="ed-paste-code">{HERO_PASTE_PROMPT}</pre>
-        <button className={`ed-paste-copy ${copied ? "is-copied" : ""}`} onClick={onCopy} aria-label="Copy prompt">
+        <pre className="ed-paste-code">{HERO_INSTALL_PROMPT}</pre>
+        <button className={`ed-paste-copy ${copied ? "is-copied" : ""}`} onClick={onCopy} aria-label="Copy install prompt">
           {copied ? "Copied" : "Copy"}
         </button>
       </div>
@@ -238,18 +238,13 @@ function HeroPaste() {
   );
 }
 
-const HERO_CLI_DISPLAY = `$ curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop-cli/main/bin/opensop -o /tmp/opensop && chmod +x /tmp/opensop
-$ sudo mkdir -p /usr/local/bin && sudo mv /tmp/opensop /usr/local/bin/opensop
-$ opensop config set url https://demo.opensop.ai
-$ opensop config set token demo-public-token-resets-daily
-$ opensop list`;
-const HERO_CLI_COPY = HERO_CLI_DISPLAY.replace(/^\$ /gm, "");
+const HERO_DISCOVER_PROMPT = `Help me uncover the procedures my team repeats that would benefit from a deterministic gate around LLM calls. For each, sketch what it would look like as an OpenSOP workflow — steps, gates, receipts. End with a comparison table per procedure: time, cost, reliability, token spend — today vs with OpenSOP, multiplier called out. https://github.com/Chosen9115/opensop`;
 
 function HeroCli() {
   const [copied, setCopied] = useState2(false);
   const onCopy = () => {
     if (!navigator.clipboard) return;
-    navigator.clipboard.writeText(HERO_CLI_COPY).then(() => {
+    navigator.clipboard.writeText(HERO_DISCOVER_PROMPT).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 1600);
     });
@@ -257,12 +252,12 @@ function HeroCli() {
   return (
     <div className="ed-hero-cli">
       <div className="ed-paste-eb">
-        <span className="ed-paste-arrow">⌘</span> Or try it in a terminal
-        <span className="ed-paste-hint">— public demo, token resets daily</span>
+        <span className="ed-paste-arrow">▷</span> See how it can benefit your current setup
+        <span className="ed-paste-hint">— same agent, same chat</span>
       </div>
       <div className="ed-paste-body">
-        <pre className="ed-paste-code ed-paste-code-shell">{HERO_CLI_DISPLAY}</pre>
-        <button className={`ed-paste-copy ${copied ? "is-copied" : ""}`} onClick={onCopy} aria-label="Copy install commands">
+        <pre className="ed-paste-code">{HERO_DISCOVER_PROMPT}</pre>
+        <button className={`ed-paste-copy ${copied ? "is-copied" : ""}`} onClick={onCopy} aria-label="Copy discovery prompt">
           {copied ? "Copied" : "Copy"}
         </button>
       </div>
