@@ -395,7 +395,7 @@ function EditorialPage({
     className: "ed-italic"
   }, "prompt"), "."), /*#__PURE__*/React.createElement("p", {
     className: "ed-hero-sub"
-  }, "Write the procedure once in YAML. Agents drive a typed, replayable API \u2014 LLM calls only where judgment lives, hard gates everywhere else."), /*#__PURE__*/React.createElement("div", {
+  }, "Define once in YAML. Run as a typed REST API. Observe with append-only receipts. LLM calls only where judgment lives \u2014 deterministic code everywhere else."), /*#__PURE__*/React.createElement("div", {
     className: "ed-hero-row"
   }, /*#__PURE__*/React.createElement("a", {
     className: "ed-btn ed-btn-dark",
@@ -458,7 +458,24 @@ function EditorialPage({
     workflow: wf
   })))), /*#__PURE__*/React.createElement("section", {
     className: "ed-quote"
-  }, /*#__PURE__*/React.createElement("blockquote", null, "\u201CUse intelligence to figure out a process \u2014 once it's repeating, put the LLM call only where judgment lives and let Python and Rust do the rest.\u201D"), /*#__PURE__*/React.createElement("cite", null, "\u2014 OpenSOP launch note")), /*#__PURE__*/React.createElement("section", {
+  }, /*#__PURE__*/React.createElement("blockquote", null, "\u201COpenAPI describes APIs. OpenSOP describes the work behind them.\u201D")), /*#__PURE__*/React.createElement("section", {
+    className: "ed-section ed-section-why",
+    id: "why"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ed-sec-head"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sec-num"
+  }, "01b"), /*#__PURE__*/React.createElement("h2", {
+    className: "ed-sec-h"
+  }, "Why we built this."), /*#__PURE__*/React.createElement("p", {
+    className: "ed-sec-sub"
+  }, "We got tired of agents claiming they did things when they hadn't, and noticed most of what we'd asked them to do was deterministic in the first place. OpenSOP runs the deterministic parts on a code runtime \u2014 auditable, reliable, cheaper than tokens \u2014 and reserves agents for what genuinely needs intelligence.")), /*#__PURE__*/React.createElement("div", {
+    className: "ed-why-scene"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ed-why-col"
+  }, /*#__PURE__*/React.createElement("h3", null, "Without a harness."), /*#__PURE__*/React.createElement("p", null, "The Calendar API times out at 07:51:34. The agent doesn't say that. It says ", /*#__PURE__*/React.createElement("em", null, "\"your schedule looks clear this morning \u2014 no urgent meetings flagged.\""), " You start your day assuming you're free. You had two meetings. You missed them. No exception thrown, no log entry \u2014 just absence of data laundered into a clean sentence.")), /*#__PURE__*/React.createElement("div", {
+    className: "ed-why-col"
+  }, /*#__PURE__*/React.createElement("h3", null, "With OpenSOP."), /*#__PURE__*/React.createElement("p", null, "That briefing is a process. Five steps, each a deterministic CLI fetch with a required ", /*#__PURE__*/React.createElement("code", null, "success: true"), " output. Calendar fails at step three; the runtime stops. You get back exactly what was collected \u2014 ", /*#__PURE__*/React.createElement("em", null, "\"Slack (3 unread DMs), Gmail (14 threads), Calendar unavailable at 07:51:34, Notion + Circleback skipped, synthesis not run\""), " \u2014 with a receipt. Honest, partial, useful.")))), /*#__PURE__*/React.createElement("section", {
     className: "ed-section ed-section-sample",
     id: "sample"
   }, /*#__PURE__*/React.createElement("div", {
@@ -622,7 +639,17 @@ function EditorialPage({
     className: "ed-three-col"
   }, /*#__PURE__*/React.createElement("h3", null, "Narrow gates around every call."), /*#__PURE__*/React.createElement("p", null, "Each job has typed inputs and outputs, prompt templates with marker protocols, structured responses parsed by Rust, size caps and critical-path exclusions.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-three-col"
-  }, /*#__PURE__*/React.createElement("h3", null, "Receipts before side effects."), /*#__PURE__*/React.createElement("p", null, "Every fire writes an append-only receipt. Ground-truth git diff checks catch schema drift, scope creep, hallucinated files and unsafe changes before anything touches production.")))), /*#__PURE__*/React.createElement("section", {
+  }, /*#__PURE__*/React.createElement("h3", null, "Receipts before side effects."), /*#__PURE__*/React.createElement("p", null, "Every fire writes an append-only receipt. Ground-truth git diff checks catch schema drift, scope creep, hallucinated files and unsafe changes before anything touches production."))), /*#__PURE__*/React.createElement("div", {
+    className: "ed-loop-row"
+  }, ["Create", "Test", "Audit", "Iterate", "Improve", "Cement"].map((step, i, arr) => /*#__PURE__*/React.createElement(React.Fragment, {
+    key: step
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ed-loop-pill"
+  }, step), i < arr.length - 1 && /*#__PURE__*/React.createElement("span", {
+    className: "ed-loop-sep"
+  }, "\u2192"))), /*#__PURE__*/React.createElement("p", {
+    className: "ed-loop-note"
+  }, "Agents can write the process for you. A new ", /*#__PURE__*/React.createElement("code", null, ".sop.yaml"), " takes seconds with the right prompt. Auditability is the superpower; reliability is the moat."))), /*#__PURE__*/React.createElement("section", {
     className: "ed-section ed-section-mvp",
     id: "mvp"
   }, /*#__PURE__*/React.createElement("div", {
@@ -778,6 +805,21 @@ support-ticket-triage        support, triage, customer-service                  
 # don't know the name? describe the task, get a recommendation:
 $ opensop search lead
 3   lead-qualification          (growth, sales, qualification)  Qualify an inbound lead and score their fit`)), /*#__PURE__*/React.createElement("section", {
+    className: "ed-section ed-section-runtimes",
+    id: "runtimes"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ed-sec-head"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ed-sec-num"
+  }, "08"), /*#__PURE__*/React.createElement("h2", {
+    className: "ed-sec-h"
+  }, "Two runtimes, one spec."), /*#__PURE__*/React.createElement("p", {
+    className: "ed-sec-sub"
+  }, "The same ", /*#__PURE__*/React.createElement("code", null, ".sop.yaml"), " runs in both. Pick the runtime that fits the context \u2014 same artifact, same receipts.")), /*#__PURE__*/React.createElement("div", {
+    className: "ed-sample-wrap"
+  }, /*#__PURE__*/React.createElement("table", {
+    className: "ed-sample-table"
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null), /*#__PURE__*/React.createElement("th", null, "Hosted runtime (Rails)"), /*#__PURE__*/React.createElement("th", null, "Portable runtime (opensop-cli)"))), /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, "Best for")), /*#__PURE__*/React.createElement("td", null, "Multi-team workflows \u2014 DDQs, customer onboarding, expense approval, release deploys, week-long async"), /*#__PURE__*/React.createElement("td", null, "Agent-embedded skills \u2014 cron-driven routines, CI checks, mineralized agent procedures")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, "Lifetime")), /*#__PURE__*/React.createElement("td", null, "Days to weeks, survives restarts"), /*#__PURE__*/React.createElement("td", null, "Seconds to minutes, exits when done")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, "State")), /*#__PURE__*/React.createElement("td", null, "Postgres \u2014 queryable, diff-able, replayable"), /*#__PURE__*/React.createElement("td", null, "SQLite \u2014 local, portable, disposable")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, "Async")), /*#__PURE__*/React.createElement("td", null, "Yes \u2014 wait steps, human approvals, webhook callbacks"), /*#__PURE__*/React.createElement("td", null, "No \u2014 linear execution to completion")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, "Audience")), /*#__PURE__*/React.createElement("td", null, "Teams, ops, compliance, cross-functional flows"), /*#__PURE__*/React.createElement("td", null, "Individual agents, CI pipelines, local dev")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, "Install")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("code", null, "bin/setup"), " \xB7 self-hosted or demo.opensop.ai"), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("code", null, "curl \u2026 | bash"), " \xB7 single binary, no server")))))), /*#__PURE__*/React.createElement("section", {
     className: "ed-section ed-section-vs"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-vs-card ed-vs-card-dual"
@@ -898,7 +940,7 @@ window.EditorialPage = EditorialPage;
 // --- Boot stub: stateful App so hero/workflow switchers work ---
 function __OpenSOPApp() {
   const [tweaks, setTweaks] = React.useState({
-    workflow: "kyb",
+    workflow: "morning-briefing",
     hero: "harness",
     density: "medium"
   });
