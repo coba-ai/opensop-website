@@ -858,3 +858,186 @@ a.ed-btn-ghost:hover { background: var(--bg-2); }
 
 /* belt-and-suspenders: never let the page overflow horizontally */
 html, body { overflow-x: hidden; }
+
+/* === New sections (sync with README v3) === */
+
+/* ed-section-why — "Why we built this" wrapper.
+   Inherits .ed-section padding/border; no additional layout beyond
+   the two-column scene below. */
+.ed-section-why {}
+
+/* ed-why-scene — two-column layout: failure on the left, solution on the right.
+   Mirrors the ed-vs-grid / ed-yaml-pair two-column pattern already in the file. */
+.ed-why-scene {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-top: 8px;
+}
+
+/* ed-why-col — each column in the scene.
+   Left column (first-child) gets a subtle warning tint to signal failure.
+   Right column (last-child) gets a clean white card with the accent border
+   to signal the resolution — matching the ed-diff-new treatment. */
+.ed-why-col {
+  padding: 28px 32px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+}
+.ed-why-col:first-child {
+  opacity: 0.78;
+  border-color: var(--line-2);
+  background: var(--bg-2);
+}
+.ed-why-col:last-child {
+  background: var(--bg);
+  border-color: var(--acc);
+  box-shadow: 0 0 0 1px rgba(210, 76, 42, 0.12);
+}
+.ed-why-col h3 {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.018em;
+  margin: 0 0 14px;
+  color: var(--ink);
+}
+.ed-why-col p {
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--ink-2);
+  margin: 0;
+}
+.ed-why-col p em {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink);
+}
+.ed-why-col p code {
+  font-family: var(--mono);
+  font-size: 13px;
+  background: rgba(20, 17, 10, 0.06);
+  border: 1px solid var(--line-2);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--ink);
+}
+
+/* ed-section-runtimes — "Two runtimes, one spec" wrapper.
+   Same .ed-section padding/border pattern; table inside uses existing
+   .ed-sample-wrap + .ed-sample-table which are already styled. */
+.ed-section-runtimes {}
+.ed-section-runtimes .ed-sample-table tbody td:first-child {
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.ed-section-runtimes .ed-sample-table tbody td code {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  background: rgba(20, 17, 10, 0.06);
+  border: 1px solid var(--line-2);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--ink);
+}
+
+/* ed-loop-row — flexbox row of loop pills inside section 03.
+   flex-wrap so pills reflow on narrow viewports; align-items:center
+   keeps separators vertically centred with the pill text. */
+.ed-loop-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 6px;
+  margin-top: 40px;
+}
+
+/* ed-loop-pill — individual pill.
+   Uses --bg-3 (the third neutral) as fill, --ink text — same neutral
+   register as .ed-harness-pill; no new color introduced. */
+.ed-loop-pill {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  background: var(--bg-3);
+  border: 1px solid var(--line-2);
+  color: var(--ink);
+  padding: 7px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* ed-loop-sep — the "→" arrow between pills.
+   Lighter ink-3 color; slightly smaller so it reads as punctuation. */
+.ed-loop-sep {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-3);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+/* ed-loop-note — closing prose line after the pill row.
+   flex-basis: 100% forces it onto its own line inside the flexbox.
+   Smaller, dimmed, italic serif to match the .ed-sample-meta register. */
+.ed-loop-note {
+  flex-basis: 100%;
+  margin: 10px 0 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink-3);
+}
+.ed-loop-note code {
+  font-family: var(--mono);
+  font-style: normal;
+  font-size: 13px;
+  background: rgba(20, 17, 10, 0.06);
+  border: 1px solid var(--line-2);
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: var(--ink-2);
+}
+
+/* --- Responsive overrides for new classes --- */
+
+@media (max-width: 820px) {
+  /* why scene stacks to a single column */
+  .ed-why-scene {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .ed-why-col {
+    padding: 20px 22px;
+  }
+  .ed-why-col h3 { font-size: 19px; }
+  .ed-why-col p  { font-size: 15px; }
+
+  /* loop row: pills stay inline-wrapping; note has comfortable top margin */
+  .ed-loop-row {
+    margin-top: 28px;
+    gap: 6px 4px;
+  }
+  .ed-loop-pill {
+    font-size: 11px;
+    padding: 6px 11px;
+  }
+  .ed-loop-note {
+    font-size: 14.5px;
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ed-why-col { padding: 16px 18px; }
+  .ed-why-col h3 { font-size: 18px; }
+  .ed-loop-pill { font-size: 10.5px; padding: 5px 10px; }
+  .ed-loop-note { font-size: 13.5px; }
+}
