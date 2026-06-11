@@ -13,6 +13,14 @@ function highlightYaml2(src) {
     .replace(/(:\s*)(\d+(?:\.\d+)?[a-z]*)\b/g, '$1<span class="ec-num">$2</span>');
 }
 
+function highlightJson(src) {
+  return src
+    .replace(/("(?:[^"\\]|\\.)*")(\s*:)/g, '<span class="ec-key">$1</span>$2')
+    .replace(/:\s*("(?:[^"\\]|\\.)*")/g, ': <span class="ec-str">$1</span>')
+    .replace(/:\s*(true|false|null)\b/g, ': <span class="ec-bool">$1</span>')
+    .replace(/:\s*(\d+(?:\.\d+)?)\b/g, ': <span class="ec-num">$1</span>');
+}
+
 function useGitHubStars(repo) {
   const [count, setCount] = useState2(null);
   useEffect2(() => {
@@ -213,7 +221,7 @@ function ProcessRibbon({ workflow }) {
 
 const HERO_INSTALL_PROMPT = `# Install the OpenSOP CLI (local-first, no account required)
 curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop/main/cli/bin/opensop -o opensop && chmod +x opensop
-./opensop run morning-briefing.sop.yaml`;
+./opensop run morning-briefing.sop.json`;
 
 function HeroPaste() {
   const [copied, setCopied] = useState2(false);
@@ -294,7 +302,7 @@ function EditorialPage({ tweaks, setTweak }) {
           <a href="#why">Why</a><a href="https://github.com/Chosen9115/opensop/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">Spec v0.6</a><a href="#workflows">Workflows</a><a href="#audit">Audit</a><a href="https://github.com/Chosen9115/opensop/tree/main/docs" target="_blank" rel="noopener noreferrer">Docs</a>
         </nav>
         <div className="ed-nav-r">
-          <a className="ed-nav-link" href="#mvp">MVP status</a>
+          <a className="ed-nav-link" href="#runtimes">CLI vs server</a>
           <a className="ed-nav-cta" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Star{starsLabel ? " · " + starsLabel : ""}</a>
         </div>
       </header>
@@ -313,7 +321,7 @@ function EditorialPage({ tweaks, setTweak }) {
         <div className="ed-hero-eyebrow">
           <span className="ed-eb-num">No. 01</span>
           <span className="ed-eb-sep">/</span>
-          <span>Process as Infrastructure for agentic workflows</span>
+          <span>Process as Infrastructure for agentic processes</span>
           <span className="ed-eb-sep">/</span>
           <span>CLI v0.8.0 · spec v0.6</span>
         </div>
@@ -322,7 +330,7 @@ function EditorialPage({ tweaks, setTweak }) {
           Declare it, version it, run it locally.
         </h1>
         <p className="ed-hero-sub">
-          Like Terraform for cloud resources — but for agentic processes. Write a <code>.sop.yaml</code>, run it with the local CLI, get an auditable receipt. The server is optional and pluggable.
+          Like Terraform for cloud resources — but for agentic processes. Write a <code>.sop.json</code>, run it with the local CLI, get an auditable receipt. The server is optional and pluggable.
         </p>
         <div className="ed-hero-row">
           <a className="ed-btn ed-btn-dark" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Standard + CLI on GitHub</a>
@@ -337,7 +345,7 @@ function EditorialPage({ tweaks, setTweak }) {
 
         <div className="ed-hero-figure">
           <div className="ed-hero-fig-tabs">
-            {[["harness","Agent harness"],["yaml","Process file"],["graph","Live run"]].map(([k,l]) => (
+            {[["harness","Process diagram"],["yaml","Process file"],["graph","Live run"]].map(([k,l]) => (
               <button key={k} className={`ed-fig-tab ${heroId===k?"is-on":""}`} onClick={() => setTweak("hero", k)}>{l}</button>
             ))}
           </div>
@@ -347,10 +355,10 @@ function EditorialPage({ tweaks, setTweak }) {
               <div className="ed-yaml-pair">
                 <div className="ed-yaml-pane">
                   <div className="ed-yaml-head">
-                    <span>{wf.id}.sop.yaml</span>
-                    <span className="ed-yaml-meta">v{(wf.yaml.match(/version: "(.+?)"/) || [,"1.0"])[1]}</span>
+                    <span>{wf.id}.sop.json</span>
+                    <span className="ed-yaml-meta">v{(wf.json.match(/"version":\s*"(.+?)"/) || [,"1.0"])[1]}</span>
                   </div>
-                  <pre className="ed-yaml-code" dangerouslySetInnerHTML={{ __html: highlightYaml2(wf.yaml) }} />
+                  <pre className="ed-yaml-code" dangerouslySetInnerHTML={{ __html: highlightJson(wf.json) }} />
                 </div>
                 <div className="ed-yaml-pane">
                   <div className="ed-yaml-head">
@@ -386,16 +394,16 @@ function EditorialPage({ tweaks, setTweak }) {
         <div className="ed-sec-head">
           <span className="ed-sec-num">01b</span>
           <h2 className="ed-sec-h">Why we built this.</h2>
-          <p className="ed-sec-sub">We got tired of agents claiming they did things when they hadn't, and noticed most of what we'd asked them to do was deterministic in the first place. OpenSOP runs the deterministic parts on a code runtime — auditable, reliable, cheaper than tokens — and reserves agents for what genuinely needs intelligence.</p>
+          <p className="ed-sec-sub">We got tired of agents claiming they did things when they hadn't, and noticed most of what we'd asked them to do was deterministic in the first place. OpenSOP defines the deterministic parts as a process file — auditable, reliable, cheaper than tokens — and reserves agents for what genuinely needs intelligence.</p>
         </div>
         <div className="ed-why-scene">
           <div className="ed-why-col">
-            <h3>Without a harness.</h3>
+            <h3>Without a process file.</h3>
             <p>The Calendar API times out at 07:51:34. The agent doesn't say that. It says <em>"your schedule looks clear this morning — no urgent meetings flagged."</em> You start your day assuming you're free. You had two meetings. You missed them. No exception thrown, no log entry — just absence of data laundered into a clean sentence.</p>
           </div>
           <div className="ed-why-col">
             <h3>With OpenSOP.</h3>
-            <p>That briefing is a process. Five steps, each a deterministic CLI fetch with a required <code>success: true</code> output. Calendar fails at step three; the runtime stops. You get back exactly what was collected — <em>"Slack (3 unread DMs), Gmail (14 threads), Calendar unavailable at 07:51:34, Notion + Circleback skipped, synthesis not run"</em> — with a receipt. Honest, partial, useful.</p>
+            <p>That briefing is a process. Five steps, each a deterministic CLI fetch with a required <code>success: true</code> output. Calendar fails at step three; the process halts. You get back exactly what was collected — <em>"Slack (3 unread DMs), Gmail (14 threads), Calendar unavailable at 07:51:34, Notion + Circleback skipped, synthesis not run"</em> — with a receipt. Honest, partial, useful.</p>
           </div>
         </div>
       </section>
@@ -404,7 +412,7 @@ function EditorialPage({ tweaks, setTweak }) {
         <div className="ed-sec-head">
           <span className="ed-sec-num">02</span>
           <h2 className="ed-sec-h">What our agent surfaced.</h2>
-          <p className="ed-sec-sub">We ran the prompt above on our own codebase. Where today and OpenSOP read the same, Claude is the bottleneck — not the harness. The wins concentrate in failure modes, debugging, and replay.</p>
+          <p className="ed-sec-sub">We ran the prompt above on our own codebase. Where today and OpenSOP read the same, Claude is the bottleneck — not the process definition. The wins concentrate in failure modes, debugging, and replay.</p>
         </div>
 
         <div className="ed-sample-wrap">
@@ -471,11 +479,11 @@ function EditorialPage({ tweaks, setTweak }) {
         <p className="ed-sample-meta">Real runs from our team. Your output will differ — different procedures, different multipliers — but the shape stays: flat happy-path, big wins on failure modes, debugging, and replay.</p>
       </section>
 
-      <section className="ed-section ed-section-worker" id="agent-harness">
+      <section className="ed-section ed-section-worker" id="case-study">
         <div className="ed-sec-head">
           <span className="ed-sec-num">03</span>
-          <h2 className="ed-sec-h">Eleven agents on schedule. One harness.</h2>
-          <p className="ed-sec-sub">Internally, OpenSOP runs opensop-worker: a Rust daemon that schedules 11 specialized agents across our Rails projects.</p>
+          <h2 className="ed-sec-h">Eleven agents on schedule. One process file each.</h2>
+          <p className="ed-sec-sub">Internally, each of our 11 specialized agents is scheduled by an OpenSOP process file that lives in the repo like any other infrastructure.</p>
         </div>
         <div className="ed-three">
           <div className="ed-three-col">
@@ -484,11 +492,11 @@ function EditorialPage({ tweaks, setTweak }) {
           </div>
           <div className="ed-three-col">
             <h3>Narrow gates around every call.</h3>
-            <p>Each job has typed inputs and outputs, prompt templates with marker protocols, structured responses parsed by Rust, size caps and critical-path exclusions.</p>
+            <p>Each process defines typed inputs and outputs, gates that enforce size caps and critical-path exclusions, and approval steps that block side effects until conditions are met.</p>
           </div>
           <div className="ed-three-col">
             <h3>Receipts before side effects.</h3>
-            <p>Every fire writes an append-only receipt. Ground-truth git diff checks catch schema drift, scope creep, hallucinated files and unsafe changes before anything touches production.</p>
+            <p>Every run writes an append-only receipt. Ground-truth git diff checks catch schema drift, scope creep, hallucinated files and unsafe changes before anything touches production.</p>
           </div>
         </div>
         <div className="ed-loop-row">
@@ -498,7 +506,7 @@ function EditorialPage({ tweaks, setTweak }) {
               {i < arr.length - 1 && <span className="ed-loop-sep">→</span>}
             </React.Fragment>
           ))}
-          <p className="ed-loop-note">Agents can write the process for you. A new <code>.sop.yaml</code> takes seconds with the right prompt. Auditability is the superpower; reliability is the moat.</p>
+          <p className="ed-loop-note">Agents can write the process for you. A new <code>.sop.json</code> takes seconds with the right prompt. Auditability is the superpower; reliability is the moat.</p>
         </div>
       </section>
 
@@ -506,7 +514,7 @@ function EditorialPage({ tweaks, setTweak }) {
         <div className="ed-sec-head">
           <span className="ed-sec-num">05</span>
           <h2 className="ed-sec-h">Running in production. Examples below.</h2>
-          <p className="ed-sec-sub">Pick a process. The YAML below is the file you declare, version, and run — locally or against a server that implements the spec.</p>
+          <p className="ed-sec-sub">Pick a process. The JSON below is the file you declare, version, and run locally; the optional server uses a YAML serialization of the same model.</p>
         </div>
 
         <div className="ed-wf-pills">
@@ -523,7 +531,7 @@ function EditorialPage({ tweaks, setTweak }) {
           <div><span>runs</span><b>{wf.runs}</b></div>
           <div><span>p50</span><b>{wf.p50}</b></div>
           <div><span>success</span><b>{wf.success}</b></div>
-          <div><span>endpoints</span><b>{wf.endpoints.length}</b></div>
+          <div><span>server endpoints (optional)</span><b>{wf.endpoints.length}</b></div>
           <div><span>steps</span><b>{wf.steps.length}</b></div>
         </div>
 
@@ -534,10 +542,10 @@ function EditorialPage({ tweaks, setTweak }) {
         <div className="ed-yaml-pair ed-yaml-pair-block">
           <div className="ed-yaml-pane">
             <div className="ed-yaml-head">
-              <span>{wf.id}.sop.yaml</span>
-              <span className="ed-yaml-meta">v{(wf.yaml.match(/version: "(.+?)"/) || [,"1.0"])[1]}</span>
+              <span>{wf.id}.sop.json</span>
+              <span className="ed-yaml-meta">v{(wf.json.match(/"version":\s*"(.+?)"/) || [,"1.0"])[1]}</span>
             </div>
-            <pre className="ed-yaml-code" dangerouslySetInnerHTML={{ __html: highlightYaml2(wf.yaml) }} />
+            <pre className="ed-yaml-code" dangerouslySetInnerHTML={{ __html: highlightJson(wf.json) }} />
           </div>
           <div className="ed-yaml-pane">
             <div className="ed-yaml-head">
@@ -623,14 +631,14 @@ success: ${wf.success}`}</pre>
         <div className="ed-sec-head">
           <span className="ed-sec-num">07</span>
           <h2 className="ed-sec-h">Local-first. One file. No account.</h2>
-          <p className="ed-sec-sub">Install the CLI with a single curl. <code>opensop run</code> executes any <code>.sop.yaml</code> locally — no server, no sign-up. Add <code>--server</code> to route runs through a hosted instance when you want shared state and audit logs.</p>
+          <p className="ed-sec-sub">Install the CLI with a single curl. <code>opensop run</code> executes any <code>.sop.json</code> locally — no server, no sign-up. Add <code>--server</code> to route runs through a hosted instance when you want shared state and audit logs.</p>
         </div>
 
         <pre className="ed-api-block">{`# install — one curl, works without a server
 $ curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop/main/cli/bin/opensop -o opensop && chmod +x opensop
 
 # run a process locally — no account, no server
-$ ./opensop run morning-briefing.sop.yaml
+$ ./opensop run morning-briefing.sop.json
 [opensop] running morning-briefing v1.4 locally
   step 01/05  fetch-slack       ✓  3 unread DMs
   step 02/05  fetch-gmail       ✓  14 threads
@@ -651,7 +659,7 @@ $ ./opensop --server https://your-opensop-server.example.com list`}</pre>
         <div className="ed-sec-head">
           <span className="ed-sec-num">08</span>
           <h2 className="ed-sec-h">CLI is the default. Server is optional.</h2>
-          <p className="ed-sec-sub">The CLI runs processes locally. The reference server adds shared state, audit logs, and a REST API — but nothing forces you to run one. Same <code>.sop.yaml</code> on both sides; the spec is the contract.</p>
+          <p className="ed-sec-sub">The CLI runs processes locally. The reference server adds shared state, audit logs, and a REST API — but nothing forces you to run one. The same process model on both sides — <code>.sop.json</code> locally, <code>.sop.yaml</code> on the server; the spec is the contract.</p>
         </div>
         <div className="ed-sample-wrap">
           <table className="ed-sample-table">
@@ -665,7 +673,7 @@ $ ./opensop --server https://your-opensop-server.example.com list`}</pre>
             <tbody>
               <tr>
                 <td><strong>What it is</strong></td>
-                <td>Bash script, single file. Executes <code>.sop.yaml</code> locally. Deps: curl + jq.</td>
+                <td>Bash script, single file. Executes <code>.sop.json</code> locally. Deps: curl + jq.</td>
                 <td>Rails app that implements the OpenSOP HTTP spec. State in PostgreSQL; admin UI included.</td>
               </tr>
               <tr>
@@ -731,12 +739,12 @@ $ ./opensop --server https://your-opensop-server.example.com list`}</pre>
       <footer className="ed-foot">
         <div className="ed-foot-l">
           <div className="ed-logo"><svg width="20" height="20" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="currentColor" strokeWidth="1.4"/><path d="M5 11h12 M5 7h8 M5 15h6" stroke="currentColor" strokeWidth="1.4"/></svg> <span>OpenSOP</span></div>
-          <p>Process as Infrastructure for agentic workflows — open standard, local-first CLI.<br />Apache 2.0 · 2026.</p>
+          <p>Process as Infrastructure for agentic processes — open standard, local-first CLI.<br />Apache 2.0 · 2026.</p>
         </div>
         <div className="ed-foot-cols">
           <div><h6>Standard</h6><a href="https://github.com/Chosen9115/opensop/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">Spec v0.6</a><a href="https://github.com/Chosen9115/opensop/blob/main/ROADMAP.md" target="_blank" rel="noopener noreferrer">Roadmap</a><a href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">Changelog</a></div>
           <div><h6>Developers</h6><a href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">CLI + spec</a><a href="https://github.com/Chosen9115/opensop-rails" target="_blank" rel="noopener noreferrer">Reference server</a><a href="https://github.com/Chosen9115/opensop/tree/main/docs" target="_blank" rel="noopener noreferrer">Docs</a><a href="https://github.com/Chosen9115/opensop/blob/main/docs/API.md" target="_blank" rel="noopener noreferrer">API reference</a><a href="https://github.com/Chosen9115/opensop/tree/main/processes/examples" target="_blank" rel="noopener noreferrer">Examples</a></div>
-          <div><h6>Community</h6><a href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://github.com/Chosen9115/opensop/discussions" target="_blank" rel="noopener noreferrer">Discussions</a><a href="#agent-harness">Case study</a><a href="https://github.com/Chosen9115/opensop/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contributing</a></div>
+          <div><h6>Community</h6><a href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://github.com/Chosen9115/opensop/discussions" target="_blank" rel="noopener noreferrer">Discussions</a><a href="#case-study">Case study</a><a href="https://github.com/Chosen9115/opensop/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contributing</a></div>
         </div>
       </footer>
     </div>

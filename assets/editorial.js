@@ -9,6 +9,9 @@ const STEP_TYPES_2 = window.OPENSOP_STEP_TYPES;
 function highlightYaml2(src) {
   return src.replace(/(#.*)$/gm, '<span class="ec-com">$1</span>').replace(/^(\s*-?\s*)([a-zA-Z_][\w-]*)(\s*:)/gm, '$1<span class="ec-key">$2</span>$3').replace(/(:\s*)("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g, '$1<span class="ec-str">$2</span>').replace(/(:\s*)(true|false|null)\b/g, '$1<span class="ec-bool">$2</span>').replace(/(:\s*)(\d+(?:\.\d+)?[a-z]*)\b/g, '$1<span class="ec-num">$2</span>');
 }
+function highlightJson(src) {
+  return src.replace(/("(?:[^"\\]|\\.)*")(\s*:)/g, '<span class="ec-key">$1</span>$2').replace(/:\s*("(?:[^"\\]|\\.)*")/g, ': <span class="ec-str">$1</span>').replace(/:\s*(true|false|null)\b/g, ': <span class="ec-bool">$1</span>').replace(/:\s*(\d+(?:\.\d+)?)\b/g, ': <span class="ec-num">$1</span>');
+}
 function useGitHubStars(repo) {
   const [count, setCount] = useState2(null);
   useEffect2(() => {
@@ -242,7 +245,7 @@ function ProcessRibbon({
 }
 const HERO_INSTALL_PROMPT = `# Install the OpenSOP CLI (local-first, no account required)
 curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop/main/cli/bin/opensop -o opensop && chmod +x opensop
-./opensop run morning-briefing.sop.yaml`;
+./opensop run morning-briefing.sop.json`;
 function HeroPaste() {
   const [copied, setCopied] = useState2(false);
   const onCopy = () => {
@@ -359,8 +362,8 @@ function EditorialPage({
     className: "ed-nav-r"
   }, /*#__PURE__*/React.createElement("a", {
     className: "ed-nav-link",
-    href: "#mvp"
-  }, "MVP status"), /*#__PURE__*/React.createElement("a", {
+    href: "#runtimes"
+  }, "CLI vs server"), /*#__PURE__*/React.createElement("a", {
     className: "ed-nav-cta",
     href: "https://github.com/Chosen9115/opensop",
     target: "_blank",
@@ -382,7 +385,7 @@ function EditorialPage({
     className: "ed-eb-num"
   }, "No. 01"), /*#__PURE__*/React.createElement("span", {
     className: "ed-eb-sep"
-  }, "/"), /*#__PURE__*/React.createElement("span", null, "Process as Infrastructure for agentic workflows"), /*#__PURE__*/React.createElement("span", {
+  }, "/"), /*#__PURE__*/React.createElement("span", null, "Process as Infrastructure for agentic processes"), /*#__PURE__*/React.createElement("span", {
     className: "ed-eb-sep"
   }, "/"), /*#__PURE__*/React.createElement("span", null, "CLI v0.8.0 \xB7 spec v0.6")), /*#__PURE__*/React.createElement("h1", {
     className: "ed-hero-h"
@@ -390,7 +393,7 @@ function EditorialPage({
     className: "ed-italic"
   }, "file"), ".", /*#__PURE__*/React.createElement("br", null), "Declare it, version it, run it locally."), /*#__PURE__*/React.createElement("p", {
     className: "ed-hero-sub"
-  }, "Like Terraform for cloud resources \u2014 but for agentic processes. Write a ", /*#__PURE__*/React.createElement("code", null, ".sop.yaml"), ", run it with the local CLI, get an auditable receipt. The server is optional and pluggable."), /*#__PURE__*/React.createElement("div", {
+  }, "Like Terraform for cloud resources \u2014 but for agentic processes. Write a ", /*#__PURE__*/React.createElement("code", null, ".sop.json"), ", run it with the local CLI, get an auditable receipt. The server is optional and pluggable."), /*#__PURE__*/React.createElement("div", {
     className: "ed-hero-row"
   }, /*#__PURE__*/React.createElement("a", {
     className: "ed-btn ed-btn-dark",
@@ -410,7 +413,7 @@ function EditorialPage({
     className: "ed-hero-figure"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-hero-fig-tabs"
-  }, [["harness", "Agent harness"], ["yaml", "Process file"], ["graph", "Live run"]].map(([k, l]) => /*#__PURE__*/React.createElement("button", {
+  }, [["harness", "Process diagram"], ["yaml", "Process file"], ["graph", "Live run"]].map(([k, l]) => /*#__PURE__*/React.createElement("button", {
     key: k,
     className: `ed-fig-tab ${heroId === k ? "is-on" : ""}`,
     onClick: () => setTweak("hero", k)
@@ -424,12 +427,12 @@ function EditorialPage({
     className: "ed-yaml-pane"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-yaml-head"
-  }, /*#__PURE__*/React.createElement("span", null, wf.id, ".sop.yaml"), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", null, wf.id, ".sop.json"), /*#__PURE__*/React.createElement("span", {
     className: "ed-yaml-meta"
-  }, "v", (wf.yaml.match(/version: "(.+?)"/) || [, "1.0"])[1])), /*#__PURE__*/React.createElement("pre", {
+  }, "v", (wf.json.match(/"version":\s*"(.+?)"/) || [, "1.0"])[1])), /*#__PURE__*/React.createElement("pre", {
     className: "ed-yaml-code",
     dangerouslySetInnerHTML: {
-      __html: highlightYaml2(wf.yaml)
+      __html: highlightJson(wf.json)
     }
   })), /*#__PURE__*/React.createElement("div", {
     className: "ed-yaml-pane"
@@ -464,13 +467,13 @@ function EditorialPage({
     className: "ed-sec-h"
   }, "Why we built this."), /*#__PURE__*/React.createElement("p", {
     className: "ed-sec-sub"
-  }, "We got tired of agents claiming they did things when they hadn't, and noticed most of what we'd asked them to do was deterministic in the first place. OpenSOP runs the deterministic parts on a code runtime \u2014 auditable, reliable, cheaper than tokens \u2014 and reserves agents for what genuinely needs intelligence.")), /*#__PURE__*/React.createElement("div", {
+  }, "We got tired of agents claiming they did things when they hadn't, and noticed most of what we'd asked them to do was deterministic in the first place. OpenSOP defines the deterministic parts as a process file \u2014 auditable, reliable, cheaper than tokens \u2014 and reserves agents for what genuinely needs intelligence.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-why-scene"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-why-col"
-  }, /*#__PURE__*/React.createElement("h3", null, "Without a harness."), /*#__PURE__*/React.createElement("p", null, "The Calendar API times out at 07:51:34. The agent doesn't say that. It says ", /*#__PURE__*/React.createElement("em", null, "\"your schedule looks clear this morning \u2014 no urgent meetings flagged.\""), " You start your day assuming you're free. You had two meetings. You missed them. No exception thrown, no log entry \u2014 just absence of data laundered into a clean sentence.")), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h3", null, "Without a process file."), /*#__PURE__*/React.createElement("p", null, "The Calendar API times out at 07:51:34. The agent doesn't say that. It says ", /*#__PURE__*/React.createElement("em", null, "\"your schedule looks clear this morning \u2014 no urgent meetings flagged.\""), " You start your day assuming you're free. You had two meetings. You missed them. No exception thrown, no log entry \u2014 just absence of data laundered into a clean sentence.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-why-col"
-  }, /*#__PURE__*/React.createElement("h3", null, "With OpenSOP."), /*#__PURE__*/React.createElement("p", null, "That briefing is a process. Five steps, each a deterministic CLI fetch with a required ", /*#__PURE__*/React.createElement("code", null, "success: true"), " output. Calendar fails at step three; the runtime stops. You get back exactly what was collected \u2014 ", /*#__PURE__*/React.createElement("em", null, "\"Slack (3 unread DMs), Gmail (14 threads), Calendar unavailable at 07:51:34, Notion + Circleback skipped, synthesis not run\""), " \u2014 with a receipt. Honest, partial, useful.")))), /*#__PURE__*/React.createElement("section", {
+  }, /*#__PURE__*/React.createElement("h3", null, "With OpenSOP."), /*#__PURE__*/React.createElement("p", null, "That briefing is a process. Five steps, each a deterministic CLI fetch with a required ", /*#__PURE__*/React.createElement("code", null, "success: true"), " output. Calendar fails at step three; the process halts. You get back exactly what was collected \u2014 ", /*#__PURE__*/React.createElement("em", null, "\"Slack (3 unread DMs), Gmail (14 threads), Calendar unavailable at 07:51:34, Notion + Circleback skipped, synthesis not run\""), " \u2014 with a receipt. Honest, partial, useful.")))), /*#__PURE__*/React.createElement("section", {
     className: "ed-section ed-section-sample",
     id: "sample"
   }, /*#__PURE__*/React.createElement("div", {
@@ -481,7 +484,7 @@ function EditorialPage({
     className: "ed-sec-h"
   }, "What our agent surfaced."), /*#__PURE__*/React.createElement("p", {
     className: "ed-sec-sub"
-  }, "We ran the prompt above on our own codebase. Where today and OpenSOP read the same, Claude is the bottleneck \u2014 not the harness. The wins concentrate in failure modes, debugging, and replay.")), /*#__PURE__*/React.createElement("div", {
+  }, "We ran the prompt above on our own codebase. Where today and OpenSOP read the same, Claude is the bottleneck \u2014 not the process definition. The wins concentrate in failure modes, debugging, and replay.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-sample-wrap"
   }, /*#__PURE__*/React.createElement("table", {
     className: "ed-sample-table"
@@ -617,24 +620,24 @@ function EditorialPage({
     className: "ed-sample-meta"
   }, "Real runs from our team. Your output will differ \u2014 different procedures, different multipliers \u2014 but the shape stays: flat happy-path, big wins on failure modes, debugging, and replay.")), /*#__PURE__*/React.createElement("section", {
     className: "ed-section ed-section-worker",
-    id: "agent-harness"
+    id: "case-study"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-sec-head"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ed-sec-num"
   }, "03"), /*#__PURE__*/React.createElement("h2", {
     className: "ed-sec-h"
-  }, "Eleven agents on schedule. One harness."), /*#__PURE__*/React.createElement("p", {
+  }, "Eleven agents on schedule. One process file each."), /*#__PURE__*/React.createElement("p", {
     className: "ed-sec-sub"
-  }, "Internally, OpenSOP runs opensop-worker: a Rust daemon that schedules 11 specialized agents across our Rails projects.")), /*#__PURE__*/React.createElement("div", {
+  }, "Internally, each of our 11 specialized agents is scheduled by an OpenSOP process file that lives in the repo like any other infrastructure.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-three"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-three-col"
   }, /*#__PURE__*/React.createElement("h3", null, "Routine work runs on time."), /*#__PURE__*/React.createElement("p", null, "PR review, dependency bumps, conflict resolution, Slack digests, AGENTS.md generation, CI re-runs, release notes. The work humans defer or forget runs on its own schedule.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-three-col"
-  }, /*#__PURE__*/React.createElement("h3", null, "Narrow gates around every call."), /*#__PURE__*/React.createElement("p", null, "Each job has typed inputs and outputs, prompt templates with marker protocols, structured responses parsed by Rust, size caps and critical-path exclusions.")), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h3", null, "Narrow gates around every call."), /*#__PURE__*/React.createElement("p", null, "Each process defines typed inputs and outputs, gates that enforce size caps and critical-path exclusions, and approval steps that block side effects until conditions are met.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-three-col"
-  }, /*#__PURE__*/React.createElement("h3", null, "Receipts before side effects."), /*#__PURE__*/React.createElement("p", null, "Every fire writes an append-only receipt. Ground-truth git diff checks catch schema drift, scope creep, hallucinated files and unsafe changes before anything touches production."))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h3", null, "Receipts before side effects."), /*#__PURE__*/React.createElement("p", null, "Every run writes an append-only receipt. Ground-truth git diff checks catch schema drift, scope creep, hallucinated files and unsafe changes before anything touches production."))), /*#__PURE__*/React.createElement("div", {
     className: "ed-loop-row"
   }, ["Create", "Test", "Audit", "Iterate", "Improve", "Cement"].map((step, i, arr) => /*#__PURE__*/React.createElement(React.Fragment, {
     key: step
@@ -644,7 +647,7 @@ function EditorialPage({
     className: "ed-loop-sep"
   }, "\u2192"))), /*#__PURE__*/React.createElement("p", {
     className: "ed-loop-note"
-  }, "Agents can write the process for you. A new ", /*#__PURE__*/React.createElement("code", null, ".sop.yaml"), " takes seconds with the right prompt. Auditability is the superpower; reliability is the moat."))), /*#__PURE__*/React.createElement("section", {
+  }, "Agents can write the process for you. A new ", /*#__PURE__*/React.createElement("code", null, ".sop.json"), " takes seconds with the right prompt. Auditability is the superpower; reliability is the moat."))), /*#__PURE__*/React.createElement("section", {
     className: "ed-section ed-section-wf",
     id: "workflows"
   }, /*#__PURE__*/React.createElement("div", {
@@ -655,7 +658,7 @@ function EditorialPage({
     className: "ed-sec-h"
   }, "Running in production. Examples below."), /*#__PURE__*/React.createElement("p", {
     className: "ed-sec-sub"
-  }, "Pick a process. The YAML below is the file you declare, version, and run \u2014 locally or against a server that implements the spec.")), /*#__PURE__*/React.createElement("div", {
+  }, "Pick a process. The JSON below is the file you declare, version, and run locally; the optional server uses a YAML serialization of the same model.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-wf-pills"
   }, WORKFLOWS_2.map(w => /*#__PURE__*/React.createElement("button", {
     key: w.id,
@@ -666,7 +669,7 @@ function EditorialPage({
     }
   }, w.name))), /*#__PURE__*/React.createElement("div", {
     className: "ed-wf-stats-grid"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "runs"), /*#__PURE__*/React.createElement("b", null, wf.runs)), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "p50"), /*#__PURE__*/React.createElement("b", null, wf.p50)), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "success"), /*#__PURE__*/React.createElement("b", null, wf.success)), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "endpoints"), /*#__PURE__*/React.createElement("b", null, wf.endpoints.length)), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "steps"), /*#__PURE__*/React.createElement("b", null, wf.steps.length))), /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "runs"), /*#__PURE__*/React.createElement("b", null, wf.runs)), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "p50"), /*#__PURE__*/React.createElement("b", null, wf.p50)), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "success"), /*#__PURE__*/React.createElement("b", null, wf.success)), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "server endpoints (optional)"), /*#__PURE__*/React.createElement("b", null, wf.endpoints.length)), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("span", null, "steps"), /*#__PURE__*/React.createElement("b", null, wf.steps.length))), /*#__PURE__*/React.createElement("p", {
     className: "ed-wf-blurb-2"
   }, wf.blurb), /*#__PURE__*/React.createElement(ProcessRibbon, {
     workflow: wf
@@ -676,12 +679,12 @@ function EditorialPage({
     className: "ed-yaml-pane"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ed-yaml-head"
-  }, /*#__PURE__*/React.createElement("span", null, wf.id, ".sop.yaml"), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", null, wf.id, ".sop.json"), /*#__PURE__*/React.createElement("span", {
     className: "ed-yaml-meta"
-  }, "v", (wf.yaml.match(/version: "(.+?)"/) || [, "1.0"])[1])), /*#__PURE__*/React.createElement("pre", {
+  }, "v", (wf.json.match(/"version":\s*"(.+?)"/) || [, "1.0"])[1])), /*#__PURE__*/React.createElement("pre", {
     className: "ed-yaml-code",
     dangerouslySetInnerHTML: {
-      __html: highlightYaml2(wf.yaml)
+      __html: highlightJson(wf.json)
     }
   })), /*#__PURE__*/React.createElement("div", {
     className: "ed-yaml-pane"
@@ -775,13 +778,13 @@ success: ${wf.success}`)))), /*#__PURE__*/React.createElement("section", {
     className: "ed-sec-h"
   }, "Local-first. One file. No account."), /*#__PURE__*/React.createElement("p", {
     className: "ed-sec-sub"
-  }, "Install the CLI with a single curl. ", /*#__PURE__*/React.createElement("code", null, "opensop run"), " executes any ", /*#__PURE__*/React.createElement("code", null, ".sop.yaml"), " locally \u2014 no server, no sign-up. Add ", /*#__PURE__*/React.createElement("code", null, "--server"), " to route runs through a hosted instance when you want shared state and audit logs.")), /*#__PURE__*/React.createElement("pre", {
+  }, "Install the CLI with a single curl. ", /*#__PURE__*/React.createElement("code", null, "opensop run"), " executes any ", /*#__PURE__*/React.createElement("code", null, ".sop.json"), " locally \u2014 no server, no sign-up. Add ", /*#__PURE__*/React.createElement("code", null, "--server"), " to route runs through a hosted instance when you want shared state and audit logs.")), /*#__PURE__*/React.createElement("pre", {
     className: "ed-api-block"
   }, `# install — one curl, works without a server
 $ curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop/main/cli/bin/opensop -o opensop && chmod +x opensop
 
 # run a process locally — no account, no server
-$ ./opensop run morning-briefing.sop.yaml
+$ ./opensop run morning-briefing.sop.json
 [opensop] running morning-briefing v1.4 locally
   step 01/05  fetch-slack       ✓  3 unread DMs
   step 02/05  fetch-gmail       ✓  14 threads
@@ -806,11 +809,11 @@ $ ./opensop --server https://your-opensop-server.example.com list`)), /*#__PURE_
     className: "ed-sec-h"
   }, "CLI is the default. Server is optional."), /*#__PURE__*/React.createElement("p", {
     className: "ed-sec-sub"
-  }, "The CLI runs processes locally. The reference server adds shared state, audit logs, and a REST API \u2014 but nothing forces you to run one. Same ", /*#__PURE__*/React.createElement("code", null, ".sop.yaml"), " on both sides; the spec is the contract.")), /*#__PURE__*/React.createElement("div", {
+  }, "The CLI runs processes locally. The reference server adds shared state, audit logs, and a REST API \u2014 but nothing forces you to run one. The same process model on both sides \u2014 ", /*#__PURE__*/React.createElement("code", null, ".sop.json"), " locally, ", /*#__PURE__*/React.createElement("code", null, ".sop.yaml"), " on the server; the spec is the contract.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-sample-wrap"
   }, /*#__PURE__*/React.createElement("table", {
     className: "ed-sample-table"
-  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null), /*#__PURE__*/React.createElement("th", null, "CLI \u2014 local execution"), /*#__PURE__*/React.createElement("th", null, "Reference server (Rails)"))), /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, "What it is")), /*#__PURE__*/React.createElement("td", null, "Bash script, single file. Executes ", /*#__PURE__*/React.createElement("code", null, ".sop.yaml"), " locally. Deps: curl + jq."), /*#__PURE__*/React.createElement("td", null, "Rails app that implements the OpenSOP HTTP spec. State in PostgreSQL; admin UI included.")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, "Best for")), /*#__PURE__*/React.createElement("td", null, "Local runs, CI pipelines, agent-driven execution without a server"), /*#__PURE__*/React.createElement("td", null, "Team-shared flows \u2014 DDQs, onboarding, expense approval, multi-week runs")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, "State")), /*#__PURE__*/React.createElement("td", null, "Receipt JSON written locally per run. No remote dependency."), /*#__PURE__*/React.createElement("td", null, "PostgreSQL + audit log. Any agent can query ", /*#__PURE__*/React.createElement("code", null, "GET /sop/"), " for the process catalogue.")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, "Install")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("code", null, "curl -fsSL \u2026/cli/bin/opensop -o opensop ", '&&', " chmod +x opensop")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("a", {
+  }, /*#__PURE__*/React.createElement("thead", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", null), /*#__PURE__*/React.createElement("th", null, "CLI \u2014 local execution"), /*#__PURE__*/React.createElement("th", null, "Reference server (Rails)"))), /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, "What it is")), /*#__PURE__*/React.createElement("td", null, "Bash script, single file. Executes ", /*#__PURE__*/React.createElement("code", null, ".sop.json"), " locally. Deps: curl + jq."), /*#__PURE__*/React.createElement("td", null, "Rails app that implements the OpenSOP HTTP spec. State in PostgreSQL; admin UI included.")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, "Best for")), /*#__PURE__*/React.createElement("td", null, "Local runs, CI pipelines, agent-driven execution without a server"), /*#__PURE__*/React.createElement("td", null, "Team-shared flows \u2014 DDQs, onboarding, expense approval, multi-week runs")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, "State")), /*#__PURE__*/React.createElement("td", null, "Receipt JSON written locally per run. No remote dependency."), /*#__PURE__*/React.createElement("td", null, "PostgreSQL + audit log. Any agent can query ", /*#__PURE__*/React.createElement("code", null, "GET /sop/"), " for the process catalogue.")), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("strong", null, "Install")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("code", null, "curl -fsSL \u2026/cli/bin/opensop -o opensop ", '&&', " chmod +x opensop")), /*#__PURE__*/React.createElement("td", null, /*#__PURE__*/React.createElement("a", {
     href: "https://github.com/Chosen9115/opensop-rails",
     target: "_blank",
     rel: "noopener noreferrer"
@@ -875,7 +878,7 @@ $ ./opensop --server https://your-opensop-server.example.com list`)), /*#__PURE_
     d: "M5 11h12 M5 7h8 M5 15h6",
     stroke: "currentColor",
     strokeWidth: "1.4"
-  })), " ", /*#__PURE__*/React.createElement("span", null, "OpenSOP")), /*#__PURE__*/React.createElement("p", null, "Process as Infrastructure for agentic workflows \u2014 open standard, local-first CLI.", /*#__PURE__*/React.createElement("br", null), "Apache 2.0 \xB7 2026.")), /*#__PURE__*/React.createElement("div", {
+  })), " ", /*#__PURE__*/React.createElement("span", null, "OpenSOP")), /*#__PURE__*/React.createElement("p", null, "Process as Infrastructure for agentic processes \u2014 open standard, local-first CLI.", /*#__PURE__*/React.createElement("br", null), "Apache 2.0 \xB7 2026.")), /*#__PURE__*/React.createElement("div", {
     className: "ed-foot-cols"
   }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h6", null, "Standard"), /*#__PURE__*/React.createElement("a", {
     href: "https://github.com/Chosen9115/opensop/blob/main/SPEC.md",
@@ -918,7 +921,7 @@ $ ./opensop --server https://your-opensop-server.example.com list`)), /*#__PURE_
     target: "_blank",
     rel: "noopener noreferrer"
   }, "Discussions"), /*#__PURE__*/React.createElement("a", {
-    href: "#agent-harness"
+    href: "#case-study"
   }, "Case study"), /*#__PURE__*/React.createElement("a", {
     href: "https://github.com/Chosen9115/opensop/blob/main/CONTRIBUTING.md",
     target: "_blank",
