@@ -7,7 +7,73 @@ window.OPENSOP_WORKFLOWS = [
     runs: "482",
     p50: "18s",
     success: "97.3%",
-    yaml: `opensop: "0.1"
+    json: `{
+  "opensop": "0.6",
+  "process": {
+    "name": "morning-briefing",
+    "version": "1.0",
+    "description": "Daily morning briefing from Slack, Gmail, Calendar. Synthesizes only when all deterministic fetches succeeded.",
+    "trigger": {
+      "type": "schedule",
+      "cron": "50 7 * * 1-5"
+    },
+    "inputs": [
+      { "name": "date", "type": "string", "format": "date", "required": true }
+    ],
+    "steps": [
+      {
+        "id": "fetch-slack",
+        "name": "Fetch Slack",
+        "type": "automated",
+        "run": "./scripts/fetch-slack.sh",
+        "outputs": [
+          { "name": "success", "type": "boolean" },
+          { "name": "unread_count", "type": "number" }
+        ]
+      },
+      {
+        "id": "fetch-gmail",
+        "name": "Fetch Gmail",
+        "type": "automated",
+        "run": "./scripts/fetch-gmail.sh",
+        "outputs": [
+          { "name": "success", "type": "boolean" }
+        ]
+      },
+      {
+        "id": "fetch-calendar",
+        "name": "Fetch Calendar",
+        "type": "automated",
+        "run": "./scripts/fetch-calendar.sh",
+        "outputs": [
+          { "name": "success", "type": "boolean" },
+          { "name": "events", "type": "object" }
+        ]
+      },
+      {
+        "id": "synthesize",
+        "name": "Synthesize brief",
+        "type": "llm",
+        "model": "claude-opus-4-7",
+        "expected_output_schema": { "brief": "string" },
+        "condition": "steps['fetch-slack'].outputs.success == true && steps['fetch-gmail'].outputs.success == true && steps['fetch-calendar'].outputs.success == true",
+        "prompt": "Synthesize a 200-word brief from these sources...",
+        "outputs": [
+          { "name": "brief", "type": "string" }
+        ]
+      },
+      {
+        "id": "deliver",
+        "name": "Deliver to Slack",
+        "type": "notification",
+        "channel": "slack",
+        "to": "#daily-briefings",
+        "body": "{{ steps.synthesize.outputs.brief }}"
+      }
+    ]
+  }
+}`,
+    yaml: `opensop: "0.6"
 
 process:
   name: morning-briefing
@@ -84,7 +150,68 @@ process:
     runs: "12,438",
     p50: "4m 12s",
     success: "98.4%",
-    yaml: `opensop: "0.1"
+    json: `{
+  "opensop": "0.6",
+  "process": {
+    "name": "customer-onboarding",
+    "version": "1.4",
+    "description": "Onboard a business for cross-border banking",
+    "owner": "banking-team",
+    "trigger": { "type": "api" },
+    "inputs": [
+      { "name": "company_name",  "type": "string", "required": true },
+      { "name": "contact_email", "type": "string", "format": "email" },
+      { "name": "country",       "type": "enum", "values": ["US", "MX"] }
+    ],
+    "outputs": [
+      { "name": "account_id", "from": "steps.provision.outputs.account_id" },
+      { "name": "status",     "from": "steps.review.outputs.decision" }
+    ],
+    "steps": [
+      {
+        "id": "collect",
+        "type": "form",
+        "name": "Collect business info",
+        "timeout": "7d"
+      },
+      {
+        "id": "verify",
+        "type": "automated",
+        "name": "Verify KYB documents",
+        "run": "./steps/verify-documents.py",
+        "retry": { "max": 3, "backoff": "exponential" }
+      },
+      {
+        "id": "review",
+        "type": "judgment",
+        "name": "Risk review",
+        "outputs": [
+          { "name": "decision", "type": "enum", "values": ["approve", "reject"] }
+        ],
+        "judgment": {
+          "allow_agent": true,
+          "confidence_threshold": 0.9,
+          "escalation": "manual"
+        }
+      },
+      {
+        "id": "compliance",
+        "type": "webhook",
+        "name": "Submit to compliance provider",
+        "condition": "steps.review.outputs.decision == 'approve'"
+      },
+      {
+        "id": "provision",
+        "type": "shell",
+        "name": "Provision account",
+        "outputs": [
+          { "name": "account_id", "type": "string" }
+        ]
+      }
+    ]
+  }
+}`,
+    yaml: `opensop: "0.6"
 
 process:
   name: customer-onboarding
@@ -127,7 +254,7 @@ process:
       name: "Submit to compliance provider"
       condition: "steps.review.outputs.decision == 'approve'"
     - id: provision
-      type: automated
+      type: shell
       name: "Provision account"
       outputs:
         - { name: account_id, type: string }`,
@@ -136,7 +263,7 @@ process:
       { id: "verify",     name: "Verify KYB documents",      type: "automated", ms: 1100, dur: 900 },
       { id: "review",     name: "Risk review",               type: "judgment",  ms: 2000, dur: 1300 },
       { id: "compliance", name: "Submit to compliance",      type: "webhook",   ms: 3300, dur: 1500 },
-      { id: "provision",  name: "Provision account",         type: "automated", ms: 4800, dur: 700 }
+      { id: "provision",  name: "Provision account",         type: "shell",     ms: 4800, dur: 700 }
     ],
     endpoints: [
       "POST   /sop/customer-onboarding/start",
@@ -154,7 +281,53 @@ process:
     runs: "84,221",
     p50: "47s",
     success: "99.7%",
-    yaml: `opensop: "0.1"
+    json: `{
+  "opensop": "0.6",
+  "process": {
+    "name": "continuous-pr-review",
+    "version": "2.1",
+    "description": "Agent + policy review on every pull request",
+    "owner": "platform",
+    "trigger": { "type": "api" },
+    "inputs": [
+      { "name": "repo",       "type": "string" },
+      { "name": "pr_number",  "type": "number" },
+      { "name": "diff_url",   "type": "string" }
+    ],
+    "steps": [
+      {
+        "id": "fetch",
+        "type": "shell",
+        "name": "Fetch diff + context"
+      },
+      {
+        "id": "lint",
+        "type": "shell",
+        "name": "Static analysis",
+        "retry": { "max": 2 }
+      },
+      {
+        "id": "review",
+        "type": "llm",
+        "name": "Agent code review",
+        "model": "claude-sonnet-4-7",
+        "tools": ["Read", "Grep"]
+      },
+      {
+        "id": "policy",
+        "type": "judgment",
+        "name": "Policy check",
+        "judgment": { "allow_agent": true, "confidence_threshold": 0.95 }
+      },
+      {
+        "id": "post",
+        "type": "webhook",
+        "name": "Post review on GitHub"
+      }
+    ]
+  }
+}`,
+    yaml: `opensop: "0.6"
 
 process:
   name: continuous-pr-review
@@ -171,10 +344,10 @@ process:
 
   steps:
     - id: fetch
-      type: automated
+      type: shell
       name: "Fetch diff + context"
     - id: lint
-      type: automated
+      type: shell
       name: "Static analysis"
       retry: { max: 2 }
     - id: review
@@ -190,8 +363,8 @@ process:
       type: webhook
       name: "Post review on GitHub"`,
     steps: [
-      { id: "fetch",  name: "Fetch diff + context",  type: "automated", ms: 0,    dur: 500 },
-      { id: "lint",   name: "Static analysis",        type: "automated", ms: 500,  dur: 700 },
+      { id: "fetch",  name: "Fetch diff + context",  type: "shell",     ms: 0,    dur: 500 },
+      { id: "lint",   name: "Static analysis",        type: "shell",     ms: 500,  dur: 700 },
       { id: "review", name: "Agent code review",      type: "llm",       ms: 1200, dur: 1900 },
       { id: "policy", name: "Policy check",           type: "judgment",  ms: 3100, dur: 600 },
       { id: "post",   name: "Post review on GitHub",  type: "webhook",   ms: 3700, dur: 500 }
@@ -212,7 +385,54 @@ process:
     runs: "3,902",
     p50: "11m 06s",
     success: "94.1%",
-    yaml: `opensop: "0.1"
+    json: `{
+  "opensop": "0.6",
+  "process": {
+    "name": "bug-bounty-triage",
+    "version": "1.2",
+    "description": "Triage incoming bug bounty submissions",
+    "owner": "security",
+    "trigger": { "type": "api" },
+    "steps": [
+      {
+        "id": "validate",
+        "type": "shell",
+        "name": "Validate report shape"
+      },
+      {
+        "id": "dedupe",
+        "type": "llm",
+        "name": "Dedupe against known issues",
+        "model": "claude-sonnet-4-7",
+        "tools": ["Read", "Grep"]
+      },
+      {
+        "id": "reproduce",
+        "type": "shell",
+        "name": "Auto-reproduce in sandbox",
+        "timeout": "30m"
+      },
+      {
+        "id": "severity",
+        "type": "judgment",
+        "name": "Score severity (CVSS)",
+        "judgment": { "allow_agent": true, "confidence_threshold": 0.85 }
+      },
+      {
+        "id": "route",
+        "type": "webhook",
+        "name": "Open ticket + notify owner"
+      },
+      {
+        "id": "pay",
+        "type": "approval",
+        "name": "Approve bounty payout",
+        "condition": "steps.severity.outputs.cvss >= 7.0"
+      }
+    ]
+  }
+}`,
+    yaml: `opensop: "0.6"
 
 process:
   name: bug-bounty-triage
@@ -224,7 +444,7 @@ process:
 
   steps:
     - id: validate
-      type: automated
+      type: shell
       name: "Validate report shape"
     - id: dedupe
       type: llm
@@ -232,7 +452,7 @@ process:
       model: claude-sonnet-4-7
       tools: [Read, Grep]
     - id: reproduce
-      type: automated
+      type: shell
       name: "Auto-reproduce in sandbox"
       timeout: 30m
     - id: severity
@@ -247,9 +467,9 @@ process:
       name: "Approve bounty payout"
       condition: "steps.severity.outputs.cvss >= 7.0"`,
     steps: [
-      { id: "validate",  name: "Validate report",      type: "automated", ms: 0,    dur: 500 },
+      { id: "validate",  name: "Validate report",      type: "shell",     ms: 0,    dur: 500 },
       { id: "dedupe",    name: "Dedupe known issues",  type: "llm",       ms: 500,  dur: 1100 },
-      { id: "reproduce", name: "Reproduce in sandbox", type: "automated", ms: 1600, dur: 1400 },
+      { id: "reproduce", name: "Reproduce in sandbox", type: "shell",     ms: 1600, dur: 1400 },
       { id: "severity",  name: "Score severity",       type: "judgment",  ms: 3000, dur: 800 },
       { id: "route",     name: "Open ticket",          type: "webhook",   ms: 3800, dur: 500 },
       { id: "pay",       name: "Approve payout",       type: "approval",  ms: 4300, dur: 1000 }
@@ -269,7 +489,44 @@ process:
     runs: "1,184",
     p50: "2m 38s",
     success: "100%",
-    yaml: `opensop: "0.1"
+    json: `{
+  "opensop": "0.6",
+  "process": {
+    "name": "send-proposal",
+    "version": "1.0",
+    "owner": "revenue",
+    "trigger": { "type": "api" },
+    "inputs": [
+      { "name": "deal_id",       "type": "string" },
+      { "name": "contact_email", "type": "string" }
+    ],
+    "steps": [
+      {
+        "id": "draft",
+        "type": "llm",
+        "name": "Draft proposal",
+        "model": "claude-sonnet-4-7"
+      },
+      {
+        "id": "internal-review",
+        "type": "approval",
+        "name": "Internal review",
+        "approvers": ["account-exec", "sales-eng"]
+      },
+      {
+        "id": "dispatch",
+        "type": "webhook",
+        "name": "Send via DocuSign"
+      },
+      {
+        "id": "log",
+        "type": "shell",
+        "name": "Log in CRM"
+      }
+    ]
+  }
+}`,
+    yaml: `opensop: "0.6"
 
 process:
   name: send-proposal
@@ -295,13 +552,13 @@ process:
       type: webhook
       name: "Send via DocuSign"
     - id: log
-      type: automated
+      type: shell
       name: "Log in CRM"`,
     steps: [
       { id: "draft",          name: "Draft proposal",  type: "llm",       ms: 0,    dur: 1200 },
       { id: "internal-review",name: "Internal review", type: "approval",  ms: 1200, dur: 1800 },
       { id: "dispatch",       name: "Send via DocuSign",type: "webhook",  ms: 3000, dur: 700 },
-      { id: "log",            name: "Log in CRM",      type: "automated", ms: 3700, dur: 400 }
+      { id: "log",            name: "Log in CRM",      type: "shell",     ms: 3700, dur: 400 }
     ],
     endpoints: [
       "POST   /sop/send-proposal/start",
@@ -317,7 +574,47 @@ process:
     runs: "27,613",
     p50: "8s",
     success: "99.1%",
-    yaml: `opensop: "0.1"
+    json: `{
+  "opensop": "0.6",
+  "process": {
+    "name": "inbound-inquiry-triage",
+    "version": "3.0",
+    "owner": "growth",
+    "trigger": { "type": "api" },
+    "steps": [
+      {
+        "id": "classify",
+        "type": "llm",
+        "name": "Classify intent",
+        "model": "claude-sonnet-4-7"
+      },
+      {
+        "id": "enrich",
+        "type": "webhook",
+        "name": "Enrich via Clearbit"
+      },
+      {
+        "id": "score",
+        "type": "judgment",
+        "name": "Score lead quality",
+        "judgment": { "allow_agent": true, "confidence_threshold": 0.8 }
+      },
+      {
+        "id": "respond",
+        "type": "shell",
+        "name": "Auto-reply to qualified",
+        "condition": "steps.score.outputs.tier == 'A'"
+      },
+      {
+        "id": "queue",
+        "type": "noop",
+        "name": "Queue for sales",
+        "condition": "steps.score.outputs.tier != 'A'"
+      }
+    ]
+  }
+}`,
+    yaml: `opensop: "0.6"
 
 process:
   name: inbound-inquiry-triage
@@ -339,18 +636,18 @@ process:
       name: "Score lead quality"
       judgment: { allow_agent: true, confidence_threshold: 0.8 }
     - id: respond
-      type: automated
+      type: shell
       name: "Auto-reply to qualified"
       condition: "steps.score.outputs.tier == 'A'"
     - id: queue
-      type: automated
+      type: noop
       name: "Queue for sales"
       condition: "steps.score.outputs.tier != 'A'"`,
     steps: [
       { id: "classify", name: "Classify intent",     type: "llm",       ms: 0,    dur: 700 },
       { id: "enrich",   name: "Enrich via Clearbit", type: "webhook",   ms: 700,  dur: 600 },
       { id: "score",    name: "Score lead quality",  type: "judgment",  ms: 1300, dur: 800 },
-      { id: "respond",  name: "Auto-reply",          type: "automated", ms: 2100, dur: 400 }
+      { id: "respond",  name: "Auto-reply",          type: "shell",     ms: 2100, dur: 400 }
     ],
     endpoints: [
       "POST   /sop/triggers/inbound-inquiry-triage (HMAC)",
@@ -363,6 +660,8 @@ process:
 
 window.OPENSOP_STEP_TYPES = {
   automated:    { label: "auto",         color: "#22c55e" },
+  shell:        { label: "shell",        color: "#16a34a" },
+  noop:         { label: "noop",         color: "#6b7280" },
   form:         { label: "form",         color: "#60a5fa" },
   judgment:     { label: "judgment",     color: "#f59e0b" },
   approval:     { label: "approval",     color: "#a78bfa" },
