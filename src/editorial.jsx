@@ -211,7 +211,9 @@ function ProcessRibbon({ workflow }) {
   );
 }
 
-const HERO_INSTALL_PROMPT = `Read and follow https://raw.githubusercontent.com/Chosen9115/opensop/main/INSTALL_FOR_AGENTS.md to set up OpenSOP for me.`;
+const HERO_INSTALL_PROMPT = `# Install the OpenSOP CLI (local-first, no account required)
+curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop/main/cli/bin/opensop -o opensop && chmod +x opensop
+./opensop run morning-briefing.sop.yaml`;
 
 function HeroPaste() {
   const [copied, setCopied] = useState2(false);
@@ -225,8 +227,8 @@ function HeroPaste() {
   return (
     <div className="ed-hero-paste">
       <div className="ed-paste-eb">
-        <span className="ed-paste-arrow">▷</span> Get started asap with your agent of choice
-        <span className="ed-paste-hint">— Claude Code, Codex, Cursor, anything</span>
+        <span className="ed-paste-arrow">▷</span> Install the CLI locally — no server, no account
+        <span className="ed-paste-hint">— one curl, then opensop run</span>
       </div>
       <div className="ed-paste-body">
         <pre className="ed-paste-code">{HERO_INSTALL_PROMPT}</pre>
@@ -238,7 +240,7 @@ function HeroPaste() {
   );
 }
 
-const HERO_DISCOVER_PROMPT = `Help me uncover the procedures my team repeats that would benefit from a deterministic gate around LLM calls. For each, sketch what it would look like as an OpenSOP workflow — steps, gates, receipts. End with a comparison table per procedure: time, cost, reliability, token spend — today vs with OpenSOP, multiplier called out. https://github.com/Chosen9115/opensop`;
+const HERO_DISCOVER_PROMPT = `Help me uncover the procedures my team repeats that would benefit from a deterministic gate around LLM calls. For each, sketch what it would look like as an OpenSOP process file — steps, gates, receipts. End with a comparison table per procedure: time, cost, reliability, token spend — today vs with OpenSOP, multiplier called out. Spec: https://github.com/Chosen9115/opensop/blob/main/SPEC.md`;
 
 function HeroCli() {
   const [copied, setCopied] = useState2(false);
@@ -252,7 +254,7 @@ function HeroCli() {
   return (
     <div className="ed-hero-cli">
       <div className="ed-paste-eb">
-        <span className="ed-paste-arrow">▷</span> See how it can benefit your current setup
+        <span className="ed-paste-arrow">▷</span> See where your team already has repeatable processes
         <span className="ed-paste-hint">— same agent, same chat</span>
       </div>
       <div className="ed-paste-body">
@@ -289,7 +291,7 @@ function EditorialPage({ tweaks, setTweak }) {
           </span>
         </div>
         <nav className="ed-nav-c">
-          <a href="#runtime">Runtime</a><a href="https://github.com/Chosen9115/opensop/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">Spec</a><a href="#workflows">Workflows</a><a href="#audit">Audit</a><a href="https://github.com/Chosen9115/opensop/tree/main/docs" target="_blank" rel="noopener noreferrer">Docs</a>
+          <a href="#why">Why</a><a href="https://github.com/Chosen9115/opensop/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">Spec v0.6</a><a href="#workflows">Workflows</a><a href="#audit">Audit</a><a href="https://github.com/Chosen9115/opensop/tree/main/docs" target="_blank" rel="noopener noreferrer">Docs</a>
         </nav>
         <div className="ed-nav-r">
           <a className="ed-nav-link" href="#mvp">MVP status</a>
@@ -311,22 +313,22 @@ function EditorialPage({ tweaks, setTweak }) {
         <div className="ed-hero-eyebrow">
           <span className="ed-eb-num">No. 01</span>
           <span className="ed-eb-sep">/</span>
-          <span>Process runtime for AI agents</span>
+          <span>Process as Infrastructure for agentic workflows</span>
           <span className="ed-eb-sep">/</span>
-          <span>v0.1 developer preview</span>
+          <span>CLI v0.8.0 · spec v0.6</span>
         </div>
         <h1 className="ed-hero-h">
-          We got tired of agents lying to us,<br />
-          so we built them a <span className="ed-italic">harness</span>.
+          A process is a <span className="ed-italic">file</span>.<br />
+          Declare it, version it, run it locally.
         </h1>
         <p className="ed-hero-sub">
-          Define the process in YAML. The runtime executes every step, blocks the LLM from skipping anything, and writes an auditable receipt after every run.
+          Like Terraform for cloud resources — but for agentic processes. Write a <code>.sop.yaml</code>, run it with the local CLI, get an auditable receipt. The server is optional and pluggable.
         </p>
         <div className="ed-hero-row">
-          <a className="ed-btn ed-btn-dark" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Star on GitHub</a>
-          <a className="ed-btn ed-btn-ghost" href="https://github.com/Chosen9115/opensop#readme" target="_blank" rel="noopener noreferrer">Read the spec →</a>
+          <a className="ed-btn ed-btn-dark" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Standard + CLI on GitHub</a>
+          <a className="ed-btn ed-btn-ghost" href="https://github.com/Chosen9115/opensop/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">Read spec v0.6 →</a>
           <span className="ed-hero-meta">
-            <span className="ed-pulse" /> v0.1 developer preview · Apache 2.0 · self-hostable
+            <span className="ed-pulse" /> CLI v0.8.0 · Apache 2.0 · local-first
           </span>
         </div>
 
@@ -335,7 +337,7 @@ function EditorialPage({ tweaks, setTweak }) {
 
         <div className="ed-hero-figure">
           <div className="ed-hero-fig-tabs">
-            {[["harness","Agent harness"],["yaml","YAML → API"],["graph","Live run"]].map(([k,l]) => (
+            {[["harness","Agent harness"],["yaml","Process file"],["graph","Live run"]].map(([k,l]) => (
               <button key={k} className={`ed-fig-tab ${heroId===k?"is-on":""}`} onClick={() => setTweak("hero", k)}>{l}</button>
             ))}
           </div>
@@ -352,8 +354,8 @@ function EditorialPage({ tweaks, setTweak }) {
                 </div>
                 <div className="ed-yaml-pane">
                   <div className="ed-yaml-head">
-                    <span>generated REST API</span>
-                    <span className="ed-yaml-meta ed-live">live</span>
+                    <span>server endpoints (optional)</span>
+                    <span className="ed-yaml-meta ed-live">when hosted</span>
                   </div>
                   <div className="ed-yaml-endpoints">
                     {wf.endpoints.map((e) => {
@@ -376,7 +378,7 @@ function EditorialPage({ tweaks, setTweak }) {
 
       <section className="ed-quote">
         <blockquote>
-          &ldquo;OpenAPI describes APIs. OpenSOP describes the work behind them.&rdquo;
+          &ldquo;Terraform is to cloud resources what OpenSOP is to agentic processes.&rdquo;
         </blockquote>
       </section>
 
@@ -504,7 +506,7 @@ function EditorialPage({ tweaks, setTweak }) {
         <div className="ed-sec-head">
           <span className="ed-sec-num">05</span>
           <h2 className="ed-sec-h">Running in production. Examples below.</h2>
-          <p className="ed-sec-sub">Pick a process. The YAML below shows the contract OpenSOP turns into endpoints, state and audit trails.</p>
+          <p className="ed-sec-sub">Pick a process. The YAML below is the file you declare, version, and run — locally or against a server that implements the spec.</p>
         </div>
 
         <div className="ed-wf-pills">
@@ -539,8 +541,8 @@ function EditorialPage({ tweaks, setTweak }) {
           </div>
           <div className="ed-yaml-pane">
             <div className="ed-yaml-head">
-              <span>generated REST API</span>
-              <span className="ed-yaml-meta ed-live">live</span>
+              <span>server endpoints (when hosted)</span>
+              <span className="ed-yaml-meta ed-live">optional</span>
             </div>
             <div className="ed-yaml-endpoints">
               {wf.endpoints.map((e) => {
@@ -617,62 +619,74 @@ success: ${wf.success}`}</pre>
         </div>
       </section>
 
-      <section className="ed-section ed-section-api" id="runtime">
+      <section className="ed-section ed-section-api" id="cli">
         <div className="ed-sec-head">
           <span className="ed-sec-num">07</span>
-          <h2 className="ed-sec-h">Discoverable, typed, operational.</h2>
-          <p className="ed-sec-sub"><code>GET /sop/</code> returns a typed catalogue of every process your org runs. Any agent can discover what it is allowed to do and how to invoke it without scraping docs or guessing from chat history.</p>
+          <h2 className="ed-sec-h">Local-first. One file. No account.</h2>
+          <p className="ed-sec-sub">Install the CLI with a single curl. <code>opensop run</code> executes any <code>.sop.yaml</code> locally — no server, no sign-up. Add <code>--server</code> to route runs through a hosted instance when you want shared state and audit logs.</p>
         </div>
 
-        <pre className="ed-api-block">{`# the CLI just wraps the API; agents can curl it too
-$ opensop list
-agent-pr-review              developer-tooling, code-review, agent-harness, ai  An agent reviews a PR diff and emits a typed decision…
-customer-onboarding          banking, onboarding, compliance, kyb               Onboard a new business customer for cross-border banking
-expense-approval             finance, expense, approval, hr                     Employee submits an expense; LLM categorizes; manager approves…
-lead-qualification           growth, sales, qualification                       Qualify an inbound lead and score their fit
-release-deploy               devops, release, deployment, cicd                  Release engineer fills release notes; deploy webhook fires…
-support-ticket-triage        support, triage, customer-service                  Inbound support ticket is categorized, triaged, routed, notified…
+        <pre className="ed-api-block">{`# install — one curl, works without a server
+$ curl -fsSL https://raw.githubusercontent.com/Chosen9115/opensop/main/cli/bin/opensop -o opensop && chmod +x opensop
 
-# don't know the name? describe the task, get a recommendation:
-$ opensop search lead
-3   lead-qualification          (growth, sales, qualification)  Qualify an inbound lead and score their fit`}</pre>
+# run a process locally — no account, no server
+$ ./opensop run morning-briefing.sop.yaml
+[opensop] running morning-briefing v1.4 locally
+  step 01/05  fetch-slack       ✓  3 unread DMs
+  step 02/05  fetch-gmail       ✓  14 threads
+  step 03/05  fetch-calendar    ✗  unavailable at 07:51:34
+[opensop] halted at step 03 — receipt written to ./receipts/i_9f3a4c.json
+
+# list processes in the current directory
+$ ./opensop list
+morning-briefing   schedule, digest       Daily briefing from Slack, Gmail, Calendar
+expense-approval   finance, approval      Submit an expense; LLM categorizes; manager approves
+lead-qualify       sales, crm             Qualify an inbound lead and score their fit
+
+# point at a server when you want shared state
+$ ./opensop --server https://your-opensop-server.example.com list`}</pre>
       </section>
 
       <section className="ed-section ed-section-runtimes" id="runtimes">
         <div className="ed-sec-head">
           <span className="ed-sec-num">08</span>
-          <h2 className="ed-sec-h">One runtime. One CLI.</h2>
-          <p className="ed-sec-sub">The runtime is where processes execute. The CLI is how you talk to it. Same <code>.sop.yaml</code> on both sides.</p>
+          <h2 className="ed-sec-h">CLI is the default. Server is optional.</h2>
+          <p className="ed-sec-sub">The CLI runs processes locally. The reference server adds shared state, audit logs, and a REST API — but nothing forces you to run one. Same <code>.sop.yaml</code> on both sides; the spec is the contract.</p>
         </div>
         <div className="ed-sample-wrap">
           <table className="ed-sample-table">
             <thead>
               <tr>
                 <th></th>
-                <th>Hosted runtime (Rails)</th>
-                <th>CLI client (opensop-cli)</th>
+                <th>CLI — local execution</th>
+                <th>Reference server (Rails)</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td><strong>What it is</strong></td>
-                <td>Processes execute here. State lives here. The audit log accumulates here.</td>
-                <td>A bash wrapper around the /sop/* HTTP endpoints. One file, deps are curl + jq.</td>
+                <td>Bash script, single file. Executes <code>.sop.yaml</code> locally. Deps: curl + jq.</td>
+                <td>Rails app that implements the OpenSOP HTTP spec. State in PostgreSQL; admin UI included.</td>
               </tr>
               <tr>
                 <td><strong>Best for</strong></td>
-                <td>Self-hosting OpenSOP — DDQs, customer onboarding, expense approval, week-long flows</td>
-                <td>Talking to any OpenSOP server from the terminal — yours, ours, the demo</td>
+                <td>Local runs, CI pipelines, agent-driven execution without a server</td>
+                <td>Team-shared flows — DDQs, onboarding, expense approval, multi-week runs</td>
               </tr>
               <tr>
                 <td><strong>State</strong></td>
-                <td>PostgreSQL + admin UI dashboard</td>
-                <td>Tiny ~/.opensop/instances.tsv cache for id→name lookups; real state on the server</td>
+                <td>Receipt JSON written locally per run. No remote dependency.</td>
+                <td>PostgreSQL + audit log. Any agent can query <code>GET /sop/</code> for the process catalogue.</td>
               </tr>
               <tr>
                 <td><strong>Install</strong></td>
-                <td><code>bin/setup</code> (self-host) or hit demo.opensop.ai</td>
-                <td><code>curl … | sh</code> (single bash file)</td>
+                <td><code>curl -fsSL …/cli/bin/opensop -o opensop {'&&'} chmod +x opensop</code></td>
+                <td><a href="https://github.com/Chosen9115/opensop-rails" target="_blank" rel="noopener noreferrer">github.com/Chosen9115/opensop-rails</a> — self-host, bring your own Postgres</td>
+              </tr>
+              <tr>
+                <td><strong>Spec compliance</strong></td>
+                <td>Implements spec v0.6 locally</td>
+                <td>Reference implementation of spec v0.6. Others can implement the same spec.</td>
               </tr>
             </tbody>
           </table>
@@ -691,6 +705,10 @@ $ opensop search lead
               <h3 className="ed-vs-h-sm">Not a connector canvas.</h3>
               <p>n8n, Zapier, Make wire services together. OpenSOP is the process contract those services and agents execute — it can call connector tools, not replace them.</p>
             </div>
+            <div className="ed-vs-col">
+              <h3 className="ed-vs-h-sm">Not a SaaS platform.</h3>
+              <p>The spec is open. The CLI runs locally. The reference server is one implementation — you can write your own. Nothing in OpenSOP requires an account, a cloud, or a vendor.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -702,21 +720,22 @@ $ opensop search lead
       </section>
 
       <section className="ed-cta">
-        <h2>Give agents a harness.<br />Give processes a runtime.</h2>
+        <h2>A process is a file.<br />Start with the <span className="ed-italic">CLI</span>.</h2>
         <div className="ed-cta-row">
-          <a className="ed-btn ed-btn-dark" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Star on GitHub</a>
+          <a className="ed-btn ed-btn-dark" href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">★ Standard + CLI on GitHub</a>
+          <a className="ed-btn ed-btn-ghost" href="https://github.com/Chosen9115/opensop-rails" target="_blank" rel="noopener noreferrer">Reference server →</a>
         </div>
-        <div className="ed-cta-meta">Apache 2.0 &middot; self-hostable &middot; Rails + Postgres &middot; v0.1 developer preview</div>
+        <div className="ed-cta-meta">Apache 2.0 &middot; local-first &middot; spec v0.6 &middot; CLI v0.8.0</div>
       </section>
 
       <footer className="ed-foot">
         <div className="ed-foot-l">
           <div className="ed-logo"><svg width="20" height="20" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="currentColor" strokeWidth="1.4"/><path d="M5 11h12 M5 7h8 M5 15h6" stroke="currentColor" strokeWidth="1.4"/></svg> <span>OpenSOP</span></div>
-          <p>A process runtime for AI agents — open and self-hostable.<br />Apache 2.0 · 2026.</p>
+          <p>Process as Infrastructure for agentic workflows — open standard, local-first CLI.<br />Apache 2.0 · 2026.</p>
         </div>
         <div className="ed-foot-cols">
-          <div><h6>Product</h6><a href="#runtime">Runtime</a><a href="https://github.com/Chosen9115/opensop/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">Spec v0.1</a><a href="https://github.com/Chosen9115/opensop/blob/main/ROADMAP.md" target="_blank" rel="noopener noreferrer">Roadmap</a><a href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">Changelog</a></div>
-          <div><h6>Developers</h6><a href="https://github.com/Chosen9115/opensop-cli" target="_blank" rel="noopener noreferrer">CLI</a><a href="https://demo.opensop.ai" target="_blank" rel="noopener noreferrer">Public demo</a><a href="https://github.com/Chosen9115/opensop/tree/main/docs" target="_blank" rel="noopener noreferrer">Docs</a><a href="https://github.com/Chosen9115/opensop/blob/main/docs/API.md" target="_blank" rel="noopener noreferrer">API reference</a><a href="https://github.com/Chosen9115/opensop/tree/main/processes/examples" target="_blank" rel="noopener noreferrer">Examples</a></div>
+          <div><h6>Standard</h6><a href="https://github.com/Chosen9115/opensop/blob/main/SPEC.md" target="_blank" rel="noopener noreferrer">Spec v0.6</a><a href="https://github.com/Chosen9115/opensop/blob/main/ROADMAP.md" target="_blank" rel="noopener noreferrer">Roadmap</a><a href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">Changelog</a></div>
+          <div><h6>Developers</h6><a href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">CLI + spec</a><a href="https://github.com/Chosen9115/opensop-rails" target="_blank" rel="noopener noreferrer">Reference server</a><a href="https://github.com/Chosen9115/opensop/tree/main/docs" target="_blank" rel="noopener noreferrer">Docs</a><a href="https://github.com/Chosen9115/opensop/blob/main/docs/API.md" target="_blank" rel="noopener noreferrer">API reference</a><a href="https://github.com/Chosen9115/opensop/tree/main/processes/examples" target="_blank" rel="noopener noreferrer">Examples</a></div>
           <div><h6>Community</h6><a href="https://github.com/Chosen9115/opensop" target="_blank" rel="noopener noreferrer">GitHub</a><a href="https://github.com/Chosen9115/opensop/discussions" target="_blank" rel="noopener noreferrer">Discussions</a><a href="#agent-harness">Case study</a><a href="https://github.com/Chosen9115/opensop/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">Contributing</a></div>
         </div>
       </footer>
