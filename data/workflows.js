@@ -24,7 +24,7 @@ window.OPENSOP_WORKFLOWS = [
       {
         "id": "fetch-slack",
         "name": "Fetch Slack",
-        "type": "shell",
+        "type": "automated",
         "run": "./scripts/fetch-slack.sh",
         "outputs": [
           { "name": "success", "type": "boolean" },
@@ -34,7 +34,7 @@ window.OPENSOP_WORKFLOWS = [
       {
         "id": "fetch-gmail",
         "name": "Fetch Gmail",
-        "type": "shell",
+        "type": "automated",
         "run": "./scripts/fetch-gmail.sh",
         "outputs": [
           { "name": "success", "type": "boolean" }
@@ -43,7 +43,7 @@ window.OPENSOP_WORKFLOWS = [
       {
         "id": "fetch-calendar",
         "name": "Fetch Calendar",
-        "type": "shell",
+        "type": "automated",
         "run": "./scripts/fetch-calendar.sh",
         "outputs": [
           { "name": "success", "type": "boolean" },
@@ -87,7 +87,7 @@ process:
   steps:
     - id: fetch-slack
       name: Fetch Slack
-      type: shell
+      type: automated
       run: ./scripts/fetch-slack.sh
       outputs:
         - { name: success, type: boolean }
@@ -95,14 +95,14 @@ process:
 
     - id: fetch-gmail
       name: Fetch Gmail
-      type: shell
+      type: automated
       run: ./scripts/fetch-gmail.sh
       outputs:
         - { name: success, type: boolean }
 
     - id: fetch-calendar
       name: Fetch Calendar
-      type: shell
+      type: automated
       run: ./scripts/fetch-calendar.sh
       outputs:
         - { name: success, type: boolean }
@@ -129,9 +129,9 @@ process:
       to: "#daily-briefings"
       body: "{{ steps.synthesize.outputs.brief }}"`,
     steps: [
-      { id: "fetch-slack",    name: "Fetch Slack",       type: "shell",        ms: 0,    dur: 600 },
-      { id: "fetch-gmail",    name: "Fetch Gmail",       type: "shell",        ms: 0,    dur: 800 },
-      { id: "fetch-calendar", name: "Fetch Calendar",    type: "shell",        ms: 0,    dur: 500 },
+      { id: "fetch-slack",    name: "Fetch Slack",       type: "automated",    ms: 0,    dur: 600 },
+      { id: "fetch-gmail",    name: "Fetch Gmail",       type: "automated",    ms: 0,    dur: 800 },
+      { id: "fetch-calendar", name: "Fetch Calendar",    type: "automated",    ms: 0,    dur: 500 },
       { id: "synthesize",     name: "Synthesize brief",  type: "llm",          ms: 800,  dur: 1400 },
       { id: "deliver",        name: "Deliver to Slack",  type: "notification", ms: 2200, dur: 300 }
     ],
@@ -176,7 +176,7 @@ process:
       },
       {
         "id": "verify",
-        "type": "shell",
+        "type": "automated",
         "name": "Verify KYB documents",
         "run": "./steps/verify-documents.py",
         "retry": { "max": 3, "backoff": "exponential" }
@@ -236,7 +236,7 @@ process:
       name: "Collect business info"
       timeout: 7d
     - id: verify
-      type: shell
+      type: automated
       name: "Verify KYB documents"
       run: ./steps/verify-documents.py
       retry: { max: 3, backoff: exponential }
@@ -260,7 +260,7 @@ process:
         - { name: account_id, type: string }`,
     steps: [
       { id: "collect",    name: "Collect business info",     type: "form",      ms: 0,    dur: 1100 },
-      { id: "verify",     name: "Verify KYB documents",      type: "shell",     ms: 1100, dur: 900 },
+      { id: "verify",     name: "Verify KYB documents",      type: "automated", ms: 1100, dur: 900 },
       { id: "review",     name: "Risk review",               type: "judgment",  ms: 2000, dur: 1300 },
       { id: "compliance", name: "Submit to compliance",      type: "webhook",   ms: 3300, dur: 1500 },
       { id: "provision",  name: "Provision account",         type: "shell",     ms: 4800, dur: 700 }
